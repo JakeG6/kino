@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 //components
 import SearchBar from './components/SearchBar'
 import Home from './components/Home'
+import MoviePage from './components/MoviePage'
+
+
 import Navbar from 'react-bootstrap/Navbar'
 import './App.css'
 
@@ -22,6 +25,7 @@ class App extends Component {
           </Navbar.Collapse>
         </Navbar> 
         <Route path="/" exact component={Home} />
+        <Route path="/movie/:id" exact component={MoviePage} />
       </div>
     );
   }

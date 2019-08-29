@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -28,7 +29,9 @@ let TrendingChart = () => {
                         <ul>
                         {
                         nowTrending.map((movie) => 
-                            <li>{movie.original_title}</li> 
+                            <li>
+                                <Link to={`/movie/${movie.id}`}>{movie.original_title}</Link>
+                            </li> 
                         )
                         } 
                         </ul>

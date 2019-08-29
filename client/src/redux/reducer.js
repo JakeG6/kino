@@ -1,12 +1,11 @@
 import {SET_CURRENT_MOVIE, setCurrentMovie} from './actions'
-let wow = "wow"
 
 
 const initialState = {
     currentMovie: null
 }
 
-function reducer(state = initialState, action) {
+export const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case SET_CURRENT_MOVIE:
@@ -19,5 +18,3 @@ function reducer(state = initialState, action) {
 
 }
 
-
-export default reducer;
