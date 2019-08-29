@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Row';
+
 const MoviePage = ({match}) => {
 
     const [pageMovie, setPageMovie] = useState([])
@@ -18,8 +22,20 @@ const MoviePage = ({match}) => {
 
     return (
         <div>
-            <p>movie id: {match.params.id}</p>
-            <p>name: {pageMovie.original_title}</p>
+            <Container>
+                <Row>
+                    <Col><h1>{pageMovie.original_title}</h1></Col>
+                </Row>
+                <Row>
+                    <Col><i>{pageMovie.overview}</i></Col>
+                </Row>
+                <Row>
+                    <Col><img src={`http://image.tmdb.org/t/p/w400${pageMovie.poster_path}`} alt={`poster for  ${pageMovie.original_title}`} /></Col>
+                    <Col><i>{}</i></Col>
+                </Row>
+            </Container>
+            
+            
         </div>
     )
 }
