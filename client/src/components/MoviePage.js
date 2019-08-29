@@ -20,18 +20,27 @@ const MoviePage = ({match}) => {
 
     })
 
+    let moviePageStyle = {
+        color: 'white',
+        
+        backgroundImage: `url(https://image.tmdb.org/t/p/original${pageMovie.backdrop_path})`,
+        backgroundSize: 'auto'
+
+    }
+
     return (
-        <div>
+        <div style={moviePageStyle}>
             <Container>
                 <Row>
                     <Col><h1>{pageMovie.original_title}</h1></Col>
                 </Row>
                 <Row>
-                    <Col><i>{pageMovie.overview}</i></Col>
-                </Row>
-                <Row>
-                    <Col><img src={`http://image.tmdb.org/t/p/w400${pageMovie.poster_path}`} alt={`poster for  ${pageMovie.original_title}`} /></Col>
-                    <Col><i>{}</i></Col>
+                    <Col>
+                        <img src={`http://image.tmdb.org/t/p/w300${pageMovie.poster_path}`} alt={`poster for ${pageMovie.original_title}`} />
+                    </Col>
+                    <Col>
+                        <i>{pageMovie.overview}</i>
+                    </Col>
                 </Row>
             </Container>
             
