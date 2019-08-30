@@ -18,7 +18,7 @@ let TrendingChart = () => {
                 setNowTrending(res.data.results)
         })
 
-    })
+    }, [])
 
     return (
         <div>
