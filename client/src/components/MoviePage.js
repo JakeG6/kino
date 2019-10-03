@@ -19,7 +19,7 @@ const MoviePage = ({ match }) => {
       const { data: movieCreditsRes } = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
       )
-
+        console.log(movieInfoRes);
       setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
     }
 
@@ -27,32 +27,43 @@ const MoviePage = ({ match }) => {
   }, [movieId])
 
   useEffect(() => {
-    console.log(`pageMovie state was initialized or changed`, pageMovie)
+    console.log(`pageMovie state was initialized or changed`, pageMovie);
   }, [pageMovie])
+
+    let createStarringString = () => {
+        let starringList = [];
+        for (let i = 0; i < 6; i++) {
+            starringList.push(pageMovie.movieCredits.cast[i].name);
+        }
+        let starringString = starringList.join(", ");
+        return starringString
+    }
+
+
 
     if (pageMovie) {
         return (
         <div>
             <Container>
                 <Row>
-                    <Col>
-                    <h1>{pageMovie.movieInfo.original_title}</h1>
+                    <Col xs={12}>
+                        <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+                        <i>{pageMovie.movieInfo.overview}</i>
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                         <img
-                            src={`http://image.tmdb.org/t/p/w300${pageMovie.poster_path}`}
-                            alt={`poster for ${pageMovie.original_title}`}
+                            src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                            alt={`poster for ${pageMovie.movieInfo.original_title}`}
                         />
                     </Col>
-                    <Col xs={6}>
-                        <i>{pageMovie.movieInfo.overview}</i>
+                    <Col xs={12} lg={6}>
                         <p>
                             <b>Release Date</b> {pageMovie.movieInfo.release_date}
                         </p>
                         <p>
-                            <b>Starring</b> {pageMovie.movieCredits.cast[0].name}
+                            <b>Starring</b> {createStarringString()}
                         </p>
                     </Col>
                 </Row>
