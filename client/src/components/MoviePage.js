@@ -12,6 +12,8 @@ const MoviePage = ({ match }) => {
   const movieId = match.params.id
 
   useEffect(() => {
+
+    //retrieve movie data from API
     const fetchData = async () => {
       const { data: movieInfoRes } = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`
@@ -30,13 +32,37 @@ const MoviePage = ({ match }) => {
     console.log(`pageMovie state was initialized or changed`, pageMovie);
   }, [pageMovie])
 
-    let createStarringString = () => {
+    const createStarringString = () => {
         let starringList = [];
         for (let i = 0; i < 6; i++) {
             starringList.push(pageMovie.movieCredits.cast[i].name);
         }
         let starringString = starringList.join(", ");
         return starringString
+    }
+
+    const createCrewList = () => {
+
+        const movieCrew = pageMovie.movieCredits.crew
+
+        //object containing departments on film crew
+        let deptObj = {}
+
+        //fill object with departments
+        for (let i = 0; i < movieCrew.length; i++) {
+            if (deptObj.hasOwnProperty(movieCrew[i].department)) {
+                return;
+            }
+            else {
+                deptObj[movieCrew[i].department] = [];
+            }
+        }
+        console.log(deptObj)
+
+        // for (department in deptObj) {
+
+        // }
+
     }
 
 
@@ -52,13 +78,13 @@ const MoviePage = ({ match }) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} lg={6}>
+                    <Col xs={6} lg={6}>
                         <img
                             src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
                             alt={`poster for ${pageMovie.movieInfo.original_title}`}
                         />
                     </Col>
-                    <Col xs={12} lg={6}>
+                    <Col xs={6} lg={6}>
                         <p>
                             <b>Release Date</b> {pageMovie.movieInfo.release_date}
                         </p>
