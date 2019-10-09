@@ -42,30 +42,54 @@ const MoviePage = ({ match }) => {
     }
 
     const createCrewList = () => {
-
-        const movieCrew = pageMovie.movieCredits.crew
-
+      
+        const movieCrew = pageMovie.movieCredits.crew;
+        console.log(movieCrew);
         //object containing departments on film crew
-        let deptObj = {}
-
+        let emptyObj = {};
+        let deptObj = {};
+        console.log(deptObj)
         //fill object with departments
         for (let i = 0; i < movieCrew.length; i++) {
             if (deptObj.hasOwnProperty(movieCrew[i].department)) {
-                return;
+                console.log(movieCrew[i].department)
+                console.log(deptObj.hasOwnProperty(movieCrew[i].department) == true)
+                console.log("we're about to return")
+                
             }
             else {
                 deptObj[movieCrew[i].department] = [];
+                console.log(deptObj);
             }
         }
-        console.log(deptObj)
+        
+        //fill departments with crew
+        for (let i = 0; i < movieCrew.length; i++) {
+            deptObj[movieCrew[i].department].push(movieCrew[i]);
+        }
 
-        // for (department in deptObj) {
+        console.log(deptObj);
 
-        // }
-
+        //render full crew in JSX
+        return (
+            <div>
+                {
+                Object.keys(deptObj).map(department => (
+                    <div>
+                        <h1>{department}</h1>
+                        <ul>
+                            {
+                            deptObj[department].map(crewMember => (
+                                <li>{crewMember.name}</li>
+                            ))
+                            }
+                        </ul>
+                    </div>
+                ))
+                }
+            </div>
+        )
     }
-
-
 
     if (pageMovie) {
         return (
@@ -93,6 +117,12 @@ const MoviePage = ({ match }) => {
                         </p>
                     </Col>
                 </Row>
+                <Row>
+                    <Col>
+                    <h1>Full Crew</h1>
+                        {createCrewList()}
+                    </Col>
+                </Row>
             </Container>
         </div>
         )
@@ -104,6 +134,5 @@ const MoviePage = ({ match }) => {
             </div>
         )    
     }
-  
 }
 export default MoviePage
