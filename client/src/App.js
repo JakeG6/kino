@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 //components
 import SearchBar from './components/SearchBar'
 import Home from './components/Home'
-import MoviePage from './components/MoviePage'
+import MoviePage from './components/MoviePage/MoviePage.js'
 
-
+//CSS
 import Navbar from 'react-bootstrap/Navbar'
 import './App.css'
 

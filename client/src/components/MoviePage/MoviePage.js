@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import createCrewList from './createCrewList';
+import createCastList from './createCastList';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Row';
 
+
 const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
 
 const MoviePage = ({ match }) => {
+    
   const [pageMovie, setPageMovie] = useState(null)
-
   const movieId = match.params.id
 
   useEffect(() => {
@@ -21,7 +24,7 @@ const MoviePage = ({ match }) => {
       const { data: movieCreditsRes } = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
       )
-        console.log(movieInfoRes);
+       
       setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
     }
 
@@ -32,6 +35,7 @@ const MoviePage = ({ match }) => {
     console.log(`pageMovie state was initialized or changed`, pageMovie);
   }, [pageMovie])
 
+    //create list of headlining stars
     const createStarringString = () => {
         let starringList = [];
         for (let i = 0; i < 6; i++) {
@@ -41,54 +45,13 @@ const MoviePage = ({ match }) => {
         return starringString
     }
 
-    const createCrewList = () => {
-      
-        const movieCrew = pageMovie.movieCredits.crew;
-        console.log(movieCrew);
-        //object containing departments on film crew
-        let emptyObj = {};
-        let deptObj = {};
-        console.log(deptObj)
-        //fill object with departments
-        for (let i = 0; i < movieCrew.length; i++) {
-            if (deptObj.hasOwnProperty(movieCrew[i].department)) {
-                console.log(movieCrew[i].department)
-                console.log(deptObj.hasOwnProperty(movieCrew[i].department) == true)
-                console.log("we're about to return")
-                
-            }
-            else {
-                deptObj[movieCrew[i].department] = [];
-                console.log(deptObj);
-            }
+    //create list of genres of movie
+    const createGenreString = () => {
+        let genreList = [];
+        for (let i = 0; i < pageMovie.movieInfo.genres.length; i++) {
+            genreList.push(pageMovie.movieInfo.genres[i].name);
         }
-        
-        //fill departments with crew
-        for (let i = 0; i < movieCrew.length; i++) {
-            deptObj[movieCrew[i].department].push(movieCrew[i]);
-        }
-
-        console.log(deptObj);
-
-        //render full crew in JSX
-        return (
-            <div>
-                {
-                Object.keys(deptObj).map(department => (
-                    <div>
-                        <h3>{department}</h3>
-                        <ul>
-                            {
-                            deptObj[department].map(crewMember => (
-                                <li> {crewMember.name} <b>{crewMember.job}</b> </li>
-                            ))
-                            }
-                        </ul>
-                    </div>
-                ))
-                }
-            </div>
-        )
+        return genreList;
     }
 
     if (pageMovie) {
@@ -101,9 +64,12 @@ const MoviePage = ({ match }) => {
                 alt={`poster for ${pageMovie.movieInfo.original_title}`}
             />
             <p><b>Release Date</b> {pageMovie.movieInfo.release_date} </p>
-            <p><b>Starring</b> {createStarringString()}</p>
+            <p><b>Genres</b> {createGenreString().join(", ")}</p>  
+            <p><b>Starring</b> {createStarringString()}</p>                  
+            <h2>Full Cast</h2>
+            {createCastList(pageMovie)}
             <h2>Full Crew</h2>
-            {createCrewList()}
+            {createCrewList(pageMovie)}
         </div>
         )
     }
@@ -115,4 +81,5 @@ const MoviePage = ({ match }) => {
         )    
     }
 }
+
 export default MoviePage
