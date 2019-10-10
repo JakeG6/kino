@@ -76,11 +76,11 @@ const MoviePage = ({ match }) => {
                 {
                 Object.keys(deptObj).map(department => (
                     <div>
-                        <h1>{department}</h1>
+                        <h3>{department}</h3>
                         <ul>
                             {
                             deptObj[department].map(crewMember => (
-                                <li>{crewMember.name}</li>
+                                <li> {crewMember.name} <b>{crewMember.job}</b> </li>
                             ))
                             }
                         </ul>
@@ -94,36 +94,16 @@ const MoviePage = ({ match }) => {
     if (pageMovie) {
         return (
         <div>
-            <Container>
-                <Row>
-                    <Col xs={12}>
-                        <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
-                        <i>{pageMovie.movieInfo.overview}</i>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6} lg={6}>
-                        <img
-                            src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
-                            alt={`poster for ${pageMovie.movieInfo.original_title}`}
-                        />
-                    </Col>
-                    <Col xs={6} lg={6}>
-                        <p>
-                            <b>Release Date</b> {pageMovie.movieInfo.release_date}
-                        </p>
-                        <p>
-                            <b>Starring</b> {createStarringString()}
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                    <h1>Full Crew</h1>
-                        {createCrewList()}
-                    </Col>
-                </Row>
-            </Container>
+            <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+            <i>{pageMovie.movieInfo.overview}</i>
+            <img
+                src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                alt={`poster for ${pageMovie.movieInfo.original_title}`}
+            />
+            <p><b>Release Date</b> {pageMovie.movieInfo.release_date} </p>
+            <p><b>Starring</b> {createStarringString()}</p>
+            <h2>Full Crew</h2>
+            {createCrewList()}
         </div>
         )
     }
