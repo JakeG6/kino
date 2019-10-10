@@ -8,7 +8,7 @@ import Carousel from 'react-bootstrap/Carousel'
 
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Form from 'react-bootstrap/Form'
+
 
 let Home = () =>  {
 

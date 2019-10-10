@@ -1,6 +1,6 @@
 import React from 'react';
 
-const createCastList = (pageMovie) => {
+const createCastList = pageMovie => {
     
     //array containing film cast
     const movieCast = pageMovie.movieCredits.cast;

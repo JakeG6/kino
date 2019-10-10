@@ -1,6 +1,6 @@
 import React from 'react';
 
-const createCrewList = (pageMovie) => {
+const createCrewList = pageMovie => {
       
     const movieCrew = pageMovie.movieCredits.crew;
   

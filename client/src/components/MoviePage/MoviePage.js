@@ -2,38 +2,35 @@ import React, { useState, useEffect } from 'react';
 import createCrewList from './createCrewList';
 import createCastList from './createCastList';
 import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Row';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Row';
 
 
 const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
 
 const MoviePage = ({ match }) => {
-    
+
   const [pageMovie, setPageMovie] = useState(null)
   const movieId = match.params.id
 
-  useEffect(() => {
-
+    useEffect(() => {
     //retrieve movie data from API
     const fetchData = async () => {
-      const { data: movieInfoRes } = await axios.get(
+        const { data: movieInfoRes } = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`
-      )
-      const { data: movieCreditsRes } = await axios.get(
+        )
+        const { data: movieCreditsRes } = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
-      )
-       
-      setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
+        )
+        setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
     }
-
     fetchData()
-  }, [movieId])
+    }, [movieId])
 
-  useEffect(() => {
+    useEffect(() => {
     console.log(`pageMovie state was initialized or changed`, pageMovie);
-  }, [pageMovie])
+    }, [pageMovie])
 
     //create list of headlining stars
     const createStarringString = () => {
