@@ -55,10 +55,17 @@ const MoviePage = ({ match }) => {
         return genreList;
     }
 
+    // let moviePageStyle = {
+    //     color: 'white',
+    //     //backgroundImage: `url(https://image.tmdb.org/t/p/original${pageMovie.movieInfo.backdrop_path})`,
+    //     backgroundSize: 'auto'
+
+    // }
+
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
         return (
-        <div>
+        <div >
             <Container>
                 <Row>
                     <Col>
@@ -67,8 +74,7 @@ const MoviePage = ({ match }) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} sm={6}>
-                        
+                    <Col xs={12} sm={6}>                      
                         <img
                             src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
                             alt={`poster for ${pageMovie.movieInfo.original_title}`}

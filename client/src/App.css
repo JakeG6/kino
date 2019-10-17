@@ -1,6 +1,8 @@
 
-.App-logo {
+.app-logo {
   font-family: 'Literata', serif;
+  text-decoration: none;
+  color: white;
 }
 
 .App-header {
@@ -16,5 +18,15 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.red {
+  background-color: red;
+}
+.green {
+  background-color: green;
+}
+.blue {
+  background-color: blue;
 }
 
