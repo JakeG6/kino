@@ -28,8 +28,8 @@ let TrendingChart = () => {
                         <ul>
                         {
                         nowTrending.map((movie) => 
-                            <li>
-                                <Link to={`/movie/${movie.id}`}>{movie.original_title}</Link>
+                            <li key={movie.id}>
+                                <Link to={`/movie/${movie.id}`} key={movie.id} >{movie.original_title}</Link>
                             </li> 
                         )
                         } 

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Link } from "react-router-dom";
+import axios from 'axios';
+
 import createCrewList from './createCrewList';
 import createCastList from './createCastList';
-import axios from 'axios';
-// import Container from 'react-bootstrap/Container';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Row';
+import createTechnicalInfo from './createTechnicalInfo';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Row';
 
 
 const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
@@ -51,29 +55,55 @@ const MoviePage = ({ match }) => {
         return genreList;
     }
 
+    //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
         return (
         <div>
-            <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
-            <i>{pageMovie.movieInfo.overview}</i>
-            <img
-                src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
-                alt={`poster for ${pageMovie.movieInfo.original_title}`}
-            />
-            <p><b>Release Date</b> {pageMovie.movieInfo.release_date} </p>
-            <p><b>Genres</b> {createGenreString().join(", ")}</p>  
-            <p><b>Starring</b> {createStarringString()}</p>                  
-            <h2>Full Cast</h2>
-            {createCastList(pageMovie)}
-            <h2>Full Crew</h2>
-            {createCrewList(pageMovie)}
+            <Container>
+                <Row>
+                    <Col>
+                        <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+                        <i>{pageMovie.movieInfo.overview}</i>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} sm={6}>
+                        
+                        <img
+                            src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                            alt={`poster for ${pageMovie.movieInfo.original_title}`}
+                        />
+                    </Col>
+                    <Col xs={12} sm={6}>
+                        <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
+                        <p><b>Genres</b> {createGenreString().join(", ")}</p>  
+                        <p><b>Starring</b> {createStarringString()}</p> 
+                        {createTechnicalInfo(pageMovie)}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <h2>Full Cast</h2>
+                        {createCastList(pageMovie)}
+                        <h2>Full Crew</h2>
+                        {createCrewList(pageMovie)}
+                    </Col>
+                </Row>
+            </Container>
         </div>
         )
     }
     else {
         return (
             <div>
-                <p>getting page movie</p>
+                <Container>
+                    <Row>
+                        <Col>
+                            <p>getting page movie</p>
+                        </Col>
+                    </Row>
+                </Container>
+                
             </div>
         )    
     }

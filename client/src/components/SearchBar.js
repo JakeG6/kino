@@ -9,7 +9,7 @@ class SearchBar extends Component {
         return (
             <div>
                 <Form inline>
-                    <Form.Control type="email" placeholder="Search for films" />
+                    <Form.Control type="text" placeholder="Search for films" />
                 </Form>
             </div>
         )
