@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Accordion from 'react-bootstrap/Accordion'
 
 import axios from 'axios';
 
@@ -12,10 +13,11 @@ import Image from 'react-bootstrap/Image';
 
 const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
 
+// let history = useHistory();
+
 const SearchResultsPage = () => {
 
     const [searchResults, setSearchResults] = useState(null)
-    //const searchQuery = match.params.id
 
     //Deliver user search results from TMDB api
     useEffect(() => {
@@ -34,6 +36,11 @@ const SearchResultsPage = () => {
         fetchResults();
 
     }, [])
+
+    //go to movie's page when profile is clicked on
+    // const goToMovie = (id) =>  {
+    //     history.push(`/movies/${id}`);
+    // }
 
     if (searchResults) {
         return (
@@ -55,19 +62,19 @@ const SearchResultsPage = () => {
                         <Col xs={12}>
                             <ListGroup>
                                 {searchResults.map(result => (
-                                    <Link to={`/movie/${result.id}`}>
-                                        <ListGroup.Item>
+                                    
+                                        <ListGroup.Item >
                                             <Row>
                                                 <Col sm={4}>
                                                     <Image src={`http://image.tmdb.org/t/p/w92${result.poster_path}`} rounded />
                                                 </Col>
                                                 <Col sm={8}>
-                                                    <b>{result.title} ({result.release_date.slice(0, 4)})</b>
+                                                    <Link to={`/movie/${result.id}`}><b>{result.title} ({result.release_date.slice(0, 4)})</b></Link>
                                                     <i>{result.overview}</i>
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
-                                    </Link>
+                                    
                                     
                                 ))}
                             </ListGroup>
