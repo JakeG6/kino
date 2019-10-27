@@ -17,37 +17,31 @@ const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
 
 const SearchResultsPage = () => {
 
-    const [searchResults, setSearchResults] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
     const [pageCount, setPageCount] = useState(1);
+    const [totalPages, setTotalPages] = useState(null)
 
-    //Deliver user search results from TMDB api
+    //Deliver user search results from TMDB api, then set maximum number of search result pages possible
     useEffect(() => {
-
-        const fetchFirstResults = async () => {
+        const fetchResults = async () => {
             console.log(pageCount)
             const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=batman&page=${pageCount}&include_adult=false`);
-
-            //console.log(apiResults);
-            await setSearchResults(apiResults.data.results);
-            console.log('good will')
-        }   
-
-        if (searchResults == null) {
-            console.log('getting the first results')
-            fetchFirstResults();
+            console.log(apiResults);
+            setSearchResults([...searchResults, ...apiResults.data.results]);
+            setTotalPages(apiResults.data.total_pages);
         }
+        
+        fetchResults();
+    }, [pageCount])
 
-    
+    const showMoreResults = () => setPageCount(pageCount + 1);
 
-    }, [])
-
-        const showMoreResults = async () => {
-
-            await setPageCount(pageCount + 1);
-            const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=batman&page=${pageCount}&include_adult=false`);
-            await setSearchResults([...searchResults, ...apiResults.data.results]);
-            console.log(searchResults);
-        }
+    const MoreResultsButton = () => (
+        <Button onClick={showMoreResults} variant="primary" size="lg" block>
+            Show More Results
+        </Button>
+    )
+        
 
     if (searchResults) {
         return (
@@ -75,16 +69,18 @@ const SearchResultsPage = () => {
                                                 <Image src={`http://image.tmdb.org/t/p/w92${result.poster_path}`} rounded />
                                             </Col>
                                             <Col sm={8}>
-                                                <Link to={`/movie/${result.id}`}><b>{result.title} ({result.release_date.slice(0, 4)})</b></Link>
+                                                <Link to={`/movie/${result.id}`}><b>{result.title} ({result.release_date ? result.release_date.slice(0, 4) : "N/A"})</b></Link>
                                                 <i>{result.overview}</i>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
-                            <Button onClick={showMoreResults} variant="primary" size="lg" block>
-                                Show More Results
-                            </Button>
+                            {
+                                pageCount < totalPages ? <MoreResultsButton /> : <div></div>
+
+                            }
+                            
                         </Col>
                     </Row>
                 </Container>
