@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Link } from "react-router-dom";
 import axios from 'axios';
 
+import apiKey from "../apiKey";
 import createCrewList from './createCrewList';
 import createCastList from './createCastList';
 import createTechnicalInfo from './createTechnicalInfo';
@@ -9,9 +10,6 @@ import createTechnicalInfo from './createTechnicalInfo';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Row';
-
-
-const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
 
 const MoviePage = ({ match }) => {
 
@@ -54,13 +52,6 @@ const MoviePage = ({ match }) => {
         }
         return genreList;
     }
-
-    // let moviePageStyle = {
-    //     color: 'white',
-    //     //backgroundImage: `url(https://image.tmdb.org/t/p/original${pageMovie.movieInfo.backdrop_path})`,
-    //     backgroundSize: 'auto'
-
-    // }
 
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {

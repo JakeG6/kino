@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
+import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
-
 
 const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
 
@@ -63,7 +63,7 @@ const SearchResultsPage = () => {
                         <Col xs={12}>
                             <ListGroup>
                                 {searchResults.map(result => (
-                                    <ListGroup.Item >
+                                    <ListGroup.Item key={result.id}>
                                         <Row>
                                             <Col sm={4}>
                                                 <Image src={`http://image.tmdb.org/t/p/w92${result.poster_path}`} rounded />
@@ -78,9 +78,7 @@ const SearchResultsPage = () => {
                             </ListGroup>
                             {
                                 pageCount < totalPages ? <MoreResultsButton /> : <div></div>
-
                             }
-                            
                         </Col>
                     </Row>
                 </Container>

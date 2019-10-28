@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-
+import apiKey from "./apiKey";
 import TrendingChart from './TrendingChart';
 
 import Container from 'react-bootstrap/Container'
@@ -16,6 +16,9 @@ let Home = () =>  {
 
     const [nowPlaying, setNowPlaying] = useState([]);
 
+    //const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
+
+
     //Carousel Logic
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(null);
@@ -25,7 +28,7 @@ let Home = () =>  {
     };
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=3f1b30e6df7ae6dcf64dc94b36c9487d&language=en-US&page=1&region=US`)
+        axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1&region=US`)
             .then(res => {
                 console.log(res.data.results)
                 setNowPlaying(res.data.results)
@@ -44,22 +47,19 @@ let Home = () =>  {
                         <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
                             {
                                 nowPlaying.slice(0, 20).map((movie) =>
-                                
-                                <Carousel.Item>
+                                <Carousel.Item key={movie.id}>
                                     <img
                                     className="d-block w-100"
                                     src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
                                     alt="First slide"
                                     />
                                     <Carousel.Caption>
-                                    <h3>{movie.title}</h3>
+                                    <Link to={`/movie/${movie.id}`}><h3>{movie.title}</h3></Link>
                                     {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
                                     </Carousel.Caption>
                                 </Carousel.Item>
-                                
                                 )
                             }   
-                            
                         </Carousel>
                     </Col>  
                     <Col xs={3}>
