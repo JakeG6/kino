@@ -16,9 +16,6 @@ let Home = () =>  {
 
     const [nowPlaying, setNowPlaying] = useState([]);
 
-    //const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
-
-
     //Carousel Logic
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(null);
@@ -30,7 +27,6 @@ let Home = () =>  {
     useEffect(() => {
         axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1&region=US`)
             .then(res => {
-                console.log(res.data.results)
                 setNowPlaying(res.data.results)
         })
     

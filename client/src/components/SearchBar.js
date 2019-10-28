@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import apiKey from "./apiKey";
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import axios from 'axios';
 
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import Form from 'react-bootstrap/Form'
 
@@ -22,21 +27,65 @@ const SearchBar = () => {
         
         if (searchQuery.length >= 4) { 
             fetchSuggestions();
-            console.log(suggestions); 
+            //console.log(suggestions); 
         } 
 
     }, [searchQuery]);
 
+    const clearSearchBar = () => {
+            setSearchQuery("");
+    }
+
+    const submitSearch = event => {
+        if (event.key === "Enter") {
+            //console.log('recognized');
+            this.props.history.push(`/search?q=${searchQuery}`);
+            clearSearchBar();
+            event.preventDefault()
+        }
+    }
+
+    const suggestionBars = () => {
+        if (suggestions && searchQuery.length >= 4) {
+
+            const sixSuggestions = suggestions.slice(0, 5);
+
+            return(
+                <ListGroup>
+                {
+                    sixSuggestions.map(movie => {
+                        return (
+                            <ListGroup.Item variant="warning" key={movie.id}>
+                                <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title}</Link> 
+                            </ListGroup.Item>
+                        )
+                    })
+                }
+                </ListGroup>
+            )
+        }
+    }
+
+    const suggestionStyle = {
+        zIndex: 1000,
+        position: "absolute",
+        top: ".6em"
+    }    
+
     return (
-        <div>
+        <div 
+        style={suggestionStyle}
+        >
             <Form inline>
                 <Form.Control 
                     type="text" 
                     value={searchQuery} 
-                    onChange={e => setSearchQuery(e.target.value)}        
+                    onChange={e => setSearchQuery(e.target.value)}  
+                    onKeyPress={submitSearch}
                     placeholder="Search for films" 
                 />
             </Form>
+            {suggestionBars()}
         </div>
     )
     

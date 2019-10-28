@@ -13,8 +13,7 @@ let TrendingChart = () => {
     useEffect(() => {
         //this is having issues
         axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=3f1b30e6df7ae6dcf64dc94b36c9487d`)
-            .then(res => {
-                
+            .then(res => {            
                 setNowTrending(res.data.results)
         })
 
@@ -30,7 +29,7 @@ let TrendingChart = () => {
                         {
                         nowTrending.map((movie) => 
                             <li key={movie.id}>
-                                <Link to={`/movie/${movie.id}`} key={movie.id} >{movie.original_title}</Link>
+                                <Link to={`/movie/${movie.id}`} key={movie.id}>{movie.original_title}</Link>
                             </li> 
                         )
                         } 

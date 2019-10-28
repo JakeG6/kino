@@ -17,21 +17,21 @@ const MoviePage = ({ match }) => {
   const movieId = match.params.id
 
     useEffect(() => {
-    //retrieve movie data from API
-    const fetchData = async () => {
-        const { data: movieInfoRes } = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`
-        )
-        const { data: movieCreditsRes } = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
-        )
-        setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
-    }
-    fetchData()
+        //retrieve movie data from API
+        const fetchData = async () => {
+            const { data: movieInfoRes } = await axios.get(
+            `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`
+            )
+            const { data: movieCreditsRes } = await axios.get(
+            `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
+            )
+            setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
+        }
+        fetchData()
     }, [movieId])
 
     useEffect(() => {
-    console.log(`pageMovie state was initialized or changed`, pageMovie);
+    //console.log(`pageMovie state was initialized or changed`, pageMovie);
     }, [pageMovie])
 
     //create list of headlining stars

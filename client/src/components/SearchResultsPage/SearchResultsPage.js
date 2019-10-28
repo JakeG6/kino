@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useLocation } from "react-router-dom";
+
+import apiKey from "../apiKey";
 
 import axios from 'axios';
 
@@ -11,10 +13,6 @@ import Col from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 
-const apiKey = '3f1b30e6df7ae6dcf64dc94b36c9487d';
-
-// let history = useHistory();
-
 const SearchResultsPage = () => {
 
     const [searchResults, setSearchResults] = useState([]);
@@ -24,9 +22,7 @@ const SearchResultsPage = () => {
     //Deliver user search results from TMDB api, then set maximum number of search result pages possible
     useEffect(() => {
         const fetchResults = async () => {
-            console.log(pageCount)
             const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=batman&page=${pageCount}&include_adult=false`);
-            console.log(apiResults);
             setSearchResults([...searchResults, ...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);
         }
