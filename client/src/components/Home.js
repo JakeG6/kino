@@ -50,7 +50,7 @@ let Home = () =>  {
                                     alt="First slide"
                                     />
                                     <Carousel.Caption>
-                                    <Link to={`/movie/${movie.id}`}><h3>{movie.title}</h3></Link>
+                                    <Link to={`/movie/${movie.id}`}><h3 className="carousel-title literata">{movie.title}</h3></Link>
                                     {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
                                     </Carousel.Caption>
                                 </Carousel.Item>

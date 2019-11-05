@@ -30,7 +30,7 @@ const similarMoviesDisplay = similarMovies => {
             <Col>
                 <Row>
                     <Col>
-                    <h2>Similar Movies</h2>
+                    <h2 className="movie-page-header">Similar Movies</h2>
                     </Col>
                     
                 </Row>
@@ -38,9 +38,10 @@ const similarMoviesDisplay = similarMovies => {
                         {
                     simList.map(movie => {
                         return(
-                            <Col key={movie.id} xs={3} md={2}>
+                            <Col key={movie.id} xs={3} md={2} className="similar-movie">
                                 <Link to={`/movie/${movie.id}`}>
                                     <Image
+                                        className="similar-poster"
                                         src={`http://image.tmdb.org/t/p/w92${movie.poster_path}`}
                                         alt={`poster for ${movie.title}`}
                                     />

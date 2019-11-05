@@ -8,7 +8,6 @@ import { withRouter } from "react-router-dom";
 import axios from 'axios';
 
 import ListGroup from 'react-bootstrap/ListGroup';
-
 import Form from 'react-bootstrap/Form'
 
 // import Button from 'react-bootstrap/Button'
@@ -61,7 +60,7 @@ const SearchBar = (props) => {
                     sixSuggestions.map(movie => {
                         return (
                             <ListGroup.Item variant="warning" key={movie.id}>
-                                <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title}</Link> 
+                                <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title} ({movie.release_date.slice(0,4)})</Link> 
                             </ListGroup.Item>
                         )
                     })

@@ -21,10 +21,10 @@ import Tabs from 'react-bootstrap/Tabs';
 
 const MoviePage = ({ match }) => {
 
-  const [pageMovie, setPageMovie] = useState(null);
-  const [similarMovies, setSimilarMovies] = useState([]);
+    const [pageMovie, setPageMovie] = useState(null);
+    const [similarMovies, setSimilarMovies] = useState([]);
 
-  const movieId = match.params.id
+    const movieId = match.params.id;
 
     useEffect(() => {
         //retrieve movie data from API
@@ -50,20 +50,24 @@ const MoviePage = ({ match }) => {
             setSimilarMovies(simMoviesRes.results);
         }
         fetchSimilar();
-    }, [])
+    }, [movieId])
 
+    //check if component state has changed. for development only.
     useEffect(() => {
     console.log(`pageMovie state was initialized or changed`, pageMovie);
     }, [pageMovie]);
 
     //create list of headlining stars
     const createStarringString = () => {
+        const cast = pageMovie.movieCredits.cast
+        const starringMax = 6;
+        const castLength = (cast.length < starringMax ? cast.length : starringMax);  
         let starringList = [];
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < castLength; i++) {
             starringList.push(pageMovie.movieCredits.cast[i].name);
         }
         let starringString = starringList.join(", ");
-        return starringString;
+        return starringString;        
     }
 
     //create list of genres of movie
@@ -82,21 +86,21 @@ const MoviePage = ({ match }) => {
             <Container >
                     <Row>
                         <Col>
-                            <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+                            <h1 className="movie-page-header">{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
                             <i>{pageMovie.movieInfo.overview}</i>              
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={12} md={6}>                    
                             <Image
-                                src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                                src={`http://image.tmdb.org/t/p/w185${pageMovie.movieInfo.poster_path}`}
                                 alt={`poster for ${pageMovie.movieInfo.original_title}`}
                             />
                         </Col>
                         <Col xs={12} md={6}>
                             <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
                             <p><b>Genres</b> {createGenreString().join(", ")}</p>  
-                            <p><b>Starring</b> {createStarringString()}</p> 
+                            <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
                             {createTechnicalInfo(pageMovie)}
                         </Col>
                     </Row>

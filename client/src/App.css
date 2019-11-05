@@ -29,3 +29,19 @@
   background-color: blue;
 }
 
+.movie-page-header {
+  font-family: 'Literata', serif;
+}
+
+.literata {
+  font-family: 'Literata', serif;
+}
+
+.similar-movie {
+  text-align: center;
+}
+
+.carousel-title {
+  color: white;
+  text-decoration-color: white;
+}

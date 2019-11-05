@@ -16,16 +16,27 @@ import TabPane from 'react-bootstrap/TabPane';
 const CommentTabs = () => {
 
     return (
-        <Tabs defaultActiveKey="review" id="uncontrolled-tab-example">
-            <Tab eventKey="review" title="Reviews">
-                <p>home.</p>
-            </Tab>
-            <Tab eventKey="discussion" title="Discussion">
-                <p>I was born by a river.</p>
-            </Tab>
-        </Tabs>
+        <Row>
+            <Col>
+                <Row>
+                    <Col>
+                        <h2 className="movie-page-header">Discussion</h2>
+                    </Col>
+                </Row>
+                    <Col>
+                        <Tabs defaultActiveKey="review" id="uncontrolled-tab-example">
+                            <Tab eventKey="review" title="Reviews">
+                                <p>home.</p>
+                            </Tab>
+                            <Tab eventKey="discussion" title="Discussion">
+                                <p>I was born by a river.</p>
+                            </Tab>
+                        </Tabs>
+                    </Col>
+                
+            </Col>
+        </Row>
     )
-    
 }
 
 export default CommentTabs;
