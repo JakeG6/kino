@@ -45,3 +45,13 @@
   color: white;
   text-decoration-color: white;
 }
+
+.poster-column{
+  display: flex;
+  align-items: center ;
+  justify-content: center;;
+}
+
+.movie-page-poster {
+   
+}

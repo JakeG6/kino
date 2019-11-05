@@ -81,29 +81,42 @@ const MoviePage = ({ match }) => {
 
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
+
+        const movieBackground={
+
+        }
+
+        const posterRow = {
+            marginBottom: "1em"
+        }
+
+
         return (   
         <div>
             <Container >
-                    <Row>
-                        <Col>
-                            <h1 className="movie-page-header">{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
-                            <i>{pageMovie.movieInfo.overview}</i>              
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={12} md={6}>                    
-                            <Image
-                                src={`http://image.tmdb.org/t/p/w185${pageMovie.movieInfo.poster_path}`}
-                                alt={`poster for ${pageMovie.movieInfo.original_title}`}
-                            />
-                        </Col>
-                        <Col xs={12} md={6}>
-                            <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
-                            <p><b>Genres</b> {createGenreString().join(", ")}</p>  
-                            <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
-                            {createTechnicalInfo(pageMovie)}
-                        </Col>
-                    </Row>
+                <Row>
+                    <Col>
+                        <h1 className="movie-page-header">{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+                                        
+                    </Col>
+                </Row>
+                <Row style={posterRow}>
+                    <Col xs={12} md={6} className="poster-column">                    
+                        <Image
+                            rounded
+                            className="movie-page-poster"
+                            src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                            alt={`poster for ${pageMovie.movieInfo.original_title}`}
+                        />
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <i>{pageMovie.movieInfo.overview}</i>
+                        <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
+                        <p><b>Genres</b> {createGenreString().join(", ")}</p>  
+                        <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
+                        {createTechnicalInfo(pageMovie)}
+                    </Col>
+                </Row>
                 <Row>
                     <Col xs={12}>
                         {createCastList(pageMovie)}
@@ -126,7 +139,6 @@ const MoviePage = ({ match }) => {
                         </Col>
                     </Row>
                 </Container>
-                
             </div>
         )    
     }
