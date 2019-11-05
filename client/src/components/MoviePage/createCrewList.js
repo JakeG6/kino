@@ -1,5 +1,14 @@
 import React from 'react';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';  
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table'
+import ListGroup from 'react-bootstrap/ListGroup'
+
 const createCrewList = pageMovie => {
       
     const movieCrew = pageMovie.movieCredits.crew;
@@ -24,7 +33,43 @@ const createCrewList = pageMovie => {
     //render full crew in JSX
     return (
         <div>
-            {
+            <Accordion >
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            Full Crew
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                            <Container>
+                            {
+                            Object.keys(deptObj).map(department => (
+                                <Row key={department}>
+                                    <Col>
+                                        <Row>
+                                            <h4>{department}</h4>
+                                        </Row>  
+                                        {
+                                        deptObj[department].map(crewMember => (
+                                            <Row key={crewMember.id}>
+                                                <Col>{crewMember.name}</Col>
+                                                <Col>{crewMember.job}</Col>
+                                                <Col></Col>
+                                            </Row>
+                                        ))
+                                        }
+                                    </Col>
+                                </Row>
+                            ))
+                            }  
+                            </Container>
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
+
+            {/* {
             Object.keys(deptObj).map(department => (
                 <div key={department}>
                     <h3>{department}</h3>
@@ -37,7 +82,7 @@ const createCrewList = pageMovie => {
                     </ul>
                 </div>
             ))
-            }
+            } */}
         </div>
     )
 }

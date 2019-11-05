@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import apiKey from "./apiKey";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import axios from 'axios';
 
@@ -13,10 +13,13 @@ import Form from 'react-bootstrap/Form'
 
 // import Button from 'react-bootstrap/Button'
 
-const SearchBar = () => {
+const SearchBar = (props) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
+
+    // let history = useHistory();
+
 
     useEffect(() => {
         
@@ -38,10 +41,12 @@ const SearchBar = () => {
 
     const submitSearch = event => {
         if (event.key === "Enter") {
-            //console.log('recognized');
-            this.props.history.push(`/search?q=${searchQuery}`);
-            clearSearchBar();
+            console.log('recognized');
+            console.log(searchQuery);
             event.preventDefault()
+
+            props.history.push(`/search?q=${searchQuery}`);
+            clearSearchBar();
         }
     }
 
@@ -91,4 +96,4 @@ const SearchBar = () => {
     
 }
 
-export default SearchBar
+export default withRouter(SearchBar)

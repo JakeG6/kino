@@ -6,14 +6,24 @@ import apiKey from "../apiKey";
 import createCrewList from './createCrewList';
 import createCastList from './createCastList';
 import createTechnicalInfo from './createTechnicalInfo';
+import similarMovieDisplay from './similarMoviesDisplay';
+import CommentTabs from './CommentTabs';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
+import Tabs from 'react-bootstrap/Tabs';
+
 
 const MoviePage = ({ match }) => {
 
-  const [pageMovie, setPageMovie] = useState(null)
+  const [pageMovie, setPageMovie] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]);
+
   const movieId = match.params.id
 
     useEffect(() => {
@@ -21,18 +31,30 @@ const MoviePage = ({ match }) => {
         const fetchData = async () => {
             const { data: movieInfoRes } = await axios.get(
             `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`
-            )
+            );
             const { data: movieCreditsRes } = await axios.get(
             `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
-            )
-            setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes })
+            );
+            setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes });
         }
-        fetchData()
+        fetchData();
     }, [movieId])
 
     useEffect(() => {
-    //console.log(`pageMovie state was initialized or changed`, pageMovie);
-    }, [pageMovie])
+        //retrieve similar movies
+        const fetchSimilar = async () => {
+            const {data: simMoviesRes} = await axios.get(
+            `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${apiKey}&language=en-US&page=1`
+            );
+            console.log(simMoviesRes.results);
+            setSimilarMovies(simMoviesRes.results);
+        }
+        fetchSimilar();
+    }, [])
+
+    useEffect(() => {
+    console.log(`pageMovie state was initialized or changed`, pageMovie);
+    }, [pageMovie]);
 
     //create list of headlining stars
     const createStarringString = () => {
@@ -41,7 +63,7 @@ const MoviePage = ({ match }) => {
             starringList.push(pageMovie.movieCredits.cast[i].name);
         }
         let starringString = starringList.join(", ");
-        return starringString
+        return starringString;
     }
 
     //create list of genres of movie
@@ -55,35 +77,35 @@ const MoviePage = ({ match }) => {
 
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
-        return (
-        <div >
-            <Container>
-                <Row>
-                    <Col>
-                        <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
-                        <i>{pageMovie.movieInfo.overview}</i>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={12} sm={6}>                      
-                        <img
-                            src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
-                            alt={`poster for ${pageMovie.movieInfo.original_title}`}
-                        />
-                    </Col>
-                    <Col xs={12} sm={6}>
-                        <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
-                        <p><b>Genres</b> {createGenreString().join(", ")}</p>  
-                        <p><b>Starring</b> {createStarringString()}</p> 
-                        {createTechnicalInfo(pageMovie)}
-                    </Col>
-                </Row>
+        return (   
+        <div>
+            <Container >
+                    <Row>
+                        <Col>
+                            <h1>{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+                            <i>{pageMovie.movieInfo.overview}</i>              
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12} md={6}>                    
+                            <Image
+                                src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                                alt={`poster for ${pageMovie.movieInfo.original_title}`}
+                            />
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
+                            <p><b>Genres</b> {createGenreString().join(", ")}</p>  
+                            <p><b>Starring</b> {createStarringString()}</p> 
+                            {createTechnicalInfo(pageMovie)}
+                        </Col>
+                    </Row>
                 <Row>
                     <Col xs={12}>
-                        <h2>Full Cast</h2>
                         {createCastList(pageMovie)}
-                        <h2>Full Crew</h2>
                         {createCrewList(pageMovie)}
+                        {similarMovieDisplay(similarMovies)}
+                        <CommentTabs />
                     </Col>
                 </Row>
             </Container>
