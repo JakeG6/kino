@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
+import ScrollToTop from './ScrollToTop';
 
 //components
 import SearchBar from './components/SearchBar';
@@ -13,24 +15,26 @@ import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.
 import Navbar from 'react-bootstrap/Navbar'
 import './App.css'
 
-class App extends Component {
-  render() {
+const App = () => {
     return (
-      <div className="App">
-        <Navbar expand="sm" bg="dark" variant="dark">
-          <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <SearchBar />
-          </Navbar.Collapse>
-        </Navbar> 
-        
-        <Route path="/" exact component={Home} />
-        <Route path="/movie/:id" exact component={MoviePage} />
-        <Route path="/search" exact component={SearchResultsPage} />
-      </div>
+      <Router>
+        <ScrollToTop />
+        <div className="App">
+          <Navbar expand="sm" bg="dark" variant="dark">
+            <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <SearchBar />
+            </Navbar.Collapse>
+          </Navbar> 
+          
+          <Route path="/" exact component={Home} />
+          <Route path="/movie/:id" exact component={MoviePage} />
+          <Route path="/search" exact component={SearchResultsPage} />
+        </div>
+      </Router>
+      
     );
-  }
 }
 
 export default App;
