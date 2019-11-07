@@ -22,7 +22,7 @@ const createTechnicalInfo = pageMovie => {
     return (
         <div>
             <p><b>Original Title</b> {movieInfo.original_title}</p>
-            <p><b>Budget</b> ${movieInfo.budget}</p>
+            <p><b>Budget</b> {movieInfo.budget > 0 ? `$${movieInfo.budget}` : "N/A"}</p>
             <p><b>Runtime</b> {movieInfo.runtime} minutes</p>
             <p><b>Production Companies</b> {createProductionCompanyString().join(", ")} </p>
             <p><b>Countries of Origin</b>  {createCountriesofOriginString().join(", ")}</p>

@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 
 //components
-import SearchBar from './components/SearchBar'
-import Home from './components/Home'
-import MoviePage from './components/MoviePage/MoviePage.js'
-import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js'
+import SearchBar from './components/SearchBar';
+import Home from './components/Home';
+import MoviePage from './components/MoviePage/MoviePage.js';
+import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 
 //CSS
 import Navbar from 'react-bootstrap/Navbar'
@@ -24,6 +24,7 @@ class App extends Component {
             <SearchBar />
           </Navbar.Collapse>
         </Navbar> 
+        
         <Route path="/" exact component={Home} />
         <Route path="/movie/:id" exact component={MoviePage} />
         <Route path="/search" exact component={SearchResultsPage} />

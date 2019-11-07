@@ -57,6 +57,12 @@ const MoviePage = ({ match }) => {
     console.log(`pageMovie state was initialized or changed`, pageMovie);
     }, [pageMovie]);
 
+    //scroll to top of page when url is changed.
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, [movieId])
+  
+
     //create list of headlining stars
     const createStarringString = () => {
         const cast = pageMovie.movieCredits.cast
@@ -90,13 +96,16 @@ const MoviePage = ({ match }) => {
             marginBottom: "1em"
         }
 
+        const releaseDate = pageMovie.movieInfo.release_date
 
         return (   
         <div>
             <Container >
                 <Row>
                     <Col>
-                        <h1 className="movie-page-header">{`${pageMovie.movieInfo.original_title} (${pageMovie.movieInfo.release_date.slice(0,4)})`}</h1>
+                        <h1 className="movie-page-header">
+                            {`${pageMovie.movieInfo.original_title} (${releaseDate.length > 0 ? releaseDate.slice(0,4) : "N/A"})`}
+                        </h1>
                                         
                     </Col>
                 </Row>
@@ -110,8 +119,8 @@ const MoviePage = ({ match }) => {
                         />
                     </Col>
                     <Col xs={12} md={6}>
-                        <i>{pageMovie.movieInfo.overview}</i>
-                        <p><b>Release Date</b> {pageMovie.movieInfo.release_date}</p>
+                        <p><i id="movie-overview">{pageMovie.movieInfo.overview}</i></p>
+                        <p><b>Release Date</b> {releaseDate.length > 0 ? releaseDate : "N/A" }</p>
                         <p><b>Genres</b> {createGenreString().join(", ")}</p>  
                         <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
                         {createTechnicalInfo(pageMovie)}

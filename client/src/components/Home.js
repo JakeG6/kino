@@ -37,7 +37,7 @@ let Home = () =>  {
             <Container fluid={true}>
                 <Row>
                     <Col xs={3}>
-                        <TrendingChart />
+                        {/* <TrendingChart /> */}
                     </Col>
                     <Col xs={6}>
                         <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
@@ -59,7 +59,7 @@ let Home = () =>  {
                         </Carousel>
                     </Col>  
                     <Col xs={3}>
-                        <TrendingChart />
+                        {/* <TrendingChart /> */}
                     </Col>                
                 </Row>
                 <Row>

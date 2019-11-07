@@ -34,7 +34,7 @@ const createCrewList = pageMovie => {
     return (
         <div>
             <Accordion >
-                <Card bg-dark>
+                <Card >
                     <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
                             Full Crew
