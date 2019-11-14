@@ -1,3 +1,8 @@
+.App {
+  background-color: #343a40;
+  color: white;
+}
+
 .app-logo {
   font-family: 'Literata', serif;
   text-decoration: none;
@@ -19,6 +24,16 @@
   color: #61dafb;
 }
 
+.department-header {
+  margin-top: 1em;
+  width:10em;
+  border-bottom: 5px solid white;
+}
+
+.center {
+  text-align: center;
+}
+
 .red {
   background-color: red;
 }
@@ -31,6 +46,7 @@
 
 .movie-page-header {
   font-family: 'Literata', serif;
+  margin-bottom: 1em;
 }
 
 .literata {
@@ -46,12 +62,19 @@
   text-decoration-color: white;
 }
 
+
 .poster-column{
   display: flex;
   align-items: center ;
   justify-content: center;;
 }
 
+#movie-overview {
+  font-size: .75em;
+}
+
 .movie-page-poster {
-   
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }

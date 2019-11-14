@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
 import apiKey from "../apiKey";
-import createCrewList from './createCrewList';
-import createCastList from './createCastList';
 import createTechnicalInfo from './createTechnicalInfo';
 import similarMovieDisplay from './similarMoviesDisplay';
 import CommentTabs from './CommentTabs';
+
+import LoadingSpinner from '../LoadingSpinner.js'
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -17,7 +17,6 @@ import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import Tabs from 'react-bootstrap/Tabs';
-
 
 const MoviePage = ({ match }) => {
 
@@ -106,7 +105,6 @@ const MoviePage = ({ match }) => {
                         <h1 className="movie-page-header">
                             {`${pageMovie.movieInfo.original_title} (${releaseDate.length > 0 ? releaseDate.slice(0,4) : "N/A"})`}
                         </h1>
-                                        
                     </Col>
                 </Row>
                 <Row style={posterRow}>
@@ -124,12 +122,11 @@ const MoviePage = ({ match }) => {
                         <p><b>Genres</b> {createGenreString().join(", ")}</p>  
                         <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
                         {createTechnicalInfo(pageMovie)}
+                        <Link to={`/movie/${movieId}/credits`}>See full cast and crew</Link>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        {createCastList(pageMovie)}
-                        {createCrewList(pageMovie)}
                         {similarMovieDisplay(similarMovies)}
                         <CommentTabs />
                     </Col>
@@ -141,13 +138,7 @@ const MoviePage = ({ match }) => {
     else {
         return (
             <div>
-                <Container>
-                    <Row>
-                        <Col>
-                            <p>getting page movie</p>
-                        </Col>
-                    </Row>
-                </Container>
+                <LoadingSpinner />
             </div>
         )    
     }

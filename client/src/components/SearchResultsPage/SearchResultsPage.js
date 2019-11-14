@@ -15,8 +15,6 @@ import Image from 'react-bootstrap/Image';
 
 const queryString = require('query-string');
 
-
-
 const SearchResultsPage = () => {
 
     const [searchResults, setSearchResults] = useState([]);

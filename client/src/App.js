@@ -9,6 +9,8 @@ import ScrollToTop from './ScrollToTop';
 import SearchBar from './components/SearchBar';
 import Home from './components/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
+import CreditsPage from './components/CreditsPage/CreditsPage.js';
+
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 
 //CSS
@@ -27,9 +29,9 @@ const App = () => {
               <SearchBar />
             </Navbar.Collapse>
           </Navbar> 
-          
           <Route path="/" exact component={Home} />
           <Route path="/movie/:id" exact component={MoviePage} />
+          <Route path="/movie/:id/credits" exact component={CreditsPage} />
           <Route path="/search" exact component={SearchResultsPage} />
         </div>
       </Router>

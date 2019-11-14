@@ -31,9 +31,8 @@ const similarMoviesDisplay = similarMovies => {
                 <Col>
                     <Row>
                         <Col>
-                        <h2 className="movie-page-header">Similar Movies</h2>
-                        </Col>
-                        
+                            <h2 className="movie-page-header">Similar Movies</h2>
+                        </Col> 
                     </Row>
                     <Row>
                             {
@@ -52,8 +51,7 @@ const similarMoviesDisplay = similarMovies => {
                                         <p>{movie.title}</p>
                                     </Link>
                             </Col>
-                            )
-                            
+                            ) 
                         })
                         }
                     </Row>
