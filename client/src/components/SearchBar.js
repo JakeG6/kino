@@ -9,6 +9,8 @@ import axios from 'axios';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form'
+import Image from 'react-bootstrap/Image';
+
 
 // import Button from 'react-bootstrap/Button'
 
@@ -28,7 +30,7 @@ const SearchBar = (props) => {
         
         if (searchQuery.length >= 4) { 
             fetchSuggestions();
-            //console.log(suggestions); 
+            console.log(suggestions); 
         } 
 
     }, [searchQuery]);
@@ -47,21 +49,44 @@ const SearchBar = (props) => {
         }
     }
 
+    const showMore = () => {
+        if (suggestions.length > 6) {
+        return (
+        <ListGroup.Item variant="warning">
+            <Link to={`/search?q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for ${searchQuery}`}</Link> 
+        </ListGroup.Item>
+        )
+        }
+    
+    }
+
     const suggestionBars = () => {
         if (suggestions && searchQuery.length >= 4) {
 
-            const sixSuggestions = suggestions.slice(0, 5);
+            const sixSuggestions = suggestions.slice(0, 6);
 
             return(
                 <ListGroup>
                 {
                     sixSuggestions.map(movie => {
                         return (
+
                             <ListGroup.Item variant="warning" key={movie.id}>
+                                <Image
+                                    rounded
+                                    className="suggestion-poster"
+                                    src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                                    alt={`poster for ${movie.title}`}
+                                />
                                 <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title} ({movie.release_date.slice(0,4)})</Link> 
                             </ListGroup.Item>
                         )
                     })
+                    
+                    
+                }
+                {   
+                   showMore() 
                 }
                 </ListGroup>
             )
