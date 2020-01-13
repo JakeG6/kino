@@ -61,8 +61,12 @@ const CreditsPage = ({ match }) => {
                 </Row>
                 {createCastList(pageMovie)}
                 {createCrewList(pageMovie)}
-            </Container>
-                        
+                <Row>
+                    <Col>
+                        <Link exact to={`/movie/${movieId}`} ><p className="return-link">{`<< Return to Overview Page`}</p></Link>  
+                    </Col>
+                </Row>
+            </Container>        
         </div>
         )
     }

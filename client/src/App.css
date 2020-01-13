@@ -69,6 +69,15 @@
   justify-content: center;;
 }
 
+.return-link {
+  margin-top: 1em !important;
+  margin-bottom: 1em;
+}
+
+.searchbar {
+  width: 100%;
+}
+
 #movie-overview {
   font-size: .75em;
 }

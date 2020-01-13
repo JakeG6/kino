@@ -5,7 +5,9 @@ import Spinner from 'react-bootstrap/Spinner';
 
 const LoadingSpinner = () => {
     return (
-        <Spinner animation="border" variant="light" size="lg" />
+        <div className="spinner-page">
+            <Spinner animation="border" variant="light" />
+        </div>
 
     )
 }

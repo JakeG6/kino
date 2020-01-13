@@ -19,7 +19,6 @@ const SearchBar = (props) => {
 
     // let history = useHistory();
 
-
     useEffect(() => {
         
         const fetchSuggestions = async () => {
@@ -43,7 +42,6 @@ const SearchBar = (props) => {
             console.log('recognized');
             console.log(searchQuery);
             event.preventDefault()
-
             props.history.push(`/search?q=${searchQuery}`);
             clearSearchBar();
         }
@@ -80,7 +78,7 @@ const SearchBar = (props) => {
         <div 
         style={suggestionStyle}
         >
-            <Form inline>
+            <Form className="searchbar">
                 <Form.Control 
                     type="text" 
                     value={searchQuery} 

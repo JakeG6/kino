@@ -35,7 +35,6 @@ let TrendingChart = () => {
                         } 
                         </ul>
                     </Col>
-                    
                 </Row>
             </Container>
         </div>
