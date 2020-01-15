@@ -5,7 +5,11 @@
 
 .app-logo {
   font-family: 'Literata', serif;
-  text-decoration: none;
+  text-decoration: none !important;
+  color: white;
+}
+
+.app-logo:hover {
   color: white;
 }
 

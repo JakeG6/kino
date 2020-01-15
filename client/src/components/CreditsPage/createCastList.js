@@ -43,10 +43,8 @@ const createCastList = pageMovie => {
                                                 height={67}
                                                 rounded
                                             />
-
                                         </td>
                                         <td>
-
                                             {castMember.name}
                                         </td>
                                         <td>

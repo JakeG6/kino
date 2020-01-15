@@ -13,6 +13,8 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 
+import "./SearchResultsPage.css"
+
 const queryString = require('query-string');
 
 const SearchResultsPage = () => {
@@ -32,20 +34,17 @@ const SearchResultsPage = () => {
             setSearchResults([...searchResults, ...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);
         }
-       
-        
         fetchResults();
     }, [pageCount])
 
     const showMoreResults = () => setPageCount(pageCount + 1);
 
     const MoreResultsButton = () => (
-        <Button onClick={showMoreResults} variant="primary" size="lg" block>
+        <Button onClick={showMoreResults} id="more-results-button" variant="primary" size="lg" block>
             Show More Results
         </Button>
     )
         
-
     if (searchResults) {
         return (          
             <div>
@@ -64,7 +63,7 @@ const SearchResultsPage = () => {
                                                     <Link to={`/movie/${result.id}`}><b>{result.title} ({result.release_date ? result.release_date.slice(0, 4) : "N/A"})</b></Link>
                                                 </Row>
                                                 <Row>
-                                                    <i>{result.overview}</i>
+                                                    <i className="result-overview">{result.overview}</i>
                                                 </Row>
                                             </Col>
                                         </Row>

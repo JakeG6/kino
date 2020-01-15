@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
 import apiKey from "../apiKey";
+
 import createTechnicalInfo from './createTechnicalInfo';
 import similarMovieDisplay from './similarMoviesDisplay';
 import CommentTabs from './CommentTabs';
@@ -60,7 +61,6 @@ const MoviePage = ({ match }) => {
     // useEffect(() => {
     //     window.scrollTo(0, 0);
     // }, [movieId])
-  
 
     //create list of headlining stars
     const createStarringString = () => {

@@ -91,6 +91,30 @@ const SearchBar = (props) => {
                 </ListGroup>
             )
         }
+        else {
+
+            const sixSuggestions = suggestions.slice(0, 6);
+
+            return(
+                <ListGroup>
+                {
+                    sixSuggestions.map(movie => {
+                        return (
+                            <ListGroup.Item variant="warning" key={movie.id}>
+                                <Image
+                                    rounded
+                                    className="suggestion-poster"
+                                    src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                                    alt={`poster for ${movie.title}`}
+                                />
+                                <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title} ({movie.release_date.slice(0,4)})</Link> 
+                            </ListGroup.Item>
+                        )
+                    })
+                }
+                </ListGroup>
+            )
+        }
     }
 
     const suggestionStyle = {
@@ -115,7 +139,6 @@ const SearchBar = (props) => {
             {suggestionBars()}
         </div>
     )
-    
 }
 
 export default withRouter(SearchBar)
