@@ -15,6 +15,7 @@ import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.
 
 //CSS
 import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 import './App.css'
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <SearchBar />
             </Navbar.Collapse>
+            <Nav.Link href="#">Sign in</Nav.Link>
           </Navbar> 
           <Route path="/" exact component={Home} />
           <Route path="/movie/:id" exact component={MoviePage} />

@@ -25,6 +25,7 @@ let TrendingChart = () => {
                 <Row>
                     
                     <Col>
+                    <h1>Trending</h1>
                         <ul>
                         {
                         nowTrending.map((movie) => 

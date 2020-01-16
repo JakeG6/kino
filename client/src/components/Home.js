@@ -36,10 +36,10 @@ let Home = () =>  {
         <div>
             <Container fluid={true}>
                 <Row>
-                    <Col xs={3}>
-                        {/* <TrendingChart /> */}
+                    <Col xs={0} sm={3}>
+                        <TrendingChart />
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
                             {
                                 nowPlaying.slice(0, 20).map((movie) =>
@@ -58,16 +58,13 @@ let Home = () =>  {
                             }   
                         </Carousel>
                     </Col>  
-                    <Col xs={3}>
-                        {/* <TrendingChart /> */}
+                    <Col xs={0} sm={3}>
+                        <TrendingChart />
                     </Col>                
                 </Row>
-                <Row>
-                    
+                <Row>     
                 </Row>
             </Container>
-            
-       
         </div>
     )
     
