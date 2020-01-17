@@ -53,7 +53,7 @@ const SearchBar = (props) => {
         if (suggestions.length > 6) {
         return (
         <ListGroup.Item variant="warning">
-            <Link to={`/search?q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for ${searchQuery}`}</Link> 
+            <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for ${searchQuery}`}</Link> 
         </ListGroup.Item>
         )
         }
@@ -81,9 +81,7 @@ const SearchBar = (props) => {
                                 <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title} ({movie.release_date.slice(0,4)})</Link> 
                             </ListGroup.Item>
                         )
-                    })
-                    
-                    
+                    })                    
                 }
                 {   
                    showMore() 

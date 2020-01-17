@@ -27,7 +27,9 @@ const App = () => {
             <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <SearchBar />
+              <Nav.Item>
+                <SearchBar />
+              </Nav.Item> 
             </Navbar.Collapse>
             <Nav.Link href="#">Sign in</Nav.Link>
           </Navbar> 

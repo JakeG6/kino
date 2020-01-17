@@ -95,6 +95,7 @@ const MoviePage = ({ match }) => {
             marginBottom: "1em"
         }
 
+        //release date
         const releaseDate = pageMovie.movieInfo.release_date
 
         return (   

@@ -48,6 +48,10 @@
   background-color: blue;
 }
 
+.black {
+  background-color: black;
+}
+
 .movie-page-header {
   font-family: 'Literata', serif;
   margin-bottom: 1em;

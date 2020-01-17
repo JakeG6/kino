@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, useLocation } from "react-router-dom";
 
 import apiKey from "../apiKey";
-
+import queryBuilder from "./queryBuilder";
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button'
@@ -23,14 +23,26 @@ const SearchResultsPage = () => {
     const [pageCount, setPageCount] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
 
+    //The user's query parameters
     const parsed = queryString.parse(window.location.search);
+
     console.log(parsed)
 
+    //type of search
+    // const searchType = parsed.type ? parsed.type : "movies";
+    // console.log(searchType)
 
     //Deliver user search results from TMDB api, then set maximum number of search result pages possible
     useEffect(() => {
         const fetchResults = async () => {
-            const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${parsed.q}&page=${pageCount}&include_adult=false`);
+            //original
+            //const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${parsed.q}&page=${pageCount}&include_adult=false`);
+            
+
+
+            //results from api based on url built by queryBuilder
+            const apiResults = await axios.get(queryBuilder(parsed));
+
             setSearchResults([...searchResults, ...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);
         }
