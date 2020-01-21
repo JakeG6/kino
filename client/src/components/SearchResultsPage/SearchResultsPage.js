@@ -38,10 +38,8 @@ const SearchResultsPage = () => {
             //original
             //const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${parsed.q}&page=${pageCount}&include_adult=false`);
             
-
-
             //results from api based on url built by queryBuilder
-            const apiResults = await axios.get(queryBuilder(parsed));
+            const apiResults = await axios.get(queryBuilder(parsed, parsed.type));
 
             setSearchResults([...searchResults, ...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);
