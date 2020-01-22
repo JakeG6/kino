@@ -80,21 +80,19 @@ const MoviePage = ({ match }) => {
         console.log(pageMovie.movieInfo.genres)
         let genreList = [];
         for (let i = 0; i < pageMovie.movieInfo.genres.length; i++) {
-            genreList.push(pageMovie.movieInfo.genres[i].name);
+            genreList.push(pageMovie.movieInfo.genres[i]);
         }
         return (           
-                pageMovie.movieInfo.genres.map(genre => 
-                    <span key={genre.id}><Link to={`/search/?type=discover&wg=${genre.id}`}>{genre.name}, </Link></span>
+                genreList.map(genre => 
+                    <span key={genre.id}>
+                        <Link to={`/search/?type=discover&wg=${genre.id}`}>{genre.name}</Link>{genreList.indexOf(genre) == genreList.length - 1 ? ``:`, `}
+                    </span>
                 )            
         );
     }
 
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
-
-        const movieBackground={
-
-        }
 
         const posterRow = {
             marginBottom: "1em"
