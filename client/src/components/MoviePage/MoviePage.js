@@ -5,6 +5,7 @@ import axios from 'axios';
 import apiKey from "../apiKey";
 
 import createTechnicalInfo from './createTechnicalInfo';
+import createGenreList from './createGenreList';
 import similarMovieDisplay from './similarMoviesDisplay';
 import CommentTabs from './CommentTabs';
 
@@ -75,22 +76,6 @@ const MoviePage = ({ match }) => {
         return starringString;        
     }
 
-    //create list of genres of movie
-    const createGenreString = () => {
-        console.log(pageMovie.movieInfo.genres)
-        let genreList = [];
-        for (let i = 0; i < pageMovie.movieInfo.genres.length; i++) {
-            genreList.push(pageMovie.movieInfo.genres[i]);
-        }
-        return (           
-                genreList.map(genre => 
-                    <span key={genre.id}>
-                        <Link to={`/search/?type=discover&wg=${genre.id}`}>{genre.name}</Link>{genreList.indexOf(genre) == genreList.length - 1 ? ``:`, `}
-                    </span>
-                )            
-        );
-    }
-
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
 
@@ -123,7 +108,7 @@ const MoviePage = ({ match }) => {
                     <Col xs={12} md={6}>
                         <p><i id="movie-overview">{pageMovie.movieInfo.overview}</i></p>
                         <p><b>Release Date</b> {releaseDate.length > 0 ? releaseDate : "N/A" }</p>
-                        <p><b>Genres</b> {createGenreString()}</p>  
+                        <p><b>Genres</b> {createGenreList(pageMovie)}</p>  
                         <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
                         {createTechnicalInfo(pageMovie)}
                         <Link to={`/movie/${movieId}/credits`}>See full cast and crew</Link>
