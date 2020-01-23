@@ -1,4 +1,6 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
@@ -45,7 +47,7 @@ const createCastList = pageMovie => {
                                             />
                                         </td>
                                         <td>
-                                            {castMember.name}
+                                            <Link to={`/search/?type=discover&wca=${castMember.id}`}>{castMember.name}</Link>
                                         </td>
                                         <td>
                                             "{castMember.character}"

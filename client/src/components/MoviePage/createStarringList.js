@@ -20,8 +20,7 @@ const createStarringList = (movie) => {
 
     console.log("starring List: ", starringList);
 
-    // let starringString = starringList.join(", ");
-
+    //create list of headlining stars
     return (           
         starringList.map(star => 
             <span key={star.id}>

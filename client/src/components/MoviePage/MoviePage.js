@@ -64,19 +64,6 @@ const MoviePage = ({ match }) => {
     //     window.scrollTo(0, 0);
     // }, [movieId])
 
-    //create list of headlining stars
-    const createStarringString = () => {
-        const cast = pageMovie.movieCredits.cast
-        const starringMax = 6;
-        const castLength = (cast.length < starringMax ? cast.length : starringMax);  
-        let starringList = [];
-        for (let i = 0; i < castLength; i++) {
-            starringList.push(pageMovie.movieCredits.cast[i].name);
-        }
-        let starringString = starringList.join(", ");
-        return starringString;        
-    }
-
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
 
