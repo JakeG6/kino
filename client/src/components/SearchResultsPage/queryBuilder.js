@@ -24,6 +24,9 @@ const querybuilder = (queryObj, type = "movies") => {
             case "wc":
                 urlQuery += `&with_companies=${queryObj.wc}`;
                 break;
+            case "wca":
+                urlQuery += `&with_cast=${queryObj.wca}`;
+                break;
             //with genres
             case "wg":
                 urlQuery += `&with_genres=${queryObj.wg}`;
@@ -35,7 +38,7 @@ const querybuilder = (queryObj, type = "movies") => {
             default:
               // code block
         }
-    
+           
     }
 
     //base api route

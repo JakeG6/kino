@@ -6,6 +6,7 @@ import apiKey from "../apiKey";
 
 import createTechnicalInfo from './createTechnicalInfo';
 import createGenreList from './createGenreList';
+import createStarringList from './createStarringList';
 import similarMovieDisplay from './similarMoviesDisplay';
 import CommentTabs from './CommentTabs';
 
@@ -109,7 +110,7 @@ const MoviePage = ({ match }) => {
                         <p><i id="movie-overview">{pageMovie.movieInfo.overview}</i></p>
                         <p><b>Release Date</b> {releaseDate.length > 0 ? releaseDate : "N/A" }</p>
                         <p><b>Genres</b> {createGenreList(pageMovie)}</p>  
-                        <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringString() : "N/A"}</p> 
+                        <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringList(pageMovie) : "N/A"}</p> 
                         {createTechnicalInfo(pageMovie)}
                         <Link to={`/movie/${movieId}/credits`}>See full cast and crew</Link>
                     </Col>
