@@ -1,6 +1,11 @@
-/* a {
-  color: white;
-} */
+a {
+  color: yellow !important;
+  
+}
+
+a:hover {
+  text-decoration:underline;
+}
 
 .App {
   background-color: #343a40;
@@ -10,7 +15,7 @@
 .app-logo {
   font-family: 'Literata', serif;
   text-decoration: none !important;
-  color: white;
+  color: white !important;
 }
 
 .app-logo:hover {
@@ -18,7 +23,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +37,11 @@
   color: #61dafb;
 }
 
+body {
+
+
+}
+
 .department-header {
   margin-top: 1em;
   width:10em;
@@ -39,6 +50,10 @@
 
 .center {
   text-align: center;
+}
+
+.container {
+  background-color: #343a40;
 }
 
 .red {
@@ -62,6 +77,10 @@
 
 .literata {
   font-family: 'Literata', serif;
+}
+
+.navbar {
+  background-color: black !important;
 }
 
 .similar-movie {
@@ -99,4 +118,10 @@
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.wrapper {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 0%, #343a40 100%);
+
 }

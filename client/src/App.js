@@ -23,7 +23,7 @@ const App = () => {
       <Router>
         <ScrollToTop />
         <div className="App">
-          <Navbar expand="sm" bg="dark" variant="dark">
+          <Navbar expand="sm" >
             <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -32,11 +32,15 @@ const App = () => {
               </Nav.Item> 
             </Navbar.Collapse>
             <Nav.Link href="#">Sign in</Nav.Link>
-          </Navbar> 
-          <Route path="/" exact component={Home} />
-          <Route path="/movie/:id" exact component={MoviePage} />
-          <Route path="/movie/:id/credits" exact component={CreditsPage} />
-          <Route path="/search" exact component={SearchResultsPage} />
+          </Navbar>
+          <div className="wrapper">
+            <Route path="/" exact component={Home} />
+            <Route path="/movie/:id" exact component={MoviePage} />
+            <Route path="/movie/:id/credits" exact component={CreditsPage} />
+            <Route path="/search" exact component={SearchResultsPage} />
+
+          </div>
+          
         </div>
       </Router>
       
