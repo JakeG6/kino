@@ -99,7 +99,7 @@ const MoviePage = ({ match }) => {
                         <p><b>Genres</b> {createGenreList(pageMovie)}</p>  
                         <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringList(pageMovie) : "N/A"}</p> 
                         {createTechnicalInfo(pageMovie)}
-                        <Link to={`/movie/${movieId}/credits`}>See full cast and crew</Link>
+                        <b><Link to={`/movie/${movieId}/credits`}>See Full Cast and Crew</Link></b>
                     </Col>
                 </Row>
                 <Row>
