@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import ScrollToTop from './ScrollToTop';
 
 //components
-import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar/SearchBar';
 import Home from './components/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
@@ -29,9 +29,12 @@ const App = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav.Item>
                 <SearchBar />
-              </Nav.Item> 
+              </Nav.Item>
+              {/* <Nav.Item>
+                <Nav.Link href="#">Sign in</Nav.Link>
+              </Nav.Item> */}
             </Navbar.Collapse>
-            <Nav.Link href="#">Sign in</Nav.Link>
+            
           </Navbar>
           <div className="wrapper">
             <Route path="/" exact component={Home} />

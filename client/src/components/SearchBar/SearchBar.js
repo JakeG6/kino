@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import apiKey from "./apiKey";
+import apiKey from "../apiKey";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
@@ -10,6 +10,8 @@ import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form'
 import Image from 'react-bootstrap/Image';
+
+import "./SearchBar.css";
 
 
 // import Button from 'react-bootstrap/Button'
@@ -52,8 +54,8 @@ const SearchBar = (props) => {
     const showMore = () => {
         if (suggestions.length > 6) {
         return (
-        <ListGroup.Item variant="warning">
-            <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for ${searchQuery}`}</Link> 
+        <ListGroup.Item variant="warning" className="searchbar-item">
+            <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for "${searchQuery}"`}</Link> 
         </ListGroup.Item>
         )
         }
@@ -71,7 +73,7 @@ const SearchBar = (props) => {
                     sixSuggestions.map(movie => {
                         return (
 
-                            <ListGroup.Item variant="warning" key={movie.id}>
+                            <ListGroup.Item variant="warning" key={movie.id} className="searchbar-item">
                                 <Image
                                     rounded
                                     className="suggestion-poster"
@@ -89,30 +91,7 @@ const SearchBar = (props) => {
                 </ListGroup>
             )
         }
-        else {
 
-            const sixSuggestions = suggestions.slice(0, 6);
-
-            return(
-                <ListGroup>
-                {
-                    sixSuggestions.map(movie => {
-                        return (
-                            <ListGroup.Item variant="warning" key={movie.id}>
-                                <Image
-                                    rounded
-                                    className="suggestion-poster"
-                                    src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                                    alt={`poster for ${movie.title}`}
-                                />
-                                <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title} ({movie.release_date.slice(0,4)})</Link> 
-                            </ListGroup.Item>
-                        )
-                    })
-                }
-                </ListGroup>
-            )
-        }
     }
 
     const suggestionStyle = {
