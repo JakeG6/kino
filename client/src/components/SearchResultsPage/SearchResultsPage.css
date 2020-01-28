@@ -1,5 +1,10 @@
 .result-overview {
-    color: black;
+    color: white;
+}
+
+.results-item {
+    background-color: #343a40;
+    border: 0px;
 }
 
 
