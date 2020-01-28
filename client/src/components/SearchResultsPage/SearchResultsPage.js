@@ -23,14 +23,10 @@ const SearchResultsPage = () => {
     const [pageCount, setPageCount] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
 
-    //The user's query parameters
+    //The user's kino url query parameters
     const parsed = queryString.parse(window.location.search);
 
     console.log(parsed)
-
-    //type of search
-    // const searchType = parsed.type ? parsed.type : "movies";
-    // console.log(searchType)
 
     //Deliver user search results from TMDB api, then set maximum number of search result pages possible
     useEffect(() => {
@@ -38,8 +34,8 @@ const SearchResultsPage = () => {
             //original
             //const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${parsed.q}&page=${pageCount}&include_adult=false`);
             
-            //results from api based on url built by queryBuilder
-            const apiResults = await axios.get(queryBuilder(parsed, parsed.type));
+            //results from api based on url built by queryBuilder function
+            const apiResults = await axios.get(queryBuilder(parsed, parsed.type, pageCount));
 
             setSearchResults([...searchResults, ...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);

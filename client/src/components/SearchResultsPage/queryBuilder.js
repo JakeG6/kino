@@ -1,6 +1,6 @@
 import apiKey from "../apiKey.js";
 
-const querybuilder = (queryObj, type = "movies") => {
+const querybuilder = (queryObj, type = "movies", pageCount) => {
 
     console.log(queryObj);
 
@@ -31,36 +31,34 @@ const querybuilder = (queryObj, type = "movies") => {
             case "wg":
                 urlQuery += `&with_genres=${queryObj.wg}`;
                 break;
-            //page
-            case "p":
-                urlQuery += `&page=${queryObj.p}`
-            break;
             default:
               // code block
         }
-           
+        //add mandatory page count
+        urlQuery += `&page=${pageCount}`;
+
     }
 
-    //base api route
-    let baseUrl;
+    //complete api route
+    let finalURL;
 
     switch(queryObj.type) {
 
         case "movies":
-            baseUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}` + urlQuery;          
+            finalURL = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}` + urlQuery;          
             break;
 
         case "discover":
-            baseUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc` + urlQuery;
+            finalURL = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc` + urlQuery;
             break;
 
         default:
           //search movies if Type is not included
-          baseUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}` + urlQuery;          
+          finalURL = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}` + urlQuery;          
         
     }
 
-    return baseUrl;
+    return finalURL;
 
 }
 
