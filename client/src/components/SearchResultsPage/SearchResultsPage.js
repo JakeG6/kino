@@ -61,7 +61,7 @@ const SearchResultsPage = () => {
                                 {searchResults.map(result => (
                                     <ListGroup.Item key={result.id} className="results-item">
                                         <Row>
-                                            <Col xs={12} md={2}>
+                                            <Col xs={12} md={2} className="d-none d-md-block">
                                                 <Image src={`http://image.tmdb.org/t/p/w92${result.poster_path}`} rounded />
                                             </Col>
                                             <Col xs={12} md={10}>
