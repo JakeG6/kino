@@ -61,10 +61,10 @@ const SearchResultsPage = () => {
                                 {searchResults.map(result => (
                                     <ListGroup.Item key={result.id} className="results-item">
                                         <Row>
-                                            <Col xs={2}>
+                                            <Col xs={12} md={2}>
                                                 <Image src={`http://image.tmdb.org/t/p/w92${result.poster_path}`} rounded />
                                             </Col>
-                                            <Col xs={10}>
+                                            <Col xs={12} md={10}>
                                                 <Row>
                                                     <Link to={`/movie/${result.id}`}><b>{result.title} ({result.release_date ? result.release_date.slice(0, 4) : "N/A"})</b></Link>
                                                 </Row>
