@@ -2,3 +2,14 @@
     background-color: black !important;
     border:1px solid gray;
 }
+
+.searchbar-item:hover {
+    cursor: pointer;
+    background-color: gray !important;
+}
+
+.suggestion-font {
+    font-size: 1.25em;
+    font-weight: bold;
+    text-decoration: none;
+  }

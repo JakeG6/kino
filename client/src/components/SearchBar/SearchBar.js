@@ -110,13 +110,13 @@ const SearchBar = (props) => {
                         suggestionCount.map(movie => {
                             return (
                                 <ListGroup.Item variant="warning" key={movie.id} className="searchbar-item">
-                                    <Image
-                                        rounded
-                                        className="suggestion-poster"
-                                        src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                                        alt={`poster for ${movie.title}`}
-                                    />
                                     <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">
+                                        <Image
+                                            rounded
+                                            className="suggestion-poster"
+                                            src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                                            alt={`poster for ${movie.title}`}
+                                        />
                                         {titleLimiter(movie.title, 50)} ({releaseDateChecker(movie.release_date)})
                                     </Link> 
                                 </ListGroup.Item>
