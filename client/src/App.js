@@ -7,6 +7,7 @@ import ScrollToTop from './ScrollToTop';
 
 //components
 import SearchBar from './components/SearchBar/SearchBar';
+import Button from 'react-bootstrap/Button';
 import Home from './components/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
@@ -15,7 +16,6 @@ import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.
 
 //CSS
 import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
 import './App.css'
 
 const App = () => {
@@ -23,27 +23,23 @@ const App = () => {
       <Router>
         <ScrollToTop />
         <div className="App">
-          <Navbar expand="sm" >
+          <Navbar expand="sm">
             <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav.Item>
-                <SearchBar />
-              </Nav.Item>
-              {/* <Nav.Item>
-                <Nav.Link href="#">Sign in</Nav.Link>
-              </Nav.Item> */}
+            <Navbar.Toggle />
+            <SearchBar />
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                Signed in as: <a href="#login">Mark Otto</a>
+              </Navbar.Text>
             </Navbar.Collapse>
-            
+            <Button variant="light">Log In</Button>
           </Navbar>
           <div className="wrapper">
             <Route path="/" exact component={Home} />
             <Route path="/movie/:id" exact component={MoviePage} />
             <Route path="/movie/:id/credits" exact component={CreditsPage} />
             <Route path="/search" exact component={SearchResultsPage} />
-
-          </div>
-          
+          </div>         
         </div>
       </Router>
       

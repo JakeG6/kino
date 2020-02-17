@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { BrowserRouter as Router, Route, Link, useLocation } from "react-router-dom";
 
-import apiKey from "../apiKey";
+//import apiKey from "../apiKey";
 import queryBuilder from "./queryBuilder";
 import axios from 'axios';
 
@@ -46,7 +46,7 @@ const SearchResultsPage = () => {
     const showMoreResults = () => setPageCount(pageCount + 1);
 
     const MoreResultsButton = () => (
-        <Button onClick={showMoreResults} id="more-results-button" variant="primary" size="lg" block>
+        <Button onClick={showMoreResults} id="more-results-button" variant="light" size="lg" block>
             Show More Results
         </Button>
     )
@@ -79,10 +79,8 @@ const SearchResultsPage = () => {
                             {
                                 pageCount < totalPages ? <MoreResultsButton /> : <div></div>
                             }
-                        </Col>
-                        
+                        </Col>                       
                     </Row>
-                    
                 </Container>
             </div>
         )

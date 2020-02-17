@@ -1,6 +1,5 @@
 a {
   color: yellow !important;
-  
 }
 
 a:hover {
@@ -23,8 +22,6 @@ a:hover {
 }
 
 .App-header {
-  
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,11 +32,6 @@ a:hover {
 
 .App-link {
   color: #61dafb;
-}
-
-body {
-
-
 }
 
 .department-header {
@@ -79,10 +71,6 @@ body {
   font-family: 'Literata', serif;
 }
 
-.navbar {
-  background-color: black !important;
-}
-
 .similar-movie {
   text-align: center;
 }
@@ -91,7 +79,6 @@ body {
   color: white;
   text-decoration-color: white;
 }
-
 
 .poster-column{
   display: flex;
@@ -107,6 +94,10 @@ body {
 /* .searchbar {
   width: 50em;
 } */
+
+.navbar{
+  background-color: black;
+}
 
 .suggestion-poster {
   height: 8%;
@@ -125,7 +116,6 @@ body {
 }
 
 .wrapper {
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 0%, #343a40 100%);
+  background: #C0C0C0;
 
 }
