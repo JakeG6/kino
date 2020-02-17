@@ -23,6 +23,7 @@ const SearchBar = (props) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
+    const [isFocused, setIsFocused] = useState(false);
 
     // let history = useHistory();
 
@@ -35,7 +36,7 @@ const SearchBar = (props) => {
         
         if (searchQuery.length >= 4) { 
             fetchSuggestions();
-            console.log(suggestions); 
+        
         } 
 
     }, [searchQuery]);
@@ -68,20 +69,21 @@ const SearchBar = (props) => {
         clearSearchBar();
     }
 
+    //limit the length of titles in the suggestion box that would cause text wrapping
+    const titleLimiter = (title, titleCutoff) => {
+        
+        return (title.length > titleCutoff) ?  `${title.slice(0, 47)}...` : title
+        
+    }
+
     const showMore = () => {
         if (suggestions.length > 6) {
             return (
             <ListGroup.Item variant="warning" className="searchbar-item">
-                <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for "${searchQuery}"`}</Link> 
+                <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for "${titleLimiter(searchQuery, 26)}"`}</Link> 
             </ListGroup.Item>
             )
         }
-    }
-
-    //limit the length of titles in the suggestion box that would cause text wrapping
-    const titleLimiter = title => {
-        return (title.length > 50) ?  `${title.slice(0, 47)}...` : title
-        
     }
 
    const suggestionStyle = {
@@ -89,18 +91,23 @@ const SearchBar = (props) => {
         position: "absolute",
         top: "3.25em",
         width: "660px"
-    }  
+    }
+
+    const releaseDateChecker = (date) => {
+        return date ? date.slice(0, 4) : "N/A"
+    }
+
 
     const suggestionBars = () => {
-        if (suggestions && searchQuery.length >= 4) {
+        if (suggestions && isFocused && searchQuery.length >= 4) {
 
-            const sixSuggestions = suggestions.slice(0, 6);
+            const suggestionCount = suggestions.slice(0, 6);
 
             return(
-                <div style={suggestionStyle}>
+                <div style={suggestionStyle} >
                     <ListGroup>
                     {
-                        sixSuggestions.map(movie => {
+                        suggestionCount.map(movie => {
                             return (
                                 <ListGroup.Item variant="warning" key={movie.id} className="searchbar-item">
                                     <Image
@@ -109,17 +116,18 @@ const SearchBar = (props) => {
                                         src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
                                         alt={`poster for ${movie.title}`}
                                     />
-                                    <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">{titleLimiter(movie.title)} ({movie.release_date.slice(0,4)})</Link> 
+                                    <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">
+                                        {titleLimiter(movie.title, 50)} ({releaseDateChecker(movie.release_date)})
+                                    </Link> 
                                 </ListGroup.Item>
                             )
                         })                    
                     }
                     {   
-                    showMore() 
+                        showMore() 
                     }
                     </ListGroup>
-                </div>
-                
+                </div>              
             )
         }
     }
@@ -131,8 +139,10 @@ const SearchBar = (props) => {
                     type="text" 
                     value={searchQuery} 
                     className="mr-sm-2"
-                    onChange={e => setSearchQuery(e.target.value)}  
+                    onChange={e => setSearchQuery(e.target.value)}
+                    onFocus={() => setIsFocused(true)}
                     onKeyPress={submitSearch}
+                    onBlur={() => setIsFocused(false)}
                     placeholder="Search for films" 
                 />                    
                 <Button variant="outline-light" onClick={clickSearch}>Search</Button>

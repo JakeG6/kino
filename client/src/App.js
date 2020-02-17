@@ -28,9 +28,9 @@ const App = () => {
             <Navbar.Toggle />
             <SearchBar />
             <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
+              {/* <Navbar.Text>
                 Signed in as: <a href="#login">Mark Otto</a>
-              </Navbar.Text>
+              </Navbar.Text> */}
             </Navbar.Collapse>
             <Button variant="light">Log In</Button>
           </Navbar>
