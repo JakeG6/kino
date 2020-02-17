@@ -43,17 +43,17 @@ let Home = () =>  {
                         <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
                             {
                                 nowPlaying.slice(0, 20).map((movie) =>
-                                <Carousel.Item key={movie.id}>
-                                    <img
-                                    className="d-block w-100"
-                                    src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
-                                    alt="First slide"
-                                    />
-                                    <Carousel.Caption>
-                                    <Link to={`/movie/${movie.id}`}><h3 className="carousel-title literata">{movie.title}</h3></Link>
-                                    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-                                    </Carousel.Caption>
-                                </Carousel.Item>
+                                    <Carousel.Item key={movie.id}>
+                                        <img
+                                        className="d-block w-100"
+                                        src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
+                                        alt="First slide"
+                                        />
+                                        <Carousel.Caption>
+                                        <Link to={`/movie/${movie.id}`}><h3 className="carousel-title literata">{movie.title}</h3></Link>
+                                        {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
                                 )
                             }   
                         </Carousel>

@@ -57,6 +57,17 @@ const SearchBar = (props) => {
         }
     }
 
+    const clickSearch = event => {
+        console.log('recognized');
+        console.log(searchQuery);
+        event.preventDefault()
+        
+        //This causes shenanigans when using the search navbar on the search result page
+        props.history.push(`/search?q=${searchQuery}`);
+           
+        clearSearchBar();
+    }
+
     const showMore = () => {
         if (suggestions.length > 6) {
             return (
@@ -65,6 +76,12 @@ const SearchBar = (props) => {
             </ListGroup.Item>
             )
         }
+    }
+
+    //limit the length of titles in the suggestion box that would cause text wrapping
+    const titleLimiter = title => {
+        return (title.length > 50) ?  `${title.slice(0, 47)}...` : title
+        
     }
 
    const suggestionStyle = {
@@ -85,7 +102,6 @@ const SearchBar = (props) => {
                     {
                         sixSuggestions.map(movie => {
                             return (
-
                                 <ListGroup.Item variant="warning" key={movie.id} className="searchbar-item">
                                     <Image
                                         rounded
@@ -93,7 +109,7 @@ const SearchBar = (props) => {
                                         src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
                                         alt={`poster for ${movie.title}`}
                                     />
-                                    <Link to={`/movie/${movie.id}`} onClick={clearSearchBar}>{movie.title} ({movie.release_date.slice(0,4)})</Link> 
+                                    <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">{titleLimiter(movie.title)} ({movie.release_date.slice(0,4)})</Link> 
                                 </ListGroup.Item>
                             )
                         })                    
@@ -106,10 +122,7 @@ const SearchBar = (props) => {
                 
             )
         }
-
     }
-
-      
 
     return (
         <div>
@@ -122,7 +135,7 @@ const SearchBar = (props) => {
                     onKeyPress={submitSearch}
                     placeholder="Search for films" 
                 />                    
-                <Button variant="outline-light">Search</Button>
+                <Button variant="outline-light" onClick={clickSearch}>Search</Button>
             </Form>
             {suggestionBars()}
         </div>
