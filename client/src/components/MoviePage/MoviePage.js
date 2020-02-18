@@ -48,7 +48,6 @@ const MoviePage = ({ match }) => {
             const {data: simMoviesRes} = await axios.get(
             `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${apiKey}&language=en-US&page=1`
             );
-            console.log(simMoviesRes.results);
             setSimilarMovies(simMoviesRes.results);
         }
         fetchSimilar();

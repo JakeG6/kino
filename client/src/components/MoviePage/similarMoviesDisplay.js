@@ -22,7 +22,6 @@ const similarMoviesDisplay = similarMovies => {
     for (let i = 0; i < displayCount; i++) {
         simList.push(similarMovies[i]);
     }
-    console.log(simList);
 
     //render similar movies in JSX if there are any.
     if (simList[0] !== undefined) {

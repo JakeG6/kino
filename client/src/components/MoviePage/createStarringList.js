@@ -18,8 +18,6 @@ const createStarringList = (movie) => {
         starringList.push(movie.movieCredits.cast[i]);
     }
 
-    console.log("starring List: ", starringList);
-
     //create list of headlining stars
     return (           
         starringList.map(star => 
