@@ -44,8 +44,7 @@ const similarMoviesDisplay = similarMovies => {
                                             src={`http://image.tmdb.org/t/p/w92${movie.poster_path}`}
                                             alt={`poster for ${movie.title}`}
                                         />
-                                    </Link>                            
-                                    
+                                    </Link>                                                                
                                     <Link to={`/movie/${movie.id}`}>
                                         <p>{movie.title}</p>
                                     </Link>
