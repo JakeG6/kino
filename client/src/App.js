@@ -54,6 +54,8 @@ const App = () => {
               <Route path="/movie/:id"  component={MoviePage} />
               <Route path="/movie/:id/credits"  component={CreditsPage} />
               <Route path="/search"  component={SearchResultsPage} />
+              
+              {/* 404 page */}
               <Route component={NoMatch} />
             </Switch>
             
