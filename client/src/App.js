@@ -13,21 +13,24 @@ import Home from './components/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import NoMatch from './components/NoMatch/NoMatch.js';
+import Signup from './components/Signup.js';
 
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 
 //CSS
-import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
+import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar';
 import './App.css'
 
 const App = () => {
-
+  
   //state handlers for modal
   const [show, setShow] = useState(false);
 
@@ -48,6 +51,7 @@ const App = () => {
               </Navbar.Text> */}
             </Navbar.Collapse>
             <Button variant="light" onClick={handleShow}>Log In</Button>
+            <Nav.Link href="#home">Register</Nav.Link>
           </Navbar>
           <div className="wrapper">
             <Switch>
@@ -55,11 +59,10 @@ const App = () => {
               <Route path="/movie/:id"  component={MoviePage} />
               <Route path="/movie/:id/credits"  component={CreditsPage} />
               <Route path="/search"  component={SearchResultsPage} />
-              
+              <Route path="/signup"  component={Signup} />
               {/* 404 page */}
               <Route component={NoMatch} />
             </Switch>
-            
 
           </div>
           
@@ -68,13 +71,25 @@ const App = () => {
             <Modal.Header closeButton>
               <Modal.Title>Log In</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Body>
+            <Form>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" placeholder="Enter email" />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" />
+              </Form.Group>
+            
+              
+            </Form>
+            </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
+              
               <Button variant="primary" onClick={handleClose}>
-                Save Changes
+                Submit
               </Button>
             </Modal.Footer>
           </Modal>
