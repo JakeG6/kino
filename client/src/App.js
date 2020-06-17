@@ -56,8 +56,9 @@ const App = () => {
           <div className="wrapper">
             <Switch>
               <Route path="/" exact component={Home} />
+              <Route path="/movie/:id/credits" component={CreditsPage} />
               <Route path="/movie/:id"  component={MoviePage} />
-              <Route path="/movie/:id/credits"  component={CreditsPage} />
+              
               <Route path="/search"  component={SearchResultsPage} />
               <Route path="/signup"  component={Signup} />
               {/* 404 page */}

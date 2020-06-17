@@ -53,8 +53,8 @@ const querybuilder = (queryObj, type = "movies", pageCount) => {
             break;
 
         default:
-          //search movies if Type is not included
-          finalURL = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}` + urlQuery;          
+            //search movies if Type is not included
+            finalURL = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}` + urlQuery;          
         
     }
 

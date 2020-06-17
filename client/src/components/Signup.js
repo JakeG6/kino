@@ -15,19 +15,21 @@ const Signup = () => {
     return (
         <Container>
             <Row>
-                {/* <Col>
-                </Col> */}
-                <Col>
+
+            </Row>
+            <Row>
+                <Col xs={1} sm={2} md={4}>
+                </Col>
+                <Col xs={10} sm={8} md={4}>
                     <Form>
-                        <Col>
-                        </Col>
+                        
                         <Form.Group controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="email" placeholder="What's your name?" />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label>Email Address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" />
                         </Form.Group>
 
@@ -36,9 +38,9 @@ const Signup = () => {
                         <Form.Control type="password" placeholder="Password" />
                         </Form.Group>
                     </Form>
+                </Col >
+                <Col xs={1} sm={2} md={4}>
                 </Col>
-                {/* <Col>
-                </Col> */}
             </Row>
             
         </Container>
