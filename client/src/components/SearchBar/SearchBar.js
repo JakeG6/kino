@@ -145,7 +145,7 @@ const SearchBar = (props) => {
                     onKeyPress={submitSearch}
                     placeholder="Search for films" 
                 />                    
-                <Button variant="outline-light" onClick={clickSearch}>Search</Button>
+                {/* <Button variant="outline-light" onClick={clickSearch}>Search</Button> */}
             </Form>
             {suggestionBars()}
         </div>
