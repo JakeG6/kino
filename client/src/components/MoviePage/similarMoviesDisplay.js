@@ -37,7 +37,7 @@ const similarMoviesDisplay = similarMovies => {
                             {
                         simList.map(movie => {
                             return(
-                                <Col key={movie.id} xs={3} md={2} className="similar-movie">
+                                <Col key={movie.id} xs={4} sm={3} md={2} className="similar-movie">
                                     <Link to={`/movie/${movie.id}`}>
                                         <Image
                                             className="similar-poster"

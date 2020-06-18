@@ -41,18 +41,10 @@ const App = () => {
       <Router>
         <ScrollToTop />
         <div className="App">
-          <Navbar expand="sm">
+          <Navbar expand="sm" className="justify-content-between">
             <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-            <Navbar.Toggle />
-            
-            <Navbar.Collapse className="justify-content-end">
-              {/* <Navbar.Text>
-                Signed in as: <a href="#login">Mark Otto</a>
-              </Navbar.Text> */}
-              <SearchBar />
-              <Button variant="light" onClick={handleShow}>Log In</Button>
-              {/* <Nav.Link href="#home">Register</Nav.Link> */}
-            </Navbar.Collapse>
+            <SearchBar />
+            <Button variant="light" onClick={handleShow}>Log In</Button>
           </Navbar>
           <div className="wrapper">
             <Switch>
