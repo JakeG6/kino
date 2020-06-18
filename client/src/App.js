@@ -44,14 +44,15 @@ const App = () => {
           <Navbar expand="sm">
             <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
             <Navbar.Toggle />
-            <SearchBar />
+            
             <Navbar.Collapse className="justify-content-end">
               {/* <Navbar.Text>
                 Signed in as: <a href="#login">Mark Otto</a>
               </Navbar.Text> */}
+              <SearchBar />
+              <Button variant="light" onClick={handleShow}>Log In</Button>
+              {/* <Nav.Link href="#home">Register</Nav.Link> */}
             </Navbar.Collapse>
-            <Button variant="light" onClick={handleShow}>Log In</Button>
-            <Nav.Link href="#home">Register</Nav.Link>
           </Navbar>
           <div className="wrapper">
             <Switch>
