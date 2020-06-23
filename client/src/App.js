@@ -56,9 +56,7 @@ const App = () => {
               {/* 404 page */}
               <Route component={NoMatch} />
             </Switch>
-
           </div>
-          
           {/* Login Modal */}
           <Modal show={show} onHide={handleClose} className="login-modal">
             <Modal.Header closeButton>
@@ -83,11 +81,8 @@ const App = () => {
               </Button>
             </Modal.Footer>
           </Modal>
-
         </div>
-      </Router>
-
-      
+      </Router>     
     );
 }
 

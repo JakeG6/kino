@@ -9,10 +9,14 @@ import { withRouter } from "react-router-dom";
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import Image from 'react-bootstrap/Image';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import "./SearchBar.css";
 
@@ -135,16 +139,27 @@ const SearchBar = (props) => {
     return (
         <div>
             <Form>
-                <FormControl 
-                    type="text" 
-                    value={searchQuery} 
-                    className="searchbar-input"
-                    onChange={e => setSearchQuery(e.target.value)}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={handleOnBlur}
-                    onKeyPress={submitSearch}
-                    placeholder="Search for films" 
-                />                    
+                <InputGroup>
+                    <FormControl 
+                        type="text" 
+                        value={searchQuery} 
+                        className="searchbar-input"
+                        onChange={e => setSearchQuery(e.target.value)}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={handleOnBlur}
+                        onKeyPress={submitSearch}
+                        placeholder="Search for films" 
+                    />  
+                    <InputGroup.Append>
+                        <Button 
+                            variant="outline-secondary"
+                            onClick={clickSearch}
+                        >
+                            <FontAwesomeIcon icon={faSearch} color="white" />
+                        </Button>
+                    </InputGroup.Append>
+                </InputGroup>
+                <FontAwesomeIcon icon="fa-search" color="white" />      
             </Form>
             {suggestionBars()}
         </div>
