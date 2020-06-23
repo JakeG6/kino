@@ -134,18 +134,17 @@ const SearchBar = (props) => {
 
     return (
         <div>
-            <Form inline className="searchbar">
+            <Form>
                 <FormControl 
                     type="text" 
                     value={searchQuery} 
-                    className="mr-sm-2"
+                    className="searchbar-input"
                     onChange={e => setSearchQuery(e.target.value)}
                     onFocus={() => setIsFocused(true)}
                     onBlur={handleOnBlur}
                     onKeyPress={submitSearch}
                     placeholder="Search for films" 
                 />                    
-                {/* <Button variant="outline-light" onClick={clickSearch}>Search</Button> */}
             </Form>
             {suggestionBars()}
         </div>

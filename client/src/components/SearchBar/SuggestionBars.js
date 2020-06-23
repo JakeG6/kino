@@ -22,6 +22,7 @@ const SuggestionBars = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [isFocused, setIsFocused] = useState(false);
 
+    //style for suggestion
     const suggestionStyle = {
         zIndex: 1000,
         position: "absolute",

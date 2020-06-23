@@ -41,7 +41,7 @@ const App = () => {
       <Router>
         <ScrollToTop />
         <div className="App">
-          <Navbar expand="sm" className="justify-content-between">
+          <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
             <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
             <SearchBar />
             <Button variant="light" onClick={handleShow}>Log In</Button>
@@ -51,7 +51,6 @@ const App = () => {
               <Route path="/" exact component={Home} />
               <Route path="/movie/:id/credits" component={CreditsPage} />
               <Route path="/movie/:id"  component={MoviePage} />
-              
               <Route path="/search"  component={SearchResultsPage} />
               <Route path="/signup"  component={Signup} />
               {/* 404 page */}
@@ -61,7 +60,7 @@ const App = () => {
           </div>
           
           {/* Login Modal */}
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={show} onHide={handleClose} className="login-modal">
             <Modal.Header closeButton>
               <Modal.Title>Log In</Modal.Title>
             </Modal.Header>
@@ -71,18 +70,15 @@ const App = () => {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" />
               </Form.Group>
-
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
-            
-              
             </Form>
             </Modal.Body>
             <Modal.Footer>
               
-              <Button variant="primary" onClick={handleClose}>
+              <Button variant="primary" className="btn-light" onClick={handleClose}>
                 Submit
               </Button>
             </Modal.Footer>
