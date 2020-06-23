@@ -10,7 +10,7 @@ import createStarringList from './createStarringList';
 import similarMovieDisplay from './similarMoviesDisplay';
 import CommentTabs from './CommentTabs';
 
-import LoadingSpinner from '../LoadingSpinner.js'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';

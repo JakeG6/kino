@@ -13,7 +13,7 @@ import Home from './components/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import NoMatch from './components/NoMatch/NoMatch.js';
-import Signup from './components/Signup.js';
+import Signup from './components/Signup/Signup.js';
 
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 
@@ -42,7 +42,7 @@ const App = () => {
         <ScrollToTop />
         <div className="App">
           <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
-            <Navbar.Brand ><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
+            <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
             <SearchBar />
             <Button variant="light" onClick={handleShow}>Log In</Button>
           </Navbar>
