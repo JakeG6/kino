@@ -121,3 +121,12 @@ a:hover {
   background: #C0C0C0;
 
 }
+
+/* styling for login modal */
+.login-modal-footer {
+  justify-content: space-between;
+}
+
+.login-modal-footer p {
+  margin: 0;
+}

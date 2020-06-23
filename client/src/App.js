@@ -76,8 +76,8 @@ const App = () => {
               </Form.Group>
             </Form>
             </Modal.Body>
-            <Modal.Footer>
-              
+            <Modal.Footer className="login-modal-footer">
+              <Link to={`/signup`}><p>Don't have an account? Sign up here!</p></Link>
               <Button variant="primary" className="btn-light" onClick={handleClose}>
                 Submit
               </Button>
