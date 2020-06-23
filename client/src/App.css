@@ -62,13 +62,22 @@ a:hover {
   background-color: black;
 }
 
-.movie-page-header {
-  font-family: 'Literata', serif;
-  margin-bottom: 1em;
+body {
+  min-height: 100vh !important;
+  background-color: #c0c0c0;
+}
+
+html {
+  height: 100vh !important;
 }
 
 .literata {
   font-family: 'Literata', serif;
+}
+
+.movie-page-header {
+  font-family: 'Literata', serif;
+  margin-bottom: 1em;
 }
 
 .similar-movie {

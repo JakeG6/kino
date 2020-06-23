@@ -158,8 +158,7 @@ const SearchBar = (props) => {
                             <FontAwesomeIcon icon={faSearch} color="white" />
                         </Button>
                     </InputGroup.Append>
-                </InputGroup>
-                <FontAwesomeIcon icon="fa-search" color="white" />      
+                </InputGroup>    
             </Form>
             {suggestionBars()}
         </div>
