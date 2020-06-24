@@ -37,53 +37,55 @@ const App = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-    return (
-      <Router>
-        <ScrollToTop />
-        <div className="App">
-          <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
-            <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-            <SearchBar />
-            <Button variant="light" onClick={handleShow}>Log In</Button>
-          </Navbar>
-          <div className="wrapper">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/movie/:id/credits" component={CreditsPage} />
-              <Route path="/movie/:id"  component={MoviePage} />
-              <Route path="/search"  component={SearchResultsPage} />
-              <Route path="/signup"  component={Signup} />
-              {/* 404 page */}
-              <Route component={NoMatch} />
-            </Switch>
-          </div>
-          {/* Login Modal */}
-          <Modal show={show} onHide={handleClose} className="login-modal">
-            <Modal.Header closeButton>
-              <Modal.Title>Log In</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-            <Form>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-            </Form>
-            </Modal.Body>
-            <Modal.Footer className="login-modal-footer">
-              <Link to={`/signup`}><p>Don't have an account? Sign up here!</p></Link>
-              <Button variant="primary" className="btn-light" onClick={handleClose}>
-                Submit
-              </Button>
-            </Modal.Footer>
-          </Modal>
+  return (
+    <Router>
+      <ScrollToTop />
+      <div className="App">
+        {/* Navigation bar */}
+        <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
+          <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
+          <SearchBar />
+          <Button variant="light" onClick={handleShow}>Log In</Button>
+        </Navbar>
+        <div className="wrapper">
+          {/* React Router  */}
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/movie/:id/credits" component={CreditsPage} />
+            <Route path="/movie/:id"  component={MoviePage} />
+            <Route path="/search"  component={SearchResultsPage} />
+            <Route path="/signup"  component={Signup} />
+            {/* 404 page */}
+            <Route component={NoMatch} />
+          </Switch>
         </div>
-      </Router>     
-    );
+        {/* Login Modal */}
+        <Modal show={show} onHide={handleClose} className="login-modal">
+          <Modal.Header closeButton>
+            <Modal.Title>Log In</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" />
+            </Form.Group>
+          </Form>
+          </Modal.Body>
+          <Modal.Footer className="login-modal-footer">
+            <Link to={`/signup`} onClick={handleClose}><p>Don't have an account? Sign up here!</p></Link>
+            <Button variant="primary" className="btn-light" onClick={handleClose}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    </Router>     
+  );
 }
 
 export default App;

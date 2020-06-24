@@ -139,3 +139,15 @@ html {
 .login-modal-footer p {
   margin: 0;
 }
+
+.login-modal .modal-content{
+  background-color: #343a40 !important;
+}
+
+.login-modal {
+  color: white !important;
+}
+
+.login-modal .close {
+  color: white !important;
+}
