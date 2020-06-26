@@ -15,24 +15,18 @@ import Image from 'react-bootstrap/Image';
 
 import "./SearchResultsPage.css"
 
+import posterPlaceholder from "../poster-placeholder.jpg";
+
 // const queryString = require('query-string');
 import queryString from "query-string";
 
 const SearchResultsPage = () => {
+
     //useLocation() listens for a change to the URL
     const location = useLocation();
 
     //The user's url search query parameters
     const searchParams = queryString.parse(window.location.search);
-
-    //results retrieved from API
-
-    // const [resultsPageData, setResultsPageData] = useState({
-    //     currentParams: searchParams,
-    //     searchResults: [],
-    //     pageCount: 1,
-    //     totalPages: null
-    // })
 
     const [currentParams, setCurrentParams] = useState(searchParams);
     const [searchResults, setSearchResults] = useState([]);
@@ -58,6 +52,10 @@ const SearchResultsPage = () => {
         setSearchResults([...apiResults.data.results]);
         setTotalPages(apiResults.data.total_pages);
         
+    }
+
+    const checkPosterPath = path => {
+        return path ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
     }
 
     const showMoreResults = async () => {
@@ -97,7 +95,11 @@ const SearchResultsPage = () => {
                                     <ListGroup.Item key={result.id} className="results-item">
                                         <Row>
                                             <Col xs={12} md={2} className="d-none d-md-block">
-                                                <Image src={`http://image.tmdb.org/t/p/w92${result.poster_path}`} rounded />
+                                                <Image 
+                                                    className="search-result-poster"
+                                                    src={checkPosterPath(result.poster_path)} 
+                                                    rounded 
+                                                />
                                             </Col>
                                             <Col xs={12} md={10}>
                                                 <Row>

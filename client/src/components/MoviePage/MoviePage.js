@@ -9,6 +9,9 @@ import createGenreList from './createGenreList';
 import createStarringList from './createStarringList';
 import similarMovieDisplay from './similarMoviesDisplay';
 import CommentTabs from './CommentTabs';
+import "./MoviePage.css"
+
+import posterPlaceholder from "../poster-placeholder.jpg";
 
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
@@ -63,6 +66,11 @@ const MoviePage = ({ match }) => {
     //     window.scrollTo(0, 0);
     // }, [movieId])
 
+
+    const checkPosterPath = path => {
+        return path ?  `http://image.tmdb.org/t/p/w300${path}` : posterPlaceholder;
+    }
+
     //return movie page, or loading screen if api calls aren't done 
     if (pageMovie) {
 
@@ -88,7 +96,7 @@ const MoviePage = ({ match }) => {
                         <Image
                             rounded
                             className="movie-page-poster"
-                            src={`http://image.tmdb.org/t/p/w300${pageMovie.movieInfo.poster_path}`}
+                            src={checkPosterPath(pageMovie.movieInfo.poster_path)}
                             alt={`poster for ${pageMovie.movieInfo.original_title}`}
                         />
                     </Col>

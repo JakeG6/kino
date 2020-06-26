@@ -7,6 +7,11 @@
     border: 0px;
 }
 
+.search-result-poster {
+    width: 92px;
+    height: 138px;
+}
+
 
 #more-results-button {
     margin-bottom: 1em;
