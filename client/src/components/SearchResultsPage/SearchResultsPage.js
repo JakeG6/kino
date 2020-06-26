@@ -15,41 +15,76 @@ import Image from 'react-bootstrap/Image';
 
 import "./SearchResultsPage.css"
 
-const queryString = require('query-string');
+// const queryString = require('query-string');
+import queryString from "query-string";
 
 const SearchResultsPage = () => {
+    //useLocation() listens for a change to the URL
+    const location = useLocation();
 
+    //The user's url search query parameters
+    const searchParams = queryString.parse(window.location.search);
+
+    //results retrieved from API
+
+    // const [resultsPageData, setResultsPageData] = useState({
+    //     currentParams: searchParams,
+    //     searchResults: [],
+    //     pageCount: 1,
+    //     totalPages: null
+    // })
+
+    const [currentParams, setCurrentParams] = useState(searchParams);
     const [searchResults, setSearchResults] = useState([]);
     const [pageCount, setPageCount] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
 
-    //The user's kino url query parameters
-    const parsed = queryString.parse(window.location.search);
+    console.log(searchParams)
 
-    console.log(parsed)
+    const fetchResults = async () => {
 
-    //Deliver user search results from TMDB api, then set maximum number of search result pages possible
+        // console.log(` we have new search params: ${searchParams.q}`)
+        
+        // console.log(`the new pageCount is ${pageCount}`)
+        
+        // console.log(`the new current params is ${currentParams.q}`)
+
+        //results from api based on url built by queryBuilder function
+        const apiResults = await axios.get(queryBuilder(searchParams, searchParams.type, 1));
+        
+        //update component state
+        setCurrentParams(searchParams)
+        setPageCount(1);
+        setSearchResults([...apiResults.data.results]);
+        setTotalPages(apiResults.data.total_pages);
+        
+    }
+
+    const showMoreResults = async () => {
+        const replacementPageCount = pageCount + 1;
+        
+        console.log(`getting more of the same. the page will be  ${replacementPageCount}`)
+        const apiResults = await axios.get(queryBuilder(currentParams, currentParams.type, replacementPageCount));
+        setPageCount(replacementPageCount);
+        setSearchResults([...searchResults, ...apiResults.data.results]);
+        setTotalPages(apiResults.data.total_pages);
+          
+    }
+
     useEffect(() => {
-        const fetchResults = async () => {
-            //original
-            //const apiResults = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${parsed.q}&page=${pageCount}&include_adult=false`);
-            
-            //results from api based on url built by queryBuilder function
-            const apiResults = await axios.get(queryBuilder(parsed, parsed.type, pageCount));
 
-            setSearchResults([...searchResults, ...apiResults.data.results]);
-            setTotalPages(apiResults.data.total_pages);
-        }
+        console.log(`hey! this is the start of useEffect. param is ${searchParams.q}. the pageCount is ${pageCount}`);
         fetchResults();
-    }, [pageCount])
 
-    const showMoreResults = () => setPageCount(pageCount + 1);
+    }, [location])
 
     const MoreResultsButton = () => (
         <Button onClick={showMoreResults} id="more-results-button" variant="light" size="lg" block>
             Show More Results
         </Button>
     )
+
+   
         
     if (searchResults) {
         return (          
