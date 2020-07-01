@@ -89,17 +89,22 @@ const MoviePage = ({ match }) => {
             paddingBottom: "1em"
         };
 
+        const backdropDefault = {
+            background: "#343a40",
+            paddingBottom: "1em"
+        }
+
         //release date
         const releaseDate = pageMovie.movieInfo.release_date
 
         return (   
         <div>
-            <Container style={backdrop} >
+            <Container style={pageMovie.movieInfo.backdrop_path ? backdrop : backdropDefault} >
                 <div >
                     <Row>
                         <Col>
                             <h1 className="movie-page-header">
-                                {`${pageMovie.movieInfo.original_title} (${releaseDate.length > 0 ? releaseDate.slice(0,4) : "N/A"})`}
+                                {`${pageMovie.movieInfo.title} (${releaseDate.length > 0 ? releaseDate.slice(0,4) : "N/A"})`}
                             </h1>
                         </Col>
                     </Row>
