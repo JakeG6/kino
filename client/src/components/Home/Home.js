@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import apiKey from "./apiKey";
-import TrendingChart from './TrendingChart';
+import apiKey from "../apiKey";
+import TrendingChart from '../TrendingChart';
+
+import "./Home.css";
 
 import Container from 'react-bootstrap/Container'
 import Carousel from 'react-bootstrap/Carousel'
@@ -41,19 +43,24 @@ let Home = () =>  {
                         <TrendingChart />
                     </Col>
                     <Col xs={12} sm={6}>
-                        <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
+                        <Carousel activeIndex={index} direction={direction} onSelect={handleSelect} >
                             {
                                 nowPlaying.slice(0, 20).map((movie) =>
-                                    <Carousel.Item key={movie.id}>
-                                        <img
-                                        className="d-block w-100"
-                                        src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
-                                        alt="First slide"
-                                        />
-                                        <Carousel.Caption>
-                                        <Link to={`/movie/${movie.id}`}><h3 className="carousel-title literata">{movie.title}</h3></Link>
-                                        {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-                                        </Carousel.Caption>
+                                    <Carousel.Item key={movie.id}  >
+                                        <Link to={`/movie/${movie.id}`}>
+                                        <div className="carousel-image">
+                                            <img
+                                                className="d-block w-100"
+                                                src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
+                                                alt="First slide"
+                                            />
+                                        </div>
+                                        <div >
+                                            <Carousel.Caption >
+                                                <h3 className="carousel-title literata">{movie.title}</h3>
+                                            </Carousel.Caption>
+                                        </div>
+                                        </Link>
                                     </Carousel.Item>
                                 )
                             }   

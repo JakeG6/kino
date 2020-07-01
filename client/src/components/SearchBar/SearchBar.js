@@ -88,7 +88,6 @@ const SearchBar = (props) => {
     }
 
     //JSX
-
     const showMore = () => {
         if (suggestions.length > 6) {
             return (

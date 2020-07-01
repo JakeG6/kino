@@ -9,7 +9,7 @@ import ScrollToTop from './ScrollToTop';
 //components
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from 'react-bootstrap/Button';
-import Home from './components/Home';
+import Home from './components/Home/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import NoMatch from './components/NoMatch/NoMatch.js';
