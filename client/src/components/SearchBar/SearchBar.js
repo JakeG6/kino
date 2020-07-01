@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-//import SuggestionBars from "./SuggestionBars";
 import apiKey from "../apiKey";
+import posterPlaceholder from "../poster-placeholder.jpg";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
@@ -89,18 +89,18 @@ const SearchBar = (props) => {
 
     //JSX
 
-    // const showMore = () => {
-    //     if (suggestions.length > 6) {
-    //         return (
-    //             <ListGroup.Item  variant="warning" className="searchbar-item" onClick={clickSearch} >
-    //                 <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for "${titleLimiter(searchQuery, 26)}"`}</Link> 
-    //             </ListGroup.Item>
-    //         )
-    //     }
-    // }
+    const showMore = () => {
+        if (suggestions.length > 6) {
+            return (
+                <ListGroup.Item  variant="warning" className="searchbar-item" onClick={clickSearch} >
+                    <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for "${titleLimiter(searchQuery, 26)}"`}</Link> 
+                </ListGroup.Item>
+            )
+        }
+    }
 
     const suggestionBars = () => {
-        if (suggestions && isFocused && searchQuery.length >= 4) {
+        if (suggestions && isFocused && searchQuery.length >= 3) {
             const suggestionCount = suggestions.slice(0, 6);
             return(
                 <div style={suggestionStyle} >
@@ -117,7 +117,7 @@ const SearchBar = (props) => {
                                     <Image
                                         rounded
                                         className="suggestion-poster"
-                                        src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                                        src={movie.poster_path ? `http://image.tmdb.org/t/p/w300${movie.poster_path}` : posterPlaceholder}
                                         alt={`poster for ${movie.title}`}
                                     />
                                     <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">
@@ -127,9 +127,9 @@ const SearchBar = (props) => {
                             )
                         })                    
                     }
-                    {/* {   
+                    {   
                         showMore() 
-                    } */}
+                    }
                     </ListGroup>
                 </div>              
             )

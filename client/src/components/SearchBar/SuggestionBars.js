@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import axios from 'axios';
 
+
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup';
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -30,6 +31,12 @@ const SuggestionBars = () => {
         width: "660px"
     }
 
+    //get placeholder poster if official poster is not available.
+    const checkPosterPath = path => {
+        console.log(`look at thsi path `, path)
+        return path !== null ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
+    }
+
     //limit the length of titles in the suggestion box that would cause text wrapping
     const titleLimiter = (title, titleCutoff) => {     
         return (title.length > titleCutoff) ?  `${title.slice(0, 47)}...` : title    
@@ -46,7 +53,6 @@ const SuggestionBars = () => {
     const clickSearch = event => {
         event.preventDefault()
         
-        //This causes shenanigans when using the search navbar on the search result page
         props.history.push(`/search?q=${searchQuery}`);
            
         clearSearchBar();
@@ -76,7 +82,7 @@ const SuggestionBars = () => {
                                 <Image
                                     rounded
                                     className="suggestion-poster"
-                                    src={`http://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                                    src={checkPosterPath(movie.poster_path)}
                                     alt={`poster for ${movie.title}`}
                                 />
                                 <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">

@@ -61,12 +61,6 @@ const MoviePage = ({ match }) => {
     console.log(`pageMovie state was initialized or changed`, pageMovie);
     }, [pageMovie]);
 
-    //scroll to top of page when url is changed.
-    // useEffect(() => {
-    //     window.scrollTo(0, 0);
-    // }, [movieId])
-
-
     const checkPosterPath = path => {
         return path ?  `http://image.tmdb.org/t/p/w300${path}` : posterPlaceholder;
     }
@@ -79,7 +73,6 @@ const MoviePage = ({ match }) => {
         };
 
         const backdropURL= `https://image.tmdb.org/t/p/w1280${pageMovie.movieInfo.backdrop_path}`;
-        console.log(backdropURL)
 
         const backdrop = {
             background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${backdropURL})`,
