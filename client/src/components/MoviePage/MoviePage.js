@@ -76,39 +76,55 @@ const MoviePage = ({ match }) => {
 
         const posterRow = {
             marginBottom: "1em"
-        }
+        };
+
+        const backdropURL= `https://image.tmdb.org/t/p/w1280${pageMovie.movieInfo.backdrop_path}`;
+        console.log(backdropURL)
+
+        const backdrop = {
+            background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${backdropURL})`,
+            backgroundPosition: "center center",
+            backgroundAttachment: "fixed",
+            backgroundSize: "cover",
+            paddingBottom: "1em"
+        };
 
         //release date
         const releaseDate = pageMovie.movieInfo.release_date
 
         return (   
         <div>
-            <Container >
-                <Row>
-                    <Col>
-                        <h1 className="movie-page-header">
-                            {`${pageMovie.movieInfo.original_title} (${releaseDate.length > 0 ? releaseDate.slice(0,4) : "N/A"})`}
-                        </h1>
-                    </Col>
-                </Row>
-                <Row style={posterRow}>
-                    <Col xs={12} md={6} className="poster-column">                    
-                        <Image
-                            rounded
-                            className="movie-page-poster"
-                            src={checkPosterPath(pageMovie.movieInfo.poster_path)}
-                            alt={`poster for ${pageMovie.movieInfo.original_title}`}
-                        />
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <p><i id="movie-overview">{pageMovie.movieInfo.overview}</i></p>
-                        <p><b>Release Date</b> {releaseDate.length > 0 ? releaseDate : "N/A" }</p>
-                        <p><b>Genres</b> {createGenreList(pageMovie)}</p>  
-                        <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringList(pageMovie) : "N/A"}</p> 
-                        {createTechnicalInfo(pageMovie)}
-                        <b><Link to={`/movie/${movieId}/credits`}>See Full Cast and Crew</Link></b>
-                    </Col>
-                </Row>
+            <Container style={backdrop} >
+                <div >
+                    <Row>
+                        <Col>
+                            <h1 className="movie-page-header">
+                                {`${pageMovie.movieInfo.original_title} (${releaseDate.length > 0 ? releaseDate.slice(0,4) : "N/A"})`}
+                            </h1>
+                        </Col>
+                    </Row>
+                    <Row style={posterRow}>
+                        <Col xs={12} md={6} className="poster-column">                    
+                            <Image
+                                rounded
+                                className="movie-page-poster"
+                                src={checkPosterPath(pageMovie.movieInfo.poster_path)}
+                                alt={`poster for ${pageMovie.movieInfo.original_title}`}
+                            />
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <p><i id="movie-overview">{pageMovie.movieInfo.overview}</i></p>
+                            <p><b>Release Date</b> {releaseDate.length > 0 ? releaseDate : "N/A" }</p>
+                            <p><b>Genres</b> {createGenreList(pageMovie)}</p>  
+                            <p><b>Starring</b> {pageMovie.movieCredits.cast ? createStarringList(pageMovie) : "N/A"}</p> 
+                            {createTechnicalInfo(pageMovie)}
+                            <b><Link to={`/movie/${movieId}/credits`}>See Full Cast and Crew</Link></b>
+                        </Col>
+                    </Row>
+                    </div>
+            </Container>
+            <Container>
+                    
                 <Row>
                     <Col xs={12}>
                         {similarMovieDisplay(similarMovies)}

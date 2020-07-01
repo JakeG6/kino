@@ -35,33 +35,15 @@ const SearchResultsPage = () => {
 
     console.log(searchParams)
 
-    const fetchResults = async () => {
-
-        // console.log(` we have new search params: ${searchParams.q}`)
-        
-        // console.log(`the new pageCount is ${pageCount}`)
-        
-        // console.log(`the new current params is ${currentParams.q}`)
-
-        //results from api based on url built by queryBuilder function
-        const apiResults = await axios.get(queryBuilder(searchParams, searchParams.type, 1));
-        
-        //update component state
-        setCurrentParams(searchParams)
-        setPageCount(1);
-        setSearchResults([...apiResults.data.results]);
-        setTotalPages(apiResults.data.total_pages);
-        
-    }
-
+    //get placeholder poster if official poster is not available.
     const checkPosterPath = path => {
         return path ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
     }
 
     const showMoreResults = async () => {
+
         const replacementPageCount = pageCount + 1;
         
-        console.log(`getting more of the same. the page will be  ${replacementPageCount}`)
         const apiResults = await axios.get(queryBuilder(currentParams, currentParams.type, replacementPageCount));
         setPageCount(replacementPageCount);
         setSearchResults([...searchResults, ...apiResults.data.results]);
@@ -72,6 +54,20 @@ const SearchResultsPage = () => {
     useEffect(() => {
 
         console.log(`hey! this is the start of useEffect. param is ${searchParams.q}. the pageCount is ${pageCount}`);
+
+        const fetchResults = async () => {
+
+            //results from api based on url built by queryBuilder function
+            const apiResults = await axios.get(queryBuilder(searchParams, searchParams.type, 1));
+            
+            //update component state
+            setCurrentParams(searchParams)
+            setPageCount(1);
+            setSearchResults([...apiResults.data.results]);
+            setTotalPages(apiResults.data.total_pages);
+            
+        }
+
         fetchResults();
 
     }, [location])
