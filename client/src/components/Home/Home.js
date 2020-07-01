@@ -9,7 +9,6 @@ import "./Home.css";
 
 import Container from 'react-bootstrap/Container'
 import Carousel from 'react-bootstrap/Carousel'
-
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 

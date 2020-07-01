@@ -1,4 +1,8 @@
 .spinner-page {
-    align-items: center;
-    justify-content: center;
+    min-height: 92.7vh;
+    
+}
+
+.spinner-col {
+    margin-top: 25%;
 }

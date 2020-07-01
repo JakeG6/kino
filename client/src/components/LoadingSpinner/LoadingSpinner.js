@@ -6,12 +6,20 @@ import { BrowserRouter as Link } from "react-router-dom";
 
 import Spinner from 'react-bootstrap/Spinner';
 
+import "./LoadingSpinner.css"
+
 const LoadingSpinner = () => {
+
+
+
     return (
-        <Container>
+        <Container className="spinner-page">
             <Row >
-                <Col>
-                <Spinner className="text-center" animation="border" variant="light" />
+                <Col className="d-flex justify-content-center align-items-center spinner-col">
+                    <div >  
+                        <Spinner  animation="border" variant="light" />
+                    </div>  
+                    
                 </Col>
             </Row>
             
