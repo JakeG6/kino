@@ -12,8 +12,12 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Navbar from 'react-bootstrap/Navbar';
 import './App.css'
+import { useState } from "react";
 
 const LoginModal = () => {
+
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
 
     return (
         /* Login Modal */
@@ -26,12 +30,12 @@ const LoginModal = () => {
                     <Form>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control type="email" placeholder="Enter email" value={email} onChange={ e => setEmail(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, useLocation } from "react-router-
 
 //import apiKey from "../apiKey";
 import queryBuilder from "./queryBuilder";
+import paramDisplayGenerator from "./paramDisplayGenerator";
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button'
@@ -29,6 +30,7 @@ const SearchResultsPage = () => {
     const searchParams = queryString.parse(window.location.search);
 
     const [currentParams, setCurrentParams] = useState(searchParams);
+    const [paramDisplay, setParamDisplay] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [pageCount, setPageCount] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
@@ -47,6 +49,7 @@ const SearchResultsPage = () => {
         const apiResults = await axios.get(queryBuilder(currentParams, currentParams.type, replacementPageCount));
         setPageCount(replacementPageCount);
         setSearchResults([...searchResults, ...apiResults.data.results]);
+        
         setTotalPages(apiResults.data.total_pages);
           
     }
@@ -60,15 +63,22 @@ const SearchResultsPage = () => {
             //results from api based on url built by queryBuilder function
             const apiResults = await axios.get(queryBuilder(searchParams, searchParams.type, 1));
             
+            //show what the parameters are for the search results
+            
+
             //update component state
             setCurrentParams(searchParams)
             setPageCount(1);
             setSearchResults([...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);
             
+            
         }
 
         fetchResults();
+        // const paramDisplay = 
+        // setParamDisplay(paramDisplayGenerator(searchParams));
+        // console.log(currentParams)
 
     }, [location])
 
@@ -86,6 +96,7 @@ const SearchResultsPage = () => {
                 <Container>
                     <Row>
                         <Col xs={12}>
+                            <b>{paramDisplayGenerator(searchParams)}</b>
                             <ListGroup >
                                 {searchResults.map(result => (
                                     <ListGroup.Item key={result.id} className="results-item">

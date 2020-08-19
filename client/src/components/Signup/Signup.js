@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import validator from 'validator';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -14,6 +15,45 @@ import "./Signup.css";
 
 const Signup = () => {
 
+    let [username, setUsername] = useState('')
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    let [errorMessage, setErrorMessage] = useState('')
+
+    //validate the signup
+    const validateSignup = () => {
+        
+        if (validator.isEmpty(username)) {
+            setErrorMessage('There is no username')
+            return;
+        }
+
+        if (validator.isLength(username, {max: 16 }) === false) {
+            setErrorMessage("Your username can't be longer than 16 characters")
+            return;
+        }
+
+        if (validator.isEmail(email) === false)  {
+            setErrorMessage('Invalid Email');
+            return;
+        }
+
+        if (validator.isLength(password, {min: 6, max: 100 }) === false) {
+            setErrorMessage('Your Password must be at least 6 characters')
+            return;
+        }
+
+        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+          });
+
+    }
+
+
+
     return (
         <Container>
             <Row className="signup">
@@ -24,19 +64,20 @@ const Signup = () => {
                         
                         <Form.Group controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="email" placeholder="What's your name?" />
+                        <Form.Control type="email" placeholder="What's your name?" value={username} onChange={ e => setUsername(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email Address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="email" placeholder="Enter email" value={email} onChange={ e => setEmail(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" placeholder="Password" value={email} onChange={ e => setEmail(e.target.value)} />
                         </Form.Group>
                         <Button variant="light" size="lg" block>Submit</Button>
+                        <h1>{errorMessage}</h1>
                     </Form>
                 </Col >
                 <Col xs={1} sm={2} md={4}>

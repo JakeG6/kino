@@ -7,15 +7,16 @@ import { useHistory } from "react-router-dom";
 import ScrollToTop from './ScrollToTop';
 
 //components
-import SearchBar from './components/SearchBar/SearchBar';
+
 import Button from 'react-bootstrap/Button';
+import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import Home from './components/Home/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
-import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import NoMatch from './components/NoMatch/NoMatch.js';
-import Signup from './components/Signup/Signup.js';
-
+import ProfilePage from './components/ProfilePage/ProfilePage.js'
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
+import SearchBar from './components/SearchBar/SearchBar';
+import Signup from './components/Signup/Signup.js';
 
 //CSS
 import Form from 'react-bootstrap/Form';
@@ -53,6 +54,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/movie/:id/credits" component={CreditsPage} />
             <Route path="/movie/:id"  component={MoviePage} />
+            <Route path="/profile" component={ProfilePage} />
             <Route path="/search"  component={SearchResultsPage} />
             <Route path="/signup"  component={Signup} />
             {/* 404 page */}
