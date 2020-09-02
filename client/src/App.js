@@ -31,6 +31,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import './App.css'
 
 const App = () => {
+
+  const user = null;
   
   //state handlers for modal
   const [show, setShow] = useState(false);
@@ -41,14 +43,25 @@ const App = () => {
   return (
     <Router>
       <ScrollToTop />
+
       <div className="App">
+
         {/* Navigation bar */}
         <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
           <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
           <SearchBar />
-          <Button variant="light" onClick={handleShow}>Log In</Button>
+          {
+            user ?
+            <p>Welcome user</p>
+            :
+            <Button variant="light" onClick={handleShow}>Log In</Button>
+
+          }
+          
         </Navbar>
+
         <div className="wrapper">
+
           {/* React Router  */}
           <Switch>
             <Route path="/" exact component={Home} />

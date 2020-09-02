@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
+import signupNewUser from "../../firebase.js";
+
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -21,7 +23,10 @@ const Signup = () => {
     let [errorMessage, setErrorMessage] = useState('')
 
     //validate the signup
-    const validateSignup = () => {
+    const validateSignup = (e) => {
+        e.preventDefault();
+        // console.log("validating signup")
+        // console.log(username, email, password)
         
         if (validator.isEmpty(username)) {
             setErrorMessage('There is no username')
@@ -42,17 +47,11 @@ const Signup = () => {
             setErrorMessage('Your Password must be at least 6 characters')
             return;
         }
-
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-          });
+        console.log("about to signup new user")
+        signupNewUser(username, password, email);
+        console.log("we're done signing up the new user")
 
     }
-
-
 
     return (
         <Container>
@@ -74,10 +73,11 @@ const Signup = () => {
 
                         <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" value={email} onChange={ e => setEmail(e.target.value)} />
+                        <Form.Control type="password" placeholder="Password" value={password} onChange={ e => setPassword(e.target.value)} />
                         </Form.Group>
-                        <Button variant="light" size="lg" block>Submit</Button>
+                        <Button variant="light" size="lg" block onClick={validateSignup}>Submit</Button>
                         <h1>{errorMessage}</h1>
+
                     </Form>
                 </Col >
                 <Col xs={1} sm={2} md={4}>
