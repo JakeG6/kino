@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import signupNewUser from "../../firebase.js";
+import {signupNewUser} from "../../firebase.js";
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';

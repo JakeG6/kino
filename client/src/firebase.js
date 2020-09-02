@@ -12,7 +12,7 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //add new user to site firebase.
-const signupNewUser = (username, password, email) => {
+export const signupNewUser = (username, password, email) => {
     console.log("we're signing up the new user")
 
     const usernameQuery =  firestore.collection("users").where("username", "==", username);
@@ -23,7 +23,7 @@ const signupNewUser = (username, password, email) => {
 
     if (!usernameQuery.exists && !emailQuery.exists) {
 
-        console.log("they don't exist")
+        console.log("good news: they don't exist")
 
         auth.createUserWithEmailAndPassword(email, password).catch( error => {
             // Handle Errors here.
@@ -53,4 +53,13 @@ const signupNewUser = (username, password, email) => {
 
 }
 
-export default signupNewUser;
+export const signinUser = (email, password) => {
+
+    auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+
+}

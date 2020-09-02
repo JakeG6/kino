@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import ScrollToTop from './ScrollToTop';
+import ScrollToTop from "./ScrollToTop";
+import {signinUser} from "./firebase.js";
 
 //components
 
-import Button from 'react-bootstrap/Button';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import Home from './components/Home/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
@@ -16,9 +16,11 @@ import NoMatch from './components/NoMatch/NoMatch.js';
 import ProfilePage from './components/ProfilePage/ProfilePage.js'
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 import SearchBar from './components/SearchBar/SearchBar';
+import SignIn from './components/SignIn/SignIn.js';
 import Signup from './components/Signup/Signup.js';
 
 //CSS
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';
@@ -43,9 +45,8 @@ const App = () => {
   return (
     <Router>
       <ScrollToTop />
-
       <div className="App">
-
+        
         {/* Navigation bar */}
         <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
           <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
@@ -56,12 +57,10 @@ const App = () => {
             :
             <Button variant="light" onClick={handleShow}>Log In</Button>
 
-          }
-          
+          }          
         </Navbar>
 
         <div className="wrapper">
-
           {/* React Router  */}
           <Switch>
             <Route path="/" exact component={Home} />
@@ -74,30 +73,10 @@ const App = () => {
             <Route component={NoMatch} />
           </Switch>
         </div>
-        {/* Login Modal */}
-        <Modal show={show} onHide={handleClose} className="login-modal">
-          <Modal.Header closeButton>
-            <Modal.Title>Log In</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-          </Form>
-          </Modal.Body>
-          <Modal.Footer className="login-modal-footer">
-            <Link to={`/signup`} onClick={handleClose}><p>Don't have an account? Sign up here!</p></Link>
-            <Button variant="primary" className="btn-light" onClick={handleClose}>
-              Submit
-            </Button>
-          </Modal.Footer>
-        </Modal>
+
+        {/* Signin Modal */}
+        <SignIn show={show} handleClose={handleClose} />
+        
       </div>
     </Router>     
   );
