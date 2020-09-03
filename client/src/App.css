@@ -7,7 +7,7 @@ a:hover {
 }
 
 .App {
-  background-color: #343a40;
+  
   color: white;
 }
 
@@ -44,9 +44,9 @@ a:hover {
   text-align: center;
 }
 
-.container {
-  background-color: #343a40;
-}
+
+
+
 
 .red {
   background-color: red;
@@ -126,8 +126,8 @@ body {
 }
 
 .wrapper {
-  background: #C0C0C0;
 
+  background-color: #343a40;
 }
 
 /* styling for login modal */

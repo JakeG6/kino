@@ -5,9 +5,8 @@ import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import ScrollToTop from "./ScrollToTop";
-import {signinUser, userListener} from "./firebase.js";
+import {logoutUser} from "./firebase.js";
 import { UserContext } from "./providers/UserProvider";
-
 
 //components
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
@@ -22,6 +21,9 @@ import Signup from './components/Signup/Signup.js';
 
 //CSS
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar';
 import './App.css'
@@ -41,41 +43,44 @@ const App = () => {
     <Router>
       <ScrollToTop />
       <div className="App">
+        <Container>
 
-        {/* Navigation bar */}
-        <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
-          <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-          <SearchBar />
-          {
-            //is the user logged in?
-            user ?
-            <div>
-              <p>Welcome user</p>
-              {/* <Button variant="light" onClick={handleShow}>Log Out</Button> */}
-            </div>
-            
-            :
-            <Button variant="light" onClick={handleShow}>Log In</Button>
+          {/* Navigation bar */}
+          <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
+            <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
+            <SearchBar />
+            {
+              //is the user logged in?
+              user ?
+              <div>
+                <p>Welcome user</p>
+                <Button variant="light" onClick={logoutUser}>Log Out</Button>
+              </div>
+              :
+              <Button variant="light" onClick={handleShow}>Log In</Button>
 
-          }          
-        </Navbar>
+            }          
+          </Navbar>
 
-        <div className="wrapper">
-          {/* React Router  */}
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/movie/:id/credits" component={CreditsPage} />
-            <Route path="/movie/:id"  component={MoviePage} />
-            <Route path="/profile" component={ProfilePage} />
-            <Route path="/search"  component={SearchResultsPage} />
-            <Route path="/signup"  component={Signup} />
-            {/* 404 page */}
-            <Route component={NoMatch} />
-          </Switch>
-        </div>
+          <div className="wrapper">
+            {/* React Router  */}
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/movie/:id/credits" component={CreditsPage} />
+              <Route path="/movie/:id"  component={MoviePage} />
+              <Route path="/profile" component={ProfilePage} />
+              <Route path="/search"  component={SearchResultsPage} />
+              <Route path="/signup"  component={Signup} />
+              {/* 404 page */}
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
 
-        {/* Signin Modal */}
-        <SignIn show={show} handleClose={handleClose} />
+          {/* Signin Modal */}
+          <SignIn show={show} handleClose={handleClose} />
+        </Container>
+
+        
         
       </div>
     </Router>     

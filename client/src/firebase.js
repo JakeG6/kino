@@ -1,7 +1,5 @@
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui'
-import "./firebaseConfig.js";
-import { BrowserRouter as Router} from "react-router-dom";
 
 import firebaseConfig from "./firebaseConfig.js"
 
@@ -53,6 +51,7 @@ export const signupNewUser = (username, password, email) => {
 
 }
 
+//sign in user
 export const signinUser = (email, password) => {
 
     auth.signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -64,13 +63,12 @@ export const signinUser = (email, password) => {
 
 }
 
-// export const userListener = () => {
-
-//     auth.onAuthStateChanged(user => {
-//         if (user) {
-//             // User is signed in.
-//             return true;
-//         }
-//     });
-
-// }
+//logout User
+export const logoutUser = () => {
+    auth.signOut().then(() => {
+        //signout succesful
+        console.log("signout succesful")
+    }).catch(error => {
+        // An error happened.
+    });
+}
