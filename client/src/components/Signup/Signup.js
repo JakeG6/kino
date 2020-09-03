@@ -63,7 +63,7 @@ const Signup = () => {
                         
                         <Form.Group controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="email" placeholder="What's your name?" value={username} onChange={ e => setUsername(e.target.value)} />
+                        <Form.Control type="username" placeholder="What's your name?" value={username} onChange={ e => setUsername(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicEmail">

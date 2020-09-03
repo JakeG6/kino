@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import ScrollToTop from "./ScrollToTop";
-import {signinUser} from "./firebase.js";
+import {signinUser, userListener} from "./firebase.js";
+import { UserContext } from "./providers/UserProvider";
+
 
 //components
-
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import Home from './components/Home/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
@@ -21,20 +22,14 @@ import Signup from './components/Signup/Signup.js';
 
 //CSS
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import ModalDialog from 'react-bootstrap/ModalDialog';
-import ModalHeader from 'react-bootstrap/ModalHeader';
-import ModalTitle from 'react-bootstrap/ModalTitle';
-import ModalBody from 'react-bootstrap/ModalBody';
-import ModalFooter from 'react-bootstrap/ModalFooter';
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar';
 import './App.css'
 
 const App = () => {
 
-  const user = null;
+  //user information if logged in
+  const user = useContext(UserContext);
   
   //state handlers for modal
   const [show, setShow] = useState(false);
@@ -46,14 +41,19 @@ const App = () => {
     <Router>
       <ScrollToTop />
       <div className="App">
-        
+
         {/* Navigation bar */}
         <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
           <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
           <SearchBar />
           {
+            //is the user logged in?
             user ?
-            <p>Welcome user</p>
+            <div>
+              <p>Welcome user</p>
+              {/* <Button variant="light" onClick={handleShow}>Log Out</Button> */}
+            </div>
+            
             :
             <Button variant="light" onClick={handleShow}>Log In</Button>
 

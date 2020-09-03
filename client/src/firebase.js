@@ -60,6 +60,17 @@ export const signinUser = (email, password) => {
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
-      });
+    });
 
 }
+
+// export const userListener = () => {
+
+//     auth.onAuthStateChanged(user => {
+//         if (user) {
+//             // User is signed in.
+//             return true;
+//         }
+//     });
+
+// }

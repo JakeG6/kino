@@ -8,10 +8,12 @@ const UserProvider = props => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        auth.onAuthStateChanged(userAuth => {
-            setUser(userAuth);
+
+        auth.onAuthStateChanged(user => {
+            setUser(user);
         });
-    });
+
+    }, []);
   
     return (
       <UserContext.Provider value={user}>
