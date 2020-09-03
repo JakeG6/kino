@@ -3,23 +3,32 @@ import { auth } from "../firebase.js";
 
 export const UserContext = createContext(null);
 
-const UserProvider = props => {
+const UserProvider = ({children}) => {
     
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
+  //waiting for context to pass down user credentials
+  const [pending, setPending] = useState(true);
 
-        auth.onAuthStateChanged(user => {
-            setUser(user);
-        });
+  useEffect(() => {
 
-    }, []);
+    auth.onAuthStateChanged(user => {
+      setUser(user)
+      setPending(false);
+      console.log(user)
+    });
+
+  }, []);
   
-    return (
-      <UserContext.Provider value={user}>
-        {props.children}
-      </UserContext.Provider>
-    );
+  if(pending) {
+    return <>Loading...</>
+  }
+
+  return (
+    <UserContext.Provider value={{user}}>
+      {children}
+    </UserContext.Provider>
+  );
   
 }
 

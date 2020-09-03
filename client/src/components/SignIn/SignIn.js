@@ -24,14 +24,17 @@ const SignIn = props => {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
 
-    const handleSignin = (event) => {
+    async function handleSignin(event) {
         
         event.preventDefault();
-        console.log(email, password);
-        console.log(typeof(email));
-        console.log(typeof(password))
-        signinUser(email, password);
+        // console.log(email, password);
+        // console.log(typeof(email));
+        // console.log(typeof(password))
+        await signinUser(email, password)
+        
         props.handleClose();
+
+        
     }
 
 

@@ -54,7 +54,12 @@ export const signupNewUser = (username, password, email) => {
 //sign in user
 export const signinUser = (email, password) => {
 
-    auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+    let userPromise = auth.signInWithEmailAndPassword(email, password);
+
+    userPromise.then((result) => {
+        console.log(result);
+         // updare the context
+    }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;

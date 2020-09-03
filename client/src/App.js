@@ -40,50 +40,46 @@ const App = () => {
   const handleShow = () => setShow(true);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="App">
-        <Container>
+    
+      <Router>
+        <ScrollToTop />
+        <div className="App">
+          <Container>
+            {/* Navigation bar */}
+            <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
+              <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
+              <SearchBar />
+              {
+                //is the user logged in?
+                user ?
+                <div>
+                  <p>Welcome user</p>
+                  <Button variant="light" onClick={logoutUser}>Log Out</Button>
+                </div>
+                :
+                <Button variant="light" onClick={handleShow}>Log In</Button>
+              }          
+            </Navbar>
+            <div className="wrapper">
+              {/* React Router */}
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/movie/:id/credits" component={CreditsPage} />
+                <Route path="/movie/:id"  component={MoviePage} />
+                <Route path="/profile" component={ProfilePage} />
+                <Route path="/search"  component={SearchResultsPage} />
+                <Route path="/signup"  component={Signup} />
+                {/* 404 page */}
+                <Route component={NoMatch} />
+              </Switch>
+            </div>
 
-          {/* Navigation bar */}
-          <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
-            <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-            <SearchBar />
-            {
-              //is the user logged in?
-              user ?
-              <div>
-                <p>Welcome user</p>
-                <Button variant="light" onClick={logoutUser}>Log Out</Button>
-              </div>
-              :
-              <Button variant="light" onClick={handleShow}>Log In</Button>
-
-            }          
-          </Navbar>
-
-          <div className="wrapper">
-            {/* React Router  */}
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/movie/:id/credits" component={CreditsPage} />
-              <Route path="/movie/:id"  component={MoviePage} />
-              <Route path="/profile" component={ProfilePage} />
-              <Route path="/search"  component={SearchResultsPage} />
-              <Route path="/signup"  component={Signup} />
-              {/* 404 page */}
-              <Route component={NoMatch} />
-            </Switch>
-          </div>
-
-          {/* Signin Modal */}
-          <SignIn show={show} handleClose={handleClose} />
-        </Container>
-
-        
-        
-      </div>
-    </Router>     
+            {/* Signin Modal */}
+            <SignIn show={show} handleClose={handleClose} />
+          </Container>
+        </div>
+      </Router> 
+   
   );
 }
 

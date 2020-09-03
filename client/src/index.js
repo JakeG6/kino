@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router} from "react-router-dom";
-import UserProvider from "./providers/UserProvider.js"
+
 // import ScrollToTop from './ScrollToTop.js';
+import UserProvider from "./providers/UserProvider.js"
+
 
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -12,6 +14,8 @@ ReactDOM.render(
     <UserProvider>
         <App />
     </UserProvider>
+        
+  
 , 
 document.getElementById('root'));
 

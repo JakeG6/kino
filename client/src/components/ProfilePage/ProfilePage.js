@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 
 import apiKey from "../apiKey";
+import { UserContext } from "../../providers/UserProvider";
 
 import posterPlaceholder from "../poster-placeholder.jpg";
 
@@ -20,18 +21,22 @@ import Tabs from 'react-bootstrap/Tabs';
 
 const ProfilePage = () => {
 
+    const user = useContext(UserContext);
 
+
+    //is the user logged in?
     return (
-        <Container>
+
+        user ?
             <Row>
                 <Col>
                     <p>Welcome "username"</p>
                 </Col>
             </Row>
-            
-        </Container>
-    )
-
+        :
+            <Redirect to="/" />
+    )       
+    
 }
 
 
