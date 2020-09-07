@@ -13,7 +13,7 @@ import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import Home from './components/Home/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import NoMatch from './components/NoMatch/NoMatch.js';
-import ProfilePage from './components/ProfilePage/ProfilePage.js'
+import DashboardPage from './components/DashboardPage/DashboardPage.js'
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 import SearchBar from './components/SearchBar/SearchBar';
 import SignIn from './components/SignIn/SignIn.js';
@@ -42,23 +42,30 @@ const App = () => {
   return (
     
       <Router>
+
         <ScrollToTop />
+
         <div className="App">
           <Container>
             {/* Navigation bar */}
             <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
               <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
               <SearchBar />
+              <UserContext.Consumer>
               {
-                //is the user logged in?
-                user ?
-                <div>
-                  <p>Welcome user</p>
-                  <Button variant="light" onClick={logoutUser}>Log Out</Button>
-                </div>
+                user => (
+                 //is the user logged in?
+                user ? 
+                  <div>
+                    <p>Welcome user</p>
+                    <Button variant="light" onClick={logoutUser}>Log Out</Button>
+                  </div>
                 :
-                <Button variant="light" onClick={handleShow}>Log In</Button>
+                  <Button variant="light" onClick={handleShow}>Log In</Button>
+                
+                )
               }          
+              </UserContext.Consumer>
             </Navbar>
             <div className="wrapper">
               {/* React Router */}
@@ -66,7 +73,7 @@ const App = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/movie/:id/credits" component={CreditsPage} />
                 <Route path="/movie/:id"  component={MoviePage} />
-                <Route path="/profile" component={ProfilePage} />
+                <Route path="/dashboard" component={DashboardPage} />
                 <Route path="/search"  component={SearchResultsPage} />
                 <Route path="/signup"  component={Signup} />
                 {/* 404 page */}
@@ -78,6 +85,7 @@ const App = () => {
             <SignIn show={show} handleClose={handleClose} />
           </Container>
         </div>
+
       </Router> 
    
   );

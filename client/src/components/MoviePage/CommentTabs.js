@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useContext } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,6 +12,7 @@ import Tab from 'react-bootstrap/Tab';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
+import { UserContext } from '../../providers/UserProvider';
 
 const CommentTabs = () => {
 
@@ -29,7 +30,23 @@ const CommentTabs = () => {
                                 <p>home.</p>
                             </Tab>
                             <Tab eventKey="discussion" title="Discussion">
-                                <p>I was born by a river.</p>
+                            {/* <UserContext.Consumer>
+                                {
+                                    user => (
+                                        user ?
+                                            <p>posts go here</p>
+                                        :
+                                            <Card>
+                                                <Card.Text>
+                                                    Log in or sign up to leave a comment
+                                                </Card.Text>
+                                            </Card>
+                                    )
+                                    
+                                        
+                                }
+                            </UserContext.Consumer> */}
+                                
                             </Tab>
                         </Tabs>
                     </Col>

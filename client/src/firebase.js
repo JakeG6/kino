@@ -70,9 +70,10 @@ export const signinUser = (email, password) => {
 
 //logout User
 export const logoutUser = () => {
-    auth.signOut().then(() => {
+    auth.signOut().then(promise => {
         //signout succesful
         console.log("signout succesful")
+        console.log(promise);
     }).catch(error => {
         // An error happened.
     });

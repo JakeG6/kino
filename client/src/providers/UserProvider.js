@@ -13,19 +13,20 @@ const UserProvider = ({children}) => {
   useEffect(() => {
 
     auth.onAuthStateChanged(user => {
+      console.log("a user is detected")
       setUser(user)
       setPending(false);
       console.log(user)
     });
 
-  }, []);
-  
-  if(pending) {
+  },[]) 
+
+  if (pending) {
     return <>Loading...</>
   }
 
   return (
-    <UserContext.Provider value={{user}}>
+    <UserContext.Provider value={user}>
       {children}
     </UserContext.Provider>
   );

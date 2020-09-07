@@ -19,7 +19,7 @@ import Image from 'react-bootstrap/Image';
 import Tabs from 'react-bootstrap/Tabs';
 
 
-const ProfilePage = () => {
+const DashboardPage = () => {
 
     const user = useContext(UserContext);
 
@@ -40,4 +40,4 @@ const ProfilePage = () => {
 }
 
 
-export default ProfilePage;
+export default DashboardPage;
