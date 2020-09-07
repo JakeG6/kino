@@ -37,10 +37,10 @@ export const signupNewUser = (username, password, email) => {
             userPoints: 1,
             username: username
             
-        }).then(function(docRef) {
+        }).then(docRef => {
             console.log("Document written with ID: ", docRef.id);
         })
-        .catch(function(error) {
+        .catch(error => {
             console.error("Error adding document: ", error);
         });
         
@@ -77,4 +77,74 @@ export const logoutUser = () => {
     }).catch(error => {
         // An error happened.
     });
+}
+
+export const getUserData = user => {
+
+    let userObj;
+
+    firestore.collection("users").where("email", "==", user.email).get().then(snapshot => {
+
+        userObj = snapshot.docs[0].data();
+        
+    }).catch(function(error) {
+    
+        console.log("Error getting user: ", error);
+    
+    });
+
+    return userObj;
+
+}
+
+//post movie comment to firestore
+export const postMovieComment = async (movieId, text, user) => {
+    // console.log(movieId, text, user.email)
+
+    let email = user.email
+    let username;
+
+    await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
+
+        username = snapshot.docs[0].data().username;
+        // console.log(username)
+    
+    }).catch(function(error) {
+    
+        console.log("Error getting documents: ", error);
+    
+    });
+
+    firestore.collection("movieComments").add({
+        movieId: movieId,
+        username: username,
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        text: text,
+        points: 0
+        
+    }).then(function(docRef) {
+        console.log("Comment written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding comment: ", error);
+    });
+}
+
+//retrieve comments for moviepage
+export const getMovieComments = async movieId => {
+
+    let commentArr = []
+
+    await firestore.collection("movieComments").where("movieId", "==", movieId).get().then(snapshot => {
+        snapshot.forEach(doc => {
+
+            commentArr.push(doc.data());
+        })
+        
+        console.log(commentArr)
+  
+    })
+
+    return commentArr;
+
 }

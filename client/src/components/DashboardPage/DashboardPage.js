@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import apiKey from "../apiKey";
 import { UserContext } from "../../providers/UserProvider";
+import { getUserData } from "../../firebase.js";
 
 import posterPlaceholder from "../poster-placeholder.jpg";
 
@@ -23,18 +24,35 @@ const DashboardPage = () => {
 
     const user = useContext(UserContext);
 
+    const [userData, setUserData] = useState(null);
+
+    useEffect(()=> {
+
+        getUserData(user).then(userObj => {
+            console.log(userObj)
+            setUserData(userObj)
+        });
+
+    }, []);
+
 
     //is the user logged in?
     return (
-
-        user ?
-            <Row>
-                <Col>
-                    <p>Welcome "username"</p>
-                </Col>
-            </Row>
-        :
-            <Redirect to="/" />
+        <UserContext.Consumer>
+        {
+            user =>
+                user ?
+                <Row>
+                    <Col>
+                        <p>Welcome {userData.username}</p>
+                    </Col>
+                </Row>
+            :
+                <Redirect to="/" />
+        }
+        </UserContext.Consumer>
+        
+        
     )       
     
 }

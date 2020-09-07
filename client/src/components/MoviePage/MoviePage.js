@@ -8,7 +8,7 @@ import createTechnicalInfo from './createTechnicalInfo';
 import createGenreList from './createGenreList';
 import createStarringList from './createStarringList';
 import similarMovieDisplay from './similarMoviesDisplay';
-import CommentTabs from './CommentTabs';
+import DiscussionTabs from './DiscussionTabs/DiscussionTabs.js';
 import "./MoviePage.css"
 
 import posterPlaceholder from "../poster-placeholder.jpg";
@@ -126,7 +126,7 @@ const MoviePage = ({ match }) => {
                 <Row>
                     <Col xs={12}>
                         {similarMovieDisplay(similarMovies)}
-                        <CommentTabs />
+                        <DiscussionTabs movieId={movieId} />
                     </Col>
                 </Row>
             </Container>
