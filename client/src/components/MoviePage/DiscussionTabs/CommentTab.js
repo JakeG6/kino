@@ -18,6 +18,10 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPrayingHands } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+
 import { UserContext } from '../../../providers/UserProvider';
 import { postMovieComment, getMovieComments } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
@@ -52,13 +56,24 @@ const CommentTab = props => {
         return (
             comments.commentArr.map(comment => (
                 <Card className="comment-card">
-                    <Card.Header as="h5">{comment.username}</Card.Header>
+                    <Card.Header>
+                     
+                            <h5>{comment.username} </h5>
+
+                    </Card.Header>
                     <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
                     <Card.Body>
                         {comment.text}
                     </Card.Body>
                     <footer className="comment-footer">
-            <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+                        <div className="comment-vote">
+                            <FontAwesomeIcon className="patrIcon" icon={faPrayingHands} size="2x" color="white"  />
+                            <h5>{comment.points}</h5>
+                            <FontAwesomeIcon className="plebIcon" icon={faThumbsDown} size="2x" color="white"  />
+                            </div>
+                    
+                            <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+            
                     </footer>
                 </Card>
             ))

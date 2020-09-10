@@ -1,13 +1,32 @@
 
+.active {
+    border-color: #343A40 !important;
+    border-bottom: 0px !important;
+    border-top: none !important;
+    background-color: black !important;
+}
+
 .comment-submit {
     text-align: right;
 }
 
 .comment-footer {
     padding: 1em 1em .5em 1em;
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     font-size: .75rem;
     color: lightgrey
+}
+
+.comment-footer i {
+    
+}
+
+.comment-vote {
+    display:flex;
+    justify-content: space-between;
+    width: 8em;
 }
 
 .discussion {
@@ -47,6 +66,27 @@
     border-bottom: none;
 }
 
+.patrIcon:hover {
+    color:green;
+    border: 1px solid green;
+    background-color: darkgreen;
+}
+
+.plebIcon:hover {
+    color: red;
+    border: 1px solid red;
+    background-color: darkred;
+}
+
+.patrIcon, .plebIcon {
+    padding: .1em;
+    border-radius: .25em;
+  }
+
+.patrIcon:hover, .plebIcon:hover {
+  cursor: pointer;
+}
+
 .please-signin {
     padding: 1em;
     background-color:#343a40;
@@ -59,9 +99,3 @@
     margin-top: 1em;
 }
 
-.active {
-    border-color: #343A40 !important;
-    border-bottom: 0px !important;
-    border-top: none !important;
-    background-color: black !important;
-}
