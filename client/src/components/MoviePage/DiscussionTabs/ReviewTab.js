@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
 
 import Accordion from 'react-bootstrap/Accordion';
 import Container from 'react-bootstrap/Container';
@@ -103,11 +105,11 @@ const ReviewTab = props => {
                             </Card>
                     </Accordion>
                     :
-                        <Card>
-                            <Card.Text>
-                                Log in or sign up to leave a review
-                            </Card.Text>
-                        </Card>
+                    <Card className="comment-card  please-signin">
+                        <Card.Text>
+                            <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a review</i>
+                        </Card.Text>
+                    </Card>
                 )
             }
             </UserContext.Consumer>
@@ -121,7 +123,7 @@ const ReviewTab = props => {
                     reviews.reviewsArr.length > 0 ?
                         reviewCards(reviews)                                                                                              
                     :
-                    <p>Nobody has reviewed this movie yet</p>
+                    <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has reviewed this movie yet. You could be the first!</p>
                 }
             </div>
         </Tab.Content>

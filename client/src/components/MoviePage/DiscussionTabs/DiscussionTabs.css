@@ -1,4 +1,14 @@
 
+.comment-submit {
+    text-align: right;
+}
+
+.comment-footer {
+    padding: 1em 1em .5em 1em;
+    text-align: right;
+    font-size: .75rem;
+    color: lightgrey
+}
 
 .discussion {
 
@@ -35,6 +45,14 @@
 .comment-card .card-header {
     background-color: gray;
     border-bottom: none;
+}
+
+.please-signin {
+    padding: 1em;
+    background-color:#343a40;
+    /* border: 1px solid white; */
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .tab-content {

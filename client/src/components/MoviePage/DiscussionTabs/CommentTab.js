@@ -1,4 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import validator from 'validator';
+
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -19,10 +22,13 @@ import { UserContext } from '../../../providers/UserProvider';
 import { postMovieComment, getMovieComments } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
+
 const CommentTab = props => {
 
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState({commentArr: [], gettingComments: true})
+      //state handlers for modal
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
 
@@ -51,6 +57,9 @@ const CommentTab = props => {
                     <Card.Body>
                         {comment.text}
                     </Card.Body>
+                    <footer className="comment-footer">
+            <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+                    </footer>
                 </Card>
             ))
         )
@@ -70,16 +79,29 @@ const CommentTab = props => {
                         user ?
                             <Form>
                                 <Form.Group controlId="formNewComment">
-                                    <FormControl as="textarea" aria-label="With textarea" rows={5} placeholder="Enter comment" value={commentText} onChange={ e => setCommentText(e.target.value)} />
+                                    <FormControl 
+                                        as="textarea" 
+                                        aria-label="With textarea" 
+                                        rows={5} 
+                                        placeholder="Enter comment" 
+                                        value={commentText} 
+                                        onChange={ e => setCommentText(e.target.value)} 
+                                    />
                                 </Form.Group>
-                                <Button variant="primary" type="submit" onClick={e => submitComment(e, props.movieId, commentText, user)}>
+                                <Button
+                                    className="comment-submit"
+                                    variant="light" 
+                                    type="submit" 
+                                    onClick={e => submitComment(e, props.movieId, commentText, user)}
+                                    disabled = {validator.isEmpty(commentText, { ignore_whitespace:true })? true : false}
+                                >
                                     Submit
                                 </Button>
                             </Form>
                         :
-                            <Card>
+                            <Card className="comment-card please-signin">
                                 <Card.Text>
-                                    Log in or sign up to leave a comment
+                                    <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a comment</i>
                                 </Card.Text>
                             </Card>
                     )
@@ -91,7 +113,7 @@ const CommentTab = props => {
                     comments.commentArr.length > 0 ?
                         commentCards(comments)                                                                                              
                     :
-                    <p>Nobody has commented on this movie yet</p>
+                    <p>Nobody has commented on this movie yet.</p>
                 }
                 </div>
                 </Col>

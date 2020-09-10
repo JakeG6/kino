@@ -22,13 +22,15 @@ const Signup = () => {
     let [password, setPassword] = useState('');
     let [errorMessage, setErrorMessage] = useState('')
 
+    const noWhitespace = { ignore_whitespace:true };
+
     //validate the signup
     const validateSignup = (e) => {
         e.preventDefault();
         // console.log("validating signup")
         // console.log(username, email, password)
         
-        if (validator.isEmpty(username)) {
+        if (validator.isEmpty(username, noWhitespace)) {
             setErrorMessage('There is no username')
             return;
         }
@@ -59,7 +61,7 @@ const Signup = () => {
                 <Col xs={1} sm={2} md={4}>
                 </Col>
                 <Col xs={10} sm={8} md={4}>
-                    <Form>
+                    <Form className="signup-form">
                         
                         <Form.Group controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
@@ -75,7 +77,16 @@ const Signup = () => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" value={password} onChange={ e => setPassword(e.target.value)} />
                         </Form.Group>
-                        <Button variant="light" size="lg" block onClick={validateSignup}>Submit</Button>
+
+                        <Button 
+                        variant="light" 
+                        size="lg" 
+                        disabled={validator.isEmpty(username, noWhitespace) || validator.isEmpty(email, noWhitespace) || validator.isEmpty(password, noWhitespace) ? true : false} 
+                        block 
+                        onClick={validateSignup}
+                        >
+                            Submit
+                        </Button>
                         <h1>{errorMessage}</h1>
 
                     </Form>
