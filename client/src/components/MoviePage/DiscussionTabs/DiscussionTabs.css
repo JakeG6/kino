@@ -1,0 +1,49 @@
+
+
+.discussion {
+
+    border-radius: .25rem;
+    margin-bottom: 1em;
+}
+
+.discussion .nav-tabs {
+    border-bottom: 1px solid #343A40;
+    border-left: 0px solid;
+    border-top: none;
+}
+
+.tab-content {
+    background-color: Black;
+}
+
+.reviewButton {
+    color: black;
+    border-radius: .25rem;
+}
+
+.comment-stack {
+    margin-top:2em;
+}
+
+.comment-card {
+    background-color:#343a40;
+    /* border: 1px solid white; */
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.comment-card .card-header {
+    background-color: gray;
+    border-bottom: none;
+}
+
+.tab-content {
+    margin-top: 1em;
+}
+
+.active {
+    border-color: #343A40 !important;
+    border-bottom: 0px !important;
+    border-top: none !important;
+    background-color: black !important;
+}

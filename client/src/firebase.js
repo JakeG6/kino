@@ -148,3 +148,55 @@ export const getMovieComments = async movieId => {
     return commentArr;
 
 }
+
+export const postMovieReview = async (movieId, reviewData, user) => {
+
+    let email = user.email
+    let username;
+
+    await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
+
+        username = snapshot.docs[0].data().username;
+        // console.log(username)
+    
+    }).catch(function(error) {
+    
+        console.log("Error getting document: ", error);
+    
+    });
+
+    firestore.collection("movieReviews").add({
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        movieId: movieId,
+        points: 0,
+        rating: reviewData.rating,
+        text: reviewData.text,
+        title: reviewData.title,
+        username: username
+        
+        
+    }).then(function(docRef) {
+        console.log("Review written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding comment: ", error);
+    });
+}
+
+export const getMovieReviews = async movieId => {
+
+    let reviewsArr = []
+
+    await firestore.collection("movieReviews").where("movieId", "==", movieId).get().then(snapshot => {
+        snapshot.forEach(doc => {
+
+            reviewsArr.push(doc.data());
+        })
+        
+        console.log(reviewsArr)
+  
+    })
+
+    return reviewsArr;
+
+}

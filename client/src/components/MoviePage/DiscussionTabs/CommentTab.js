@@ -45,8 +45,9 @@ const CommentTab = props => {
     const commentCards = comments => {
         return (
             comments.commentArr.map(comment => (
-                <Card>
-                    <Card.Subtitle className="mb-2 text-muted">{comment.username}</Card.Subtitle>
+                <Card className="comment-card">
+                    <Card.Header as="h5">{comment.username}</Card.Header>
+                    <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
                     <Card.Body>
                         {comment.text}
                     </Card.Body>
@@ -55,18 +56,21 @@ const CommentTab = props => {
         )
     }
     
-    
-
     if (comments.gettingComments === false) {
         return (
-            <div>
+            <Tab.Content>
+                <Row>
+                    <Col xs={1}>
+
+                    </Col>
+                    <Col xs={10}>
                 <UserContext.Consumer>
                 {
                     user => (
                         user ?
                             <Form>
                                 <Form.Group controlId="formNewComment">
-                                    <FormControl as="textarea" aria-label="With textarea" rows={5} value={commentText} onChange={ e => setCommentText(e.target.value)} />
+                                    <FormControl as="textarea" aria-label="With textarea" rows={5} placeholder="Enter comment" value={commentText} onChange={ e => setCommentText(e.target.value)} />
                                 </Form.Group>
                                 <Button variant="primary" type="submit" onClick={e => submitComment(e, props.movieId, commentText, user)}>
                                     Submit
@@ -81,7 +85,8 @@ const CommentTab = props => {
                     )
                 }
                 </UserContext.Consumer>
-                <div>
+                
+                <div className="comment-stack">
                 {
                     comments.commentArr.length > 0 ?
                         commentCards(comments)                                                                                              
@@ -89,7 +94,12 @@ const CommentTab = props => {
                     <p>Nobody has commented on this movie yet</p>
                 }
                 </div>
-            </div>
+                </Col>
+                <Col xs={1}>
+
+                    </Col>
+                </Row>
+            </Tab.Content>
         )
     }
     else {

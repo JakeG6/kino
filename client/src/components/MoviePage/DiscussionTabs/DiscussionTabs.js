@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react';
 
+import "./DiscussionTabs.css"
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,6 +19,7 @@ import TabPane from 'react-bootstrap/TabPane';
 
 import { UserContext } from '../../../providers/UserProvider';
 import CommentTab from "./CommentTab";
+import ReviewTab from "./ReviewTab";
 import { postMovieComment, getMovieComments } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
@@ -31,14 +34,16 @@ const DiscussionTabs = props => {
                     </Col>
                 </Row>
                     <Col>
-                        <Tabs defaultActiveKey="review" id="uncontrolled-tab-example">
-                            <Tab eventKey="review" title="Reviews">
-                                <p>home.</p>
-                            </Tab>
-                            <Tab eventKey="comments" title="Comments">
-                                <CommentTab movieId={props.movieId} />
-                            </Tab> 
-                        </Tabs>
+                        <div className="discussion black">
+                            <Tabs defaultActiveKey="review" id="uncontrolled-tab-example"  >
+                                <Tab eventKey="review" title="Reviews" className="disTab black">
+                                    <ReviewTab movieId={props.movieId} />
+                                </Tab>
+                                <Tab eventKey="comments" title="Comments" className="disTab black">
+                                    <CommentTab movieId={props.movieId} />
+                                </Tab> 
+                            </Tabs>
+                        </div>
                     </Col>
             </Col>
         </Row>
