@@ -150,3 +150,8 @@ body {
 .login-modal .close {
   color: white !important;
 }
+
+.user-dropdown {
+  color: black;
+  background-color:white;
+}

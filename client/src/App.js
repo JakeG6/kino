@@ -23,6 +23,7 @@ import Signup from './components/Signup/Signup.js';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
+import Dropdown from "react-bootstrap/Dropdown";
 import Row from 'react-bootstrap/Row'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar';
@@ -57,8 +58,16 @@ const App = () => {
                  //is the user logged in?
                 user ? 
                   <div>
-                    <p>Welcome user</p>
-                    <Button variant="light" onClick={logoutUser}>Log Out</Button>
+                     <Dropdown >
+                      <Dropdown.Toggle variant="light">
+                        User name
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item href="#/action-1">Dashboard</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2" onClick={logoutUser}>Log Out</Dropdown.Item>
+                      
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 :
                   <Button variant="light" onClick={handleShow}>Log In</Button>
