@@ -255,74 +255,98 @@ export const getMovieReviews = async movieId => {
 
 }
 
-export const upvote = async (commentId, user) => {
+export const toggleUpvote = async (commentId, user) => {
 
     const commentRef = firestore.collection("movieComments").doc(commentId);
 
-    //remove the user from downvoters if they're upvoting.
+    const removeFromUpvoters = { upvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
+    const removeFromDownvoters = { downvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
+    const addToUpvoters = { upvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
+
     let comment = undefined;
 
     await commentRef.get().then(doc => {
 
         comment = doc.data();
-
-        if (comment.downvoters.includes(user.email)) {
-            commentRef.update({ downvoters: firebase.firestore.FieldValue.arrayRemove(user.email) });
+        
+        //remove the user from upvoters if they've upvoted already
+        if (comment.upvoters.includes(user.uid)) {
+            commentRef.update(removeFromUpvoters).then(p => {
+                commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)})
+            })
+            
             
         }
+        // add the user to upvoters if they're in downvoters, and compensate for points lost from downvoting
+        else if (comment.downvoters.includes(user.uid)) {
+            commentRef.update(removeFromDownvoters).then(p => {
+                commentRef.update(addToUpvoters).then(p => {
+                    commentRef.update({ points: firebase.firestore.FieldValue.increment(2)})
+                }) 
+            })
+            
+            
+        }
+        //add the user to upvoters if they haven't voted on the comment
+        else {
+            commentRef.update(addToUpvoters).then(p => {
+                commentRef.update({ points: firebase.firestore.FieldValue.increment(1)})
+            })
+            
+
+        }
 
     })
 
-    await commentRef.update({ upvoters: firebase.firestore.FieldValue.arrayUnion(user.email) });
-    
-    commentRef.update({ points: firebase.firestore.FieldValue.increment(1)})
-
 }
 
-export const downvote = async (commentId, user) => {
+export const toggleDownvote = async (commentId, user) => {
 
     const commentRef = firestore.collection("movieComments").doc(commentId);
 
-    //remove the user from upvoters if they're downvoting.
+    const removeFromUpvoters = { upvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
+    const removeFromDownvoters = { downvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
+    const addToDownvoters = { downvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
 
     let comment = undefined;
 
     await commentRef.get().then(doc => {
 
         comment = doc.data();
+        
+        //remove the user from downvoters if they've downvoted already
+        if (comment.downvoters.includes(user.uid)) {
 
-        if (comment.upvoters.includes(user.email)) {
-            commentRef.update({ upvotes: firebase.firestore.FieldValue.arrayRemove(user.email) });
+            commentRef.update(removeFromDownvoters).then(p => {
+
+                commentRef.update({ points: firebase.firestore.FieldValue.increment(1)})
+
+            })
+            
+        }
+        // add the user to downvoters if they're in upvoters, and compensate for points gained from upvoting
+        else if (comment.upvoters.includes(user.uid)) {
+
+            commentRef.update(removeFromUpvoters).then(p => {
+
+                commentRef.update(addToDownvoters).then(p => {
+
+                    commentRef.update({ points: firebase.firestore.FieldValue.increment(-2)})
+
+                }) 
+            })
+          
+            
+        }
+        //add the user to upvoters if they haven't voted on the comment
+        else {
+           
+            commentRef.update(addToDownvoters).then(p => {
+                commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)})
+            })
+
         }
 
     })
 
-    await commentRef.update({ downvoters: firebase.firestore.FieldValue.arrayUnion(user.email) });
-    commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)})
-
 }
-
-export const unvote = async (commentId, vote, user) => {
-
-    const commentRef = firestore.collection("movieComments").doc(commentId);
-
-    if (vote === "upvote") {
-        await commentRef.update({ upvoters: firebase.firestore.FieldValue.arrayUnion(user.email) });
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)})
-    }
-
-    if (vote === "downvote") {
-        await commentRef.update({ downvoters: firebase.firestore.FieldValue.arrayRemove(user.email) });
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(1)})
-    }
-}
-
-// export const downvote = async (commentId, user) => {
-
-//     const commentRef = firestore.collection("movieComments").doc(commentId);
-
-//     commentRef
-
-//     await commentRef.update({ downvoters: firebase.firestore.FieldValue.arrayRemove(user.email) });
-
-// }

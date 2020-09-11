@@ -24,7 +24,7 @@ import { faPrayingHands } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '../../../providers/UserProvider';
-import { postMovieComment, getMovieComments, upvote, downvote, unvote } from '../../../firebase';
+import { postMovieComment, getMovieComments, toggleUpvote, toggleDownvote } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 const CommentTab = props => {
@@ -55,14 +55,12 @@ const CommentTab = props => {
     }
 
     const handleUpvote = (id, user )=> {
-        upvote(id, user)
+        toggleUpvote(id, user)
     }
 
-    const handleDownvote = () => {
-
-    }
-    const handleUnvote = () => {
-
+    const handleDownvote = (id, user) => {
+        toggleDownvote(id, user)
+      
     }
 
     const commentCards = comments => {
@@ -71,33 +69,39 @@ const CommentTab = props => {
                 <UserContext.Consumer>
                     {
                     user => (
-                        <Card className="comment-card" key={comment.id}>
-                    <Card.Header>                     
-                        <h5>{comment.username}</h5>
-                    </Card.Header>
-                    <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                    <Card.Body> {comment.text} </Card.Body>
-                    <footer className="comment-footer">
-                        <div className="comment-vote">
-                            <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Patrician</strong> </Tooltip>}>
-                                <FontAwesomeIcon 
-                                    className={`patrIcon ${comment.upvoters.includes(user.email) ? "upvoted" : ""}`} 
-                                    icon={faPrayingHands} 
-                                    size="2x" 
-                                    color="white" 
-                                    onClick={comment.upvoters.includes(user.email) ? handleUnvote(comment.id, "upvote", user) : handleUpvote(comment.commentId, user)}  
-                                />
-                            </OverlayTrigger>
-                            <h5>{comment.points}</h5>
-                            <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Plebian</strong> </Tooltip>}>
-                                <FontAwesomeIcon className="plebIcon" icon={faThumbsDown} size="2x" color="white"  />
-                            </OverlayTrigger>
-                        </div>
+                        <Card className="comment-card" key={comment.commentId}>
+                            <Card.Header>                     
+                                <h5>{comment.username}</h5>
+                            </Card.Header>
+                            <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
+                            <Card.Body> {comment.text} </Card.Body>
+                            <footer className="comment-footer">
+                                <div className="comment-vote">
+                                    <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Patrician</strong> </Tooltip>}>
+                                        <FontAwesomeIcon 
+                                            className={`patrIcon ${comment.upvoters.includes(user.uid) ? "upvoted" : ""}`} 
+                                            icon={faPrayingHands} 
+                                            size="2x" 
+                                            color="white" 
+                                            onClick={ e => handleUpvote(comment.commentId, user)}  
+                                        />
+                                    </OverlayTrigger>
+                                    <h5>{comment.points}</h5>
+                                    <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Plebian</strong> </Tooltip>}>
+                                        <FontAwesomeIcon 
+                                            className={`plebIcon ${comment.downvoters.includes(user.uid) ? "downvoted" : ""}`}
+                                            icon={faThumbsDown} 
+                                            size="2x" 
+                                            color="white"
+                                            onClick={ e => handleDownvote(comment.commentId, user)}    
+                                        />
+                                    </OverlayTrigger>
+                                </div>
+                                
+                                <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
                         
-                        <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
-                
-                    </footer>
-                </Card>
+                            </footer>
+                        </Card>
                     )
                 }
                 </UserContext.Consumer>
