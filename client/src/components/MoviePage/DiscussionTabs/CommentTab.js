@@ -12,20 +12,20 @@ import FormControl from 'react-bootstrap/FormControl';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image'
-import Tabs from 'react-bootstrap/Tabs';
+import Overlay from 'react-bootstrap/Overlay'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+
 import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
+
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrayingHands } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '../../../providers/UserProvider';
-import { postMovieComment, getMovieComments } from '../../../firebase';
+import { postMovieComment, getMovieComments, upvote, downvote, unvote } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
-
 
 const CommentTab = props => {
 
@@ -33,6 +33,8 @@ const CommentTab = props => {
     const [comments, setComments] = useState({commentArr: [], gettingComments: true})
       //state handlers for modal
     const [show, setShow] = useState(false);
+
+
 
     useEffect(() => {
 
@@ -52,30 +54,53 @@ const CommentTab = props => {
         setCommentText("");
     }
 
+    const handleUpvote = (id, user )=> {
+        upvote(id, user)
+    }
+
+    const handleDownvote = () => {
+
+    }
+    const handleUnvote = () => {
+
+    }
+
     const commentCards = comments => {
         return (
             comments.commentArr.map(comment => (
-                <Card className="comment-card">
-                    <Card.Header>
-                     
-                            <h5>{comment.username} </h5>
-
+                <UserContext.Consumer>
+                    {
+                    user => (
+                        <Card className="comment-card" key={comment.id}>
+                    <Card.Header>                     
+                        <h5>{comment.username}</h5>
                     </Card.Header>
                     <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                    <Card.Body>
-                        {comment.text}
-                    </Card.Body>
+                    <Card.Body> {comment.text} </Card.Body>
                     <footer className="comment-footer">
                         <div className="comment-vote">
-                            <FontAwesomeIcon className="patrIcon" icon={faPrayingHands} size="2x" color="white"  />
+                            <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Patrician</strong> </Tooltip>}>
+                                <FontAwesomeIcon 
+                                    className={`patrIcon ${comment.upvoters.includes(user.email) ? "upvoted" : ""}`} 
+                                    icon={faPrayingHands} 
+                                    size="2x" 
+                                    color="white" 
+                                    onClick={comment.upvoters.includes(user.email) ? handleUnvote(comment.id, "upvote", user) : handleUpvote(comment.commentId, user)}  
+                                />
+                            </OverlayTrigger>
                             <h5>{comment.points}</h5>
-                            <FontAwesomeIcon className="plebIcon" icon={faThumbsDown} size="2x" color="white"  />
-                            </div>
-                    
-                            <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
-            
+                            <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Plebian</strong> </Tooltip>}>
+                                <FontAwesomeIcon className="plebIcon" icon={faThumbsDown} size="2x" color="white"  />
+                            </OverlayTrigger>
+                        </div>
+                        
+                        <i>Posted {new Date(comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+                
                     </footer>
                 </Card>
+                    )
+                }
+                </UserContext.Consumer>
             ))
         )
     }

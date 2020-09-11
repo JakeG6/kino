@@ -72,6 +72,18 @@
     background-color: darkgreen;
 }
 
+.upvoted {
+    color:green;
+    border: 1px solid green;
+    background-color: darkgreen;
+}
+
+.downvoted {
+    color: red;
+    border: 1px solid red;
+    background-color: darkred;
+}
+
 .plebIcon:hover {
     color: red;
     border: 1px solid red;
