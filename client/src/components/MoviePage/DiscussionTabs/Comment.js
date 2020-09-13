@@ -2,20 +2,9 @@ import React, {useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import validator from 'validator';
 
-
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image'
-import Overlay from 'react-bootstrap/Overlay'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
-import Tab from 'react-bootstrap/Tab';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import Tooltip from 'react-bootstrap/Tooltip';
 
@@ -24,7 +13,7 @@ import { faPrayingHands } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '../../../providers/UserProvider';
-import { postMovieComment, getMovieComments, toggleUpvote, toggleDownvote } from '../../../firebase';
+import { toggleUpvote, toggleDownvote } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 const Comment = props => {
@@ -42,49 +31,37 @@ const Comment = props => {
         if (vote === "upvoted") {
             setVote("");
             setPointCount(pointCount -1 );
-
         }
         // add the user to upvoters if they're in downvoters, and compensate for points lost from downvoting
         else if (vote === "downvoted") {
             setVote("upvoted");
-            setPointCount(pointCount + 2);
-                    
+            setPointCount(pointCount + 2);          
         }
-
         //add the user to upvoters if they haven't voted on the comment
         else {
             setVote("upvoted");
             setPointCount(pointCount + 1);
                    
         }
-
         toggleUpvote(id, user);
-
     }
 
     const handleDownvote = (id, user) => {
-
         //remove the user from downvoters if they've downvoted already
         if (vote === "downvoted") {
             setVote("");
             setPointCount(pointCount + 1 );
-    
         }
-
         // add the user to downvoters if they're in upvoters, and compensate for points gained from upvoting
         else if (vote === "upvoted") {
             setVote("downvoted");
-            setPointCount(pointCount -2 );
-        
+            setPointCount(pointCount -2 );     
         }
-        
-        //add the user to upvoters if they haven't voted on the comment
+        //add the user to downvoters if they haven't voted on the comment
         else {
             setVote("downvoted");
             setPointCount(pointCount - 1);
-
         }
-
         toggleDownvote(id, user);
     }
 
@@ -106,7 +83,7 @@ const Comment = props => {
                                         icon={faPrayingHands} 
                                         size="2x" 
                                         color="white" 
-                                        onClick={ e => handleUpvote(props.comment.commentId, user)}  
+                                        onClick={ e => handleUpvote(props.comment.commentId, user)}
                                     />
                                 </OverlayTrigger>
                                 <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>

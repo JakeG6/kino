@@ -293,8 +293,6 @@ export const toggleUpvote = async (commentId, user) => {
             
     }
 
-    // return pointChange
-
 }
 
 export const toggleDownvote = async (commentId, user) => {

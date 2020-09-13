@@ -31,7 +31,7 @@ const ReviewTab = props => {
 
         async function waitForMovieReviews() {
             let reviews = await getMovieReviews(props.movieId);
-            console.log(reviews);
+            // console.log(reviews);
             setReviews({reviewsArr: reviews, gettingReviews: false});
         }
 

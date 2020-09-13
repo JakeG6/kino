@@ -4,6 +4,7 @@ import validator from 'validator';
 
 
 import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -17,12 +18,6 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import Tab from 'react-bootstrap/Tab';
 
-import Tooltip from 'react-bootstrap/Tooltip';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPrayingHands } from '@fortawesome/free-solid-svg-icons';
-import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
-
 import { UserContext } from '../../../providers/UserProvider';
 import { postMovieComment, getMovieComments, toggleUpvote, toggleDownvote } from '../../../firebase';
 import Comment from "./Comment";
@@ -31,24 +26,64 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 const CommentTab = props => {
 
     const [commentText, setCommentText] = useState("");
-    const [comments, setComments] = useState({commentArr: [], gettingComments: true})
+    const [comments, setComments] = useState({ commentOrder: "patrician", commentArr: [], gettingComments: true})
+    
 
       //state handlers for modal
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
+
+    async function waitForMovieComments() {
+        let newComments = await getMovieComments(props.movieId);
+
+        console.log(comments);
+
+        let sortedComments;
+
+        //sort comments by upvotes
+        if (comments.commentOrder === "patrician") {
+            console.log("doing patrician stuff")
+            sortedComments = newComments.sort((a, b) => {
+              
+                return b.points - a.points;
+            })
+            console.log(sortedComments)
+        }
+
+        //sort comments by downvotes
+        if (comments.commentOrder === "plebian") {
+            console.log("doing pleb stuff")
+            sortedComments = newComments.sort((a, b) => {
+                return a.points - b.points;
+            })
+        }
+
+        //sort comments by newest
+        if (comments.commentOrder === "newest") {
+            console.log("doing new stuff")
+            sortedComments = newComments.sort((a, b) => {
+                return b.date.nanoseconds - a.date.nanoseconds;
+            })
+        }
+
+        //sort comments by newest
+        if (comments.commentOrder === "oldest") {
+            console.log("doing old stuff")
+            sortedComments = newComments.sort((a, b) => {
+                return a.date.nanoseconds - b.date.nanoseconds;
+            })
+        }
+        console.log(sortedComments)
+
+        setComments({...comments, commentArr: sortedComments, gettingComments: false});
+    }
 
 
 
     useEffect(() => {
 
-        async function waitForMovieComments() {
-            let comments = await getMovieComments(props.movieId);
-            console.log(comments);
-            setComments({commentArr: comments, gettingComments: false});
-        }
-
         waitForMovieComments();
    
-    }, [props.movieId])
+    }, [comments.commentOrder])
 
     const submitComment = (event, movieId, text, user) => {
         event.preventDefault();
@@ -59,77 +94,96 @@ const CommentTab = props => {
     const commentCards = comments => {
         return (
             comments.commentArr.map(comment => (
-             
                     <Comment comment={comment} />
-                
             ))
         )
     }
-    
-    if (comments.gettingComments === false) {
-        return (
-            <Tab.Content>
-                <Row>
-                    <Col xs={1}>
 
-                    </Col>
-                    <Col xs={10}>
-                <UserContext.Consumer>
-                {
-                    user => (
-                        user ?
-                            <Form>
-                                <Form.Group controlId="formNewComment">
-                                    <FormControl 
-                                        as="textarea" 
-                                        aria-label="With textarea" 
-                                        rows={5} 
-                                        placeholder="Enter comment" 
-                                        value={commentText} 
-                                        onChange={ e => setCommentText(e.target.value)} 
-                                    />
-                                </Form.Group>
-                                <Button
-                                    className="comment-submit"
-                                    variant="light" 
-                                    type="submit" 
-                                    onClick={e => submitComment(e, props.movieId, commentText, user)}
-                                    disabled = {validator.isEmpty(commentText, { ignore_whitespace:true })? true : false}
-                                >
-                                    Submit
-                                </Button>
-                            </Form>
-                        :
-                            <Card className="comment-card please-signin">
-                                <Card.Text>
-                                    <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a comment</i>
-                                </Card.Text>
-                            </Card>
-                    )
-                }
-                </UserContext.Consumer>
+    const changeCommentOrder = newOrder => {
+        if (newOrder === comments.commentOrder) { 
+            console.log("the order is the same");
+            return; 
+        }
+        setComments({...comments, commentOrder: newOrder, gettingComments: true});
+    }
+    
+    return (
+        <Tab.Content>
+            <Row>
+                <Col xs={1}>
+
+                </Col>
+                <Col xs={10}>
+            <UserContext.Consumer>
+            {
+                user => (
+                    user ?
+                        <Form>
+                            <Form.Group controlId="formNewComment">
+                                <FormControl 
+                                    as="textarea" 
+                                    aria-label="With textarea" 
+                                    rows={5} 
+                                    placeholder="Enter comment" 
+                                    value={commentText} 
+                                    onChange={ e => setCommentText(e.target.value)} 
+                                />
+                            </Form.Group>
+                            <Button
+                                className="comment-submit"
+                                variant="light" 
+                                type="submit" 
+                                onClick={e => submitComment(e, props.movieId, commentText, user)}
+                                disabled = {validator.isEmpty(commentText, { ignore_whitespace:true })? true : false}
+                            >
+                                Submit
+                            </Button>
+                        </Form>
+                    :
+                        <Card className="comment-card please-signin">
+                            <Card.Text>
+                                <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a comment</i>
+                            </Card.Text>
+                        </Card>
+                )
+            }
+            </UserContext.Consumer>
+            
+            <div className="comment-stack">
+                {/* comment order options */}
+                <Dropdown  >
+                    <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
+                        Sort By
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="patrician" ? "bold" : ""}`} onClick={e => changeCommentOrder("patrician")}>Most Patrician</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="plebian" ? "bold" : ""}`} onClick={e => changeCommentOrder("plebian")}>Most Plebian</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="newest" ? "bold" : ""}`} onClick={e => changeCommentOrder("newest")}>Newest</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="oldest" ? "bold" : ""}`} onClick={e => changeCommentOrder("oldest")}>Oldest</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            {
+                comments.gettingComments ? 
+                    <LoadingSpinner />
+                :
                 
-                <div className="comment-stack">
-                {
                     comments.commentArr.length > 0 ?
                         commentCards(comments)                                                                                              
                     :
                     <p>Nobody has commented on this movie yet.</p>
-                }
-                </div>
-                </Col>
-                <Col xs={1}>
+                
+            }
+            </div>
+            </Col>
+            <Col xs={1}>
 
-                    </Col>
-                </Row>
-            </Tab.Content>
-        )
-    }
-    else {
-        return (
-            <LoadingSpinner />
-        )
-    }
+                </Col>
+            </Row>
+        </Tab.Content>
+    )
+    
+
     
 }
 

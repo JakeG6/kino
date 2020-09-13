@@ -6,6 +6,10 @@
     background-color: black !important;
 }
 
+.bold {
+    font-weight: bold !important;
+}
+
 .comment-submit {
     text-align: right;
 }
