@@ -159,10 +159,10 @@ export const postMovieComment = async (movieId, text, user) => {
     
     });
 
-    firestore.collection("movieComments").add({
+    await firestore.collection("movieComments").add({
         movieId: movieId,
         username: username,
-        date: firebase.firestore.FieldValue.serverTimestamp(),
+        date: await firebase.firestore.FieldValue.serverTimestamp(),
         text: text,
         points: 0,
         upvoters: [],

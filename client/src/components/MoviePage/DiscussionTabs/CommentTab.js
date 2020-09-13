@@ -61,7 +61,14 @@ const CommentTab = props => {
         if (comments.commentOrder === "newest") {
             console.log("doing new stuff")
             sortedComments = newComments.sort((a, b) => {
-                return a.date.nanoseconds - b.date.nanoseconds;
+                let x = a.date.nanoseconds, y = b.date.nanoseconds
+                
+                if (x > y)
+                return 1;
+
+                if (x < y)
+                    return -1;
+                return 0;
             })
         }
 
@@ -69,15 +76,20 @@ const CommentTab = props => {
         if (comments.commentOrder === "oldest") {
             console.log("doing old stuff")
             sortedComments = newComments.sort((a, b) => {
-                return b.date.nanoseconds - a.date.nanoseconds;
+                let x = a.date.nanoseconds, y = b.date.nanoseconds
+                
+                if (x < y)
+                return 1;
+
+                if (x > y)
+                    return -1;
+                return 0;
             })
         }
         console.log(sortedComments)
 
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
     }
-
-
 
     useEffect(() => {
 
