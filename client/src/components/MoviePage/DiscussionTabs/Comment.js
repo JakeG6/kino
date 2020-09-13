@@ -32,8 +32,8 @@ const Comment = props => {
       //get user information if logged in
     const user = useContext(UserContext);
 
-    //set visual for upvote/downvote based on how user has previously voted on this comment
-    const [vote, setVote] = useState(props.comment.upvoters.includes(user.uid) ? "upvoted" : props.comment.downvoters.includes(user.uid) ? "downvoted" : "");
+    //set visual for upvote/downvote based on if a user is logged in, and then how user has previously voted on this comment
+    const [vote, setVote] = useState(user ? props.comment.upvoters.includes(user.uid) ? "upvoted" : props.comment.downvoters.includes(user.uid) ? "downvoted" : "" : "");
     const [pointCount, setPointCount] = useState(props.comment.points)
 
     const handleUpvote = (id, user)=> {
@@ -91,41 +91,41 @@ const Comment = props => {
     return (
         <UserContext.Consumer>
             {
-            user => (
-                <Card className="comment-card" key={props.comment.commentId}>
-                    <Card.Header>                     
-                        <h5>{props.comment.username}</h5>
-                    </Card.Header>
-                    <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                    <Card.Body> {props.comment.text} </Card.Body>
-                    <footer className="comment-footer">
-                        <div className="comment-vote">
-                            <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Patrician</strong> </Tooltip>}>
-                                <FontAwesomeIcon 
-                                    className={`patrIcon ${vote === "upvoted" ? vote : ""}`} 
-                                    icon={faPrayingHands} 
-                                    size="2x" 
-                                    color="white" 
-                                    onClick={ e => handleUpvote(props.comment.commentId, user)}  
-                                />
-                            </OverlayTrigger>
-                            <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>
-                            <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Plebian</strong> </Tooltip>}>
-                                <FontAwesomeIcon 
-                                    className={`plebIcon ${vote === "downvoted" ? vote : ""}`}
-                                    icon={faThumbsDown} 
-                                    size="2x" 
-                                    color="white"
-                                    onClick={ e => handleDownvote(props.comment.commentId, user)}    
-                                />
-                            </OverlayTrigger>
-                        </div>
-                        
-                        <i>Posted {new Date(props.comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
-                
-                    </footer>
-                </Card>
-            )
+                user => (
+                    <Card className="comment-card" key={props.comment.commentId}>
+                        <Card.Header>                     
+                            <h5>{props.comment.username}</h5>
+                        </Card.Header>
+                        <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
+                        <Card.Body> {props.comment.text} </Card.Body>
+                        <footer className="comment-footer">
+                            <div className="comment-vote">
+                                <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Patrician</strong> </Tooltip>}>
+                                    <FontAwesomeIcon 
+                                        className={`patrIcon ${vote === "upvoted" ? vote : ""}`} 
+                                        icon={faPrayingHands} 
+                                        size="2x" 
+                                        color="white" 
+                                        onClick={ e => handleUpvote(props.comment.commentId, user)}  
+                                    />
+                                </OverlayTrigger>
+                                <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>
+                                <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Plebian</strong> </Tooltip>}>
+                                    <FontAwesomeIcon 
+                                        className={`plebIcon ${vote === "downvoted" ? vote : ""}`}
+                                        icon={faThumbsDown} 
+                                        size="2x" 
+                                        color="white"
+                                        onClick={ e => handleDownvote(props.comment.commentId, user)}    
+                                    />
+                                </OverlayTrigger>
+                            </div>
+                            
+                            <i>Posted {new Date(props.comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+                    
+                        </footer>
+                    </Card>
+                )
             }
         </UserContext.Consumer>
     )
