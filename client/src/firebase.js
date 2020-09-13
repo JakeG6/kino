@@ -264,39 +264,36 @@ export const toggleUpvote = async (commentId, user) => {
     const addToUpvoters = { upvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
 
     let comment = undefined;
+    let pointChange = 0;
 
-    await commentRef.get().then(doc => {
+    let doc = await commentRef.get();
 
-        comment = doc.data();
-        
-        //remove the user from upvoters if they've upvoted already
-        if (comment.upvoters.includes(user.uid)) {
-            commentRef.update(removeFromUpvoters).then(p => {
-                commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)})
-            })
+    comment = doc.data();
+    
+    //remove the user from upvoters if they've upvoted already
+    if (comment.upvoters.includes(user.uid)) {
+        await commentRef.update(removeFromUpvoters);
+        commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
+        pointChange = -1;
+    
+    }
+    // add the user to upvoters if they're in downvoters, and compensate for points lost from downvoting
+    else if (comment.downvoters.includes(user.uid)) {
+        await commentRef.update(removeFromDownvoters);
+        await commentRef.update(addToUpvoters);
+        commentRef.update({ points: firebase.firestore.FieldValue.increment(2)});
+        pointChange = 2;
+                
+    }
+    //add the user to upvoters if they haven't voted on the comment
+    else {
+        await commentRef.update(addToUpvoters);
+        commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
+        pointChange = 1;
             
-            
-        }
-        // add the user to upvoters if they're in downvoters, and compensate for points lost from downvoting
-        else if (comment.downvoters.includes(user.uid)) {
-            commentRef.update(removeFromDownvoters).then(p => {
-                commentRef.update(addToUpvoters).then(p => {
-                    commentRef.update({ points: firebase.firestore.FieldValue.increment(2)})
-                }) 
-            })
-            
-            
-        }
-        //add the user to upvoters if they haven't voted on the comment
-        else {
-            commentRef.update(addToUpvoters).then(p => {
-                commentRef.update({ points: firebase.firestore.FieldValue.increment(1)})
-            })
-            
+    }
 
-        }
-
-    })
+    // return pointChange
 
 }
 
@@ -309,44 +306,38 @@ export const toggleDownvote = async (commentId, user) => {
     const addToDownvoters = { downvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
 
     let comment = undefined;
+    let pointChange = 0;
 
-    await commentRef.get().then(doc => {
-
-        comment = doc.data();
+    let doc = await commentRef.get();
+    
+    comment = doc.data();
         
-        //remove the user from downvoters if they've downvoted already
-        if (comment.downvoters.includes(user.uid)) {
+    //remove the user from downvoters if they've downvoted already
+    if (comment.downvoters.includes(user.uid)) {
 
-            commentRef.update(removeFromDownvoters).then(p => {
+        await commentRef.update(removeFromDownvoters);
+        commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
+        pointChange = 1;
+   
+    }
 
-                commentRef.update({ points: firebase.firestore.FieldValue.increment(1)})
+    // add the user to downvoters if they're in upvoters, and compensate for points gained from upvoting
+    else if (comment.upvoters.includes(user.uid)) {
 
-            })
-            
-        }
-        // add the user to downvoters if they're in upvoters, and compensate for points gained from upvoting
-        else if (comment.upvoters.includes(user.uid)) {
+        await commentRef.update(removeFromUpvoters);
+        await commentRef.update(addToDownvoters);
+        commentRef.update({ points: firebase.firestore.FieldValue.increment(-2)});
+        pointChange = -2;
+       
+    }
+    
+    //add the user to upvoters if they haven't voted on the comment
+    else {
+        
+        await commentRef.update(addToDownvoters);
+        commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
+        pointChange = -1;
 
-            commentRef.update(removeFromUpvoters).then(p => {
-
-                commentRef.update(addToDownvoters).then(p => {
-
-                    commentRef.update({ points: firebase.firestore.FieldValue.increment(-2)})
-
-                }) 
-            })
-          
-            
-        }
-        //add the user to upvoters if they haven't voted on the comment
-        else {
-           
-            commentRef.update(addToDownvoters).then(p => {
-                commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)})
-            })
-
-        }
-
-    })
+    }
 
 }
