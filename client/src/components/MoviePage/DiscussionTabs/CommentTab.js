@@ -61,7 +61,7 @@ const CommentTab = props => {
         if (comments.commentOrder === "newest") {
             console.log("doing new stuff")
             sortedComments = newComments.sort((a, b) => {
-                return b.date.nanoseconds - a.date.nanoseconds;
+                return a.date.nanoseconds - b.date.nanoseconds;
             })
         }
 
@@ -69,7 +69,7 @@ const CommentTab = props => {
         if (comments.commentOrder === "oldest") {
             console.log("doing old stuff")
             sortedComments = newComments.sort((a, b) => {
-                return a.date.nanoseconds - b.date.nanoseconds;
+                return b.date.nanoseconds - a.date.nanoseconds;
             })
         }
         console.log(sortedComments)
@@ -83,12 +83,17 @@ const CommentTab = props => {
 
         waitForMovieComments();
    
-    }, [comments.commentOrder])
+    }, [comments.gettingComments])
 
-    const submitComment = (event, movieId, text, user) => {
+
+    //submit comment, and trigger comments rerender
+    const submitComment = async (event, movieId, text, user) => {
         event.preventDefault();
-        postMovieComment(movieId, text, user);
+        await postMovieComment(movieId, text, user);
         setCommentText("");
+        setComments({...comments, gettingComments: true});
+
+
     }
 
     const commentCards = comments => {
@@ -99,6 +104,7 @@ const CommentTab = props => {
         )
     }
 
+    //change order of comments and trigger comments rerender
     const changeCommentOrder = newOrder => {
         if (newOrder === comments.commentOrder) { 
             console.log("the order is the same");
