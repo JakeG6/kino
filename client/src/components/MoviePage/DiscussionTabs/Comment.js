@@ -109,7 +109,7 @@ const Comment = props => {
                                     onClick={ e => handleUpvote(props.comment.commentId, user)}  
                                 />
                             </OverlayTrigger>
-                            <h5>{pointCount}</h5>
+                            <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>
                             <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Plebian</strong> </Tooltip>}>
                                 <FontAwesomeIcon 
                                     className={`plebIcon ${vote === "downvoted" ? vote : ""}`}
