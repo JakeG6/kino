@@ -146,6 +146,7 @@ export const postMovieComment = async (movieId, text, user) => {
     // console.log(movieId, text, user.email)
 
     let email = user.email
+    let authorId = user.uid
     let username;
 
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
@@ -162,6 +163,7 @@ export const postMovieComment = async (movieId, text, user) => {
     await firestore.collection("movieComments").add({
         movieId: movieId,
         username: username,
+        authorId: authorId,
         date: await firebase.firestore.FieldValue.serverTimestamp(),
         text: text,
         points: 0,
@@ -337,5 +339,18 @@ export const toggleDownvote = async (commentId, user) => {
         pointChange = -1;
 
     }
+
+}
+
+export const deleteComment = (id) => {
+
+    const commentRef = firestore.collection("movieComments").doc(id);
+
+    commentRef.delete().then(function() {
+        console.log("Document successfully deleted!");
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+
 
 }

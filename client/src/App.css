@@ -66,6 +66,10 @@ a:hover {
   color: black !important;
 }
 
+.dark-bg {
+  background-color: #343a40 !important;
+}
+
 body, html {
   height: 100% !important;
 }
@@ -134,24 +138,26 @@ body {
   background-color: #343a40;
 }
 
-/* styling for login modal */
+/* styling for modals */
+
+.comment-delete-button {
+  margin-right: 2em !important;
+}
+
 .login-modal-footer {
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .login-modal-footer p {
   margin: 0;
 }
 
-.login-modal .modal-content{
+.modal-content{
   background-color: #343a40 !important;
-}
-
-.login-modal {
   color: white !important;
 }
 
-.login-modal .close {
+.modal-content .close {
   color: white !important;
 }
 

@@ -111,13 +111,12 @@ const CommentTab = props => {
         setCommentText("");
         setComments({...comments, gettingComments: true});
 
-
     }
 
     const commentCards = comments => {
         return (
             comments.commentArr.map(comment => (
-                    <Comment comment={comment} />
+                    <Comment comment={comment} comments={comments} setComments={setComments} />
             ))
         )
     }
@@ -192,10 +191,10 @@ const CommentTab = props => {
                     <LoadingSpinner />
                 :
                 
-                    comments.commentArr.length > 0 ?
-                        commentCards(comments)                                                                                              
-                    :
-                    <p>Nobody has commented on this movie yet.</p>
+                comments.commentArr.length > 0 ?
+                    commentCards(comments)                                                                                              
+                :
+                <p>Nobody has commented on this movie yet.</p>
                 
             }
             </div>

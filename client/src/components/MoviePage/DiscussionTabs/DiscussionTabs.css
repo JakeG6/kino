@@ -27,10 +27,24 @@
     
 }
 
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .comment-vote {
     display:flex;
     justify-content: space-between;
     width: 8em;
+}
+
+.delete-icon {
+    
+}
+
+.delete-icon:hover {
+    color:red;
+    cursor: pointer;
 }
 
 .discussion {
