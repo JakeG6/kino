@@ -14,39 +14,6 @@
     text-align: right;
 }
 
-.comment-footer {
-    padding: 1em 1em .5em 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    font-size: .75rem;
-    color: lightgrey
-}
-
-.comment-footer i {
-    
-}
-
-.comment-header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.comment-vote {
-    display:flex;
-    justify-content: space-between;
-    width: 8em;
-}
-
-.delete-icon {
-    
-}
-
-.delete-icon:hover {
-    color:red;
-    cursor: pointer;
-}
-
 .discussion {
 
     border-radius: .25rem;
@@ -77,18 +44,6 @@
     margin-top: 1em;
 }
 
-.comment-card {
-    background-color:#343a40;
-    /* border: 1px solid white; */
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-.comment-card .card-header {
-    background-color: gray;
-    border-bottom: none;
-}
-
 .modal-opener {
     color: yellow;
     
@@ -97,39 +52,6 @@
 .modal-opener:hover {
     text-decoration: underline;
     cursor: pointer;
-}
-
-.patrIcon:hover {
-    color:green;
-    border: 1px solid green;
-    background-color: darkgreen;
-}
-
-.upvoted {
-    color:green;
-    border: 1px solid green;
-    background-color: darkgreen;
-}
-
-.downvoted {
-    color: red;
-    border: 1px solid red;
-    background-color: darkred;
-}
-
-.plebIcon:hover {
-    color: red;
-    border: 1px solid red;
-    background-color: darkred;
-}
-
-.patrIcon, .plebIcon {
-    padding: .1em;
-    border-radius: .25em;
-  }
-
-.patrIcon:hover, .plebIcon:hover {
-  cursor: pointer;
 }
 
 .please-signin {
@@ -143,4 +65,3 @@
 .tab-content {
     margin-top: 1em;
 }
-

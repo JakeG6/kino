@@ -12,6 +12,8 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
+import "./Comment.css"
+
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
