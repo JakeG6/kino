@@ -18,7 +18,6 @@ import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 
 import { UserContext } from '../../../providers/UserProvider';
-import CommentTab from "./CommentTab";
 import { postMovieReview, getMovieReviews } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
@@ -26,6 +25,66 @@ const ReviewTab = props => {
 
     const [reviewData, setReviewData] = useState({title: "", rating: 1, reviewText: ""});
     const [reviews, setReviews] = useState({reviewsArr: [], gettingReviews: true})
+
+    async function waitForMovieReviews() {
+        let newReviews = await getMovieReviews(props.movieId);
+
+        // console.log(reviews);
+
+        let sortedReviews;
+
+        //sort reviews by upvotes
+        if (reviews.commentOrder === "patrician") {
+            // console.log("doing patrician stuff")
+            sortedReviews = newReviews.sort((a, b) => {
+              
+                return b.points - a.points;
+            })
+            // console.log(sortedReviews)
+        }
+
+        //sort reviews by downvotes
+        if (reviews.commentOrder === "plebian") {
+            // console.log("doing pleb stuff")
+            sortedReviews = newReviews.sort((a, b) => {
+                return a.points - b.points;
+            })
+        }
+
+        //sort reviews by newest
+        if (reviews.commentOrder === "newest") {
+            // console.log("doing new stuff")
+            sortedReviews = newReviews.sort((a, b) => {
+                let x = a.date.seconds, y = b.date.seconds
+                console.log(typeof(x))
+                
+                if (x < y)
+                return 1;
+
+                if (x > y)
+                    return -1;
+                return 0;
+            })
+        }
+
+        //sort reviews by newest
+        if (reviews.commentOrder === "oldest") {
+            // console.log("doing old stuff")
+            sortedReviews = newReviews.sort((a, b) => {
+                let x = a.date.seconds, y = b.date.seconds
+                
+                if (x > y)
+                return 1;
+
+                if (x < y)
+                    return -1;
+                return 0;
+            })
+        }
+        console.log(sortedReviews)
+
+        setReviews({...reviews, commentArr: sortedReviews, gettingReviews: false});
+    }
 
     useEffect(() => {
 
@@ -37,10 +96,11 @@ const ReviewTab = props => {
 
         waitForMovieReviews();
    
-    }, [props.movieId])
+    }, [reviews.gettingReviews])
 
     const submitReview = (event, movieId, reviewData, user) => {
         event.preventDefault();
+        console.log(movieId, reviewData, user)
         postMovieReview(movieId, reviewData, user);
         setReviewData({title:"", rating: 1, reviewText: ""});
     }

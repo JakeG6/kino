@@ -36,7 +36,7 @@ const CommentTab = props => {
 
     const handleModalShow = () => {
         setLoginShow(true);
-      }
+    }
 
     async function waitForMovieComments() {
         let newComments = await getMovieComments(props.movieId);
@@ -93,7 +93,7 @@ const CommentTab = props => {
                 return 0;
             })
         }
-        console.log(sortedComments)
+        // console.log(sortedComments)
 
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
     }

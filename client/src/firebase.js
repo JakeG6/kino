@@ -196,7 +196,7 @@ export const getMovieComments = async movieId => {
             commentArr.push(doc.data());
         })
         
-        console.log(commentArr)
+        //console.log(commentArr)
   
     })
 
@@ -207,36 +207,35 @@ export const getMovieComments = async movieId => {
 export const postMovieReview = async (movieId, reviewData, user) => {
 
     let email = user.email
+    let authorId = user.uid
     let username;
 
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
-
         username = snapshot.docs[0].data().username;
-        // console.log(username)
+        // console.log("username is ", username)
     
     }).catch(function(error) {
-    
         console.log("Error getting document: ", error);
-    
     });
 
-    firestore.collection("movieReviews").add({
+    await firestore.collection("movieReviews").add({
         date: firebase.firestore.FieldValue.serverTimestamp(),
-    
         movieId: movieId,
+        authorId: authorId,
         points: 0,
         rating: reviewData.rating,
-        text: reviewData.text,
+        text: reviewData.reviewText,
         title: reviewData.title,
         username: username
-        
-        
     }).then(function(docRef) {
+        let freshReview = firestore.collection("movieReviews").doc(docRef.id);
+        freshReview.set({ reviewId: docRef.id }, {merge: true})
         console.log("Review written with ID: ", docRef.id);
     })
     .catch(function(error) {
         console.error("Error adding comment: ", error);
     });
+
 }
 
 export const getMovieReviews = async movieId => {
@@ -249,7 +248,7 @@ export const getMovieReviews = async movieId => {
             reviewsArr.push(doc.data());
         })
         
-        console.log(reviewsArr)
+        //console.log(reviewsArr)
   
     })
 
