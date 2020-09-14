@@ -67,12 +67,13 @@ const CommentTab = props => {
         if (comments.commentOrder === "newest") {
             // console.log("doing new stuff")
             sortedComments = newComments.sort((a, b) => {
-                let x = a.date.nanoseconds, y = b.date.nanoseconds
+                let x = a.date.seconds, y = b.date.seconds
+                console.log(typeof(x))
                 
-                if (x > y)
+                if (x < y)
                 return 1;
 
-                if (x < y)
+                if (x > y)
                     return -1;
                 return 0;
             })
@@ -82,17 +83,17 @@ const CommentTab = props => {
         if (comments.commentOrder === "oldest") {
             // console.log("doing old stuff")
             sortedComments = newComments.sort((a, b) => {
-                let x = a.date.nanoseconds, y = b.date.nanoseconds
+                let x = a.date.seconds, y = b.date.seconds
                 
-                if (x < y)
+                if (x > y)
                 return 1;
 
-                if (x > y)
+                if (x < y)
                     return -1;
                 return 0;
             })
         }
-        // console.log(sortedComments)
+        console.log(sortedComments)
 
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
     }
@@ -110,7 +111,6 @@ const CommentTab = props => {
         await postMovieComment(movieId, text, user);
         setCommentText("");
         setComments({...comments, gettingComments: true});
-
     }
 
     const commentCards = comments => {
@@ -182,10 +182,10 @@ const CommentTab = props => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item className={`black-text ${comments.commentOrder==="patrician" ? "bold" : ""}`} onClick={e => changeCommentOrder("patrician")}>Most Patrician</Dropdown.Item>
-                        <Dropdown.Item className={`black-text ${comments.commentOrder==="plebian" ? "bold" : ""}`} onClick={e => changeCommentOrder("plebian")}>Most Plebian</Dropdown.Item>
-                        <Dropdown.Item className={`black-text ${comments.commentOrder==="newest" ? "bold" : ""}`} onClick={e => changeCommentOrder("newest")}>Newest</Dropdown.Item>
-                        <Dropdown.Item className={`black-text ${comments.commentOrder==="oldest" ? "bold" : ""}`} onClick={e => changeCommentOrder("oldest")}>Oldest</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="patrician" ? "bold" : ""}`} onClick={() => changeCommentOrder("patrician")}>Most Patrician</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="plebian" ? "bold" : ""}`} onClick={() => changeCommentOrder("plebian")}>Most Plebian</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="newest" ? "bold" : ""}`} onClick={() => changeCommentOrder("newest")}>Newest</Dropdown.Item>
+                        <Dropdown.Item className={`black-text ${comments.commentOrder==="oldest" ? "bold" : ""}`} onClick={() => changeCommentOrder("oldest")}>Oldest</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             {
