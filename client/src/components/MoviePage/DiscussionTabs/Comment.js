@@ -161,7 +161,6 @@ const Comment = props => {
                                 show={delModalShow}
                                 onHide={() => setDelModal(false)}
                                 size="sm"
-                                // aria-labelledby="contained-modal-title-vcenter"
                                 centered
                             >
                                 <Modal.Header closeButton>

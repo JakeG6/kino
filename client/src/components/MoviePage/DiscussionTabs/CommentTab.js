@@ -152,15 +152,17 @@ const CommentTab = props => {
                                     onChange={ e => setCommentText(e.target.value)} 
                                 />
                             </Form.Group>
-                            <Button
-                                className="comment-submit"
-                                variant="light" 
-                                type="submit" 
-                                onClick={e => submitComment(e, props.movieId, commentText, user)}
-                                disabled = {validator.isEmpty(commentText, { ignore_whitespace:true })? true : false}
-                            >
-                                Submit
-                            </Button>
+                            <div className="comment-submit">
+                                <Button
+                                    variant="light" 
+                                    type="submit" 
+                                    onClick={e => submitComment(e, props.movieId, commentText, user)}
+                                    disabled = {validator.isEmpty(commentText, { ignore_whitespace:true })? true : false}
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                            
                         </Form>
                     :
                         <Card className="comment-card please-signin">

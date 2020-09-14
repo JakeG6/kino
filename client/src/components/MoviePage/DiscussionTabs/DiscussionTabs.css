@@ -69,7 +69,12 @@
 }
 
 .comment-stack {
-    margin-top:2em;
+    margin-top: 1.5em;
+    border-top: solid white 1px;
+}
+
+.comment-stack .dropdown-toggle {
+    margin-top: 1em;
 }
 
 .comment-card {
