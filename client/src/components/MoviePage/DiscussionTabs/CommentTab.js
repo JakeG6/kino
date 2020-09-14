@@ -19,39 +19,45 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tab from 'react-bootstrap/Tab';
 
 import { UserContext } from '../../../providers/UserProvider';
+import { LoginModalContext } from '../../../providers/LoginModalProvider';
 import { postMovieComment, getMovieComments, toggleUpvote, toggleDownvote } from '../../../firebase';
 import Comment from "./Comment";
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 const CommentTab = props => {
 
+    //context for signin modal
+    const {loginShow, setLoginShow} = useContext(LoginModalContext)
+
+
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState({ commentOrder: "patrician", commentArr: [], gettingComments: true})
     
 
-      //state handlers for modal
-    // const [show, setShow] = useState(false);
+    const handleModalShow = () => {
+        setLoginShow(true);
+      }
 
     async function waitForMovieComments() {
         let newComments = await getMovieComments(props.movieId);
 
-        console.log(comments);
+        // console.log(comments);
 
         let sortedComments;
 
         //sort comments by upvotes
         if (comments.commentOrder === "patrician") {
-            console.log("doing patrician stuff")
+            // console.log("doing patrician stuff")
             sortedComments = newComments.sort((a, b) => {
               
                 return b.points - a.points;
             })
-            console.log(sortedComments)
+            // console.log(sortedComments)
         }
 
         //sort comments by downvotes
         if (comments.commentOrder === "plebian") {
-            console.log("doing pleb stuff")
+            // console.log("doing pleb stuff")
             sortedComments = newComments.sort((a, b) => {
                 return a.points - b.points;
             })
@@ -59,7 +65,7 @@ const CommentTab = props => {
 
         //sort comments by newest
         if (comments.commentOrder === "newest") {
-            console.log("doing new stuff")
+            // console.log("doing new stuff")
             sortedComments = newComments.sort((a, b) => {
                 let x = a.date.nanoseconds, y = b.date.nanoseconds
                 
@@ -74,7 +80,7 @@ const CommentTab = props => {
 
         //sort comments by newest
         if (comments.commentOrder === "oldest") {
-            console.log("doing old stuff")
+            // console.log("doing old stuff")
             sortedComments = newComments.sort((a, b) => {
                 let x = a.date.nanoseconds, y = b.date.nanoseconds
                 
@@ -86,7 +92,7 @@ const CommentTab = props => {
                 return 0;
             })
         }
-        console.log(sortedComments)
+        // console.log(sortedComments)
 
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
     }
@@ -160,7 +166,7 @@ const CommentTab = props => {
                     :
                         <Card className="comment-card please-signin">
                             <Card.Text>
-                                <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a comment</i>
+                                <i><span className="modal-opener" onClick={handleModalShow}>Log in</span> or <Link to={`/signup`}> sign up</Link> to leave a comment</i>
                             </Card.Text>
                         </Card>
                 )

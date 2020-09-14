@@ -70,6 +70,16 @@
     border-bottom: none;
 }
 
+.modal-opener {
+    color: yellow;
+    
+}
+
+.modal-opener:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .patrIcon:hover {
     color:green;
     border: 1px solid green;

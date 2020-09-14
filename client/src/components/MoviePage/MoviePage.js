@@ -15,14 +15,11 @@ import posterPlaceholder from "../poster-placeholder.jpg";
 
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-import Tabs from 'react-bootstrap/Tabs';
+
 
 const MoviePage = ({ match }) => {
 
@@ -122,7 +119,6 @@ const MoviePage = ({ match }) => {
                     </div>
             </Container>
             <Container>
-                    
                 <Row>
                     <Col xs={12}>
                         {similarMovieDisplay(similarMovies)}

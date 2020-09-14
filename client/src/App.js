@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import {logoutUser} from "./firebase.js";
 import { UserContext } from "./providers/UserProvider";
+import { LoginModalContext } from "./providers/LoginModalProvider";
 
 //components
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
@@ -31,70 +32,67 @@ import './App.css'
 
 const App = () => {
 
-  //user information if logged in
-  const user = useContext(UserContext);
-  
-  //state handlers for modal
-  const [show, setShow] = useState(false);
+  const {loginShow, setLoginShow} = useContext(LoginModalContext)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  // const handleModalClose = () => setLoginShow(false)
+  const handleModalShow = () => {
+    console.log("this is triggered")
+    setLoginShow(true);
+  }
 
   return (
-    
+
       <Router>
-
         <ScrollToTop />
-
         <div className="App">
-          <Container>
-            {/* Navigation bar */}
-            <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
-              <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
-              <SearchBar />
-              <UserContext.Consumer>
-              {
-                user => (
-                 //is the user logged in?
-                user ? 
-                  <div>
-                     <Dropdown >
-                      <Dropdown.Toggle variant="light">
-                        User name
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Dashboard</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2" onClick={logoutUser}>Log Out</Dropdown.Item>
-                      
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                :
-                  <Button variant="light" onClick={handleShow}>Log In</Button>
-                
-                )
-              }          
-              </UserContext.Consumer>
-            </Navbar>
-            <div className="wrapper">
-              {/* React Router */}
-              <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/movie/:id/credits" component={CreditsPage} />
-                <Route path="/movie/:id"  component={MoviePage} />
-                <Route path="/dashboard" component={DashboardPage} />
-                <Route path="/search"  component={SearchResultsPage} />
-                <Route path="/signup"  component={Signup} />
-                {/* 404 page */}
-                <Route component={NoMatch} />
-              </Switch>
-            </div>
+            <Container>
+              {/* Navigation bar */}
+              <Navbar fluid expand="sm" sticky="top" className="justify-content-between">
+                <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
+                <SearchBar />
+                <UserContext.Consumer>
+                {
+                  user => (
+                  //is the user logged in?
+                  user ? 
+                    <div>
+                      <Dropdown >
+                        <Dropdown.Toggle variant="light">
+                          User name
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item className="black-text">Dashboard</Dropdown.Item>
+                          <Dropdown.Item className="black-text" onClick={logoutUser}>Log Out</Dropdown.Item>                       
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
+                  :
+                  
+                    <Button variant="light" onClick={handleModalShow}>Log In</Button>
+                    
+                  )
+                }         
+                </UserContext.Consumer>
+              </Navbar>
+              <div className="wrapper">
+                {/* React Router */}
+                <Switch>
+                  <Route path="/"                   exact component={Home} />
+                  <Route path="/movie/:id/credits"  component={CreditsPage} />
+                  <Route path="/movie/:id"          component={MoviePage} />
+                  <Route path="/dashboard"          component={DashboardPage} />
+                  <Route path="/search"             component={SearchResultsPage} />
+                  <Route path="/signup"             component={Signup} />
+                  {/* 404 page */}
+                  <Route component={NoMatch} />
+                </Switch>
+              </div>
 
-            {/* Signin Modal */}
-            <SignIn show={show} handleClose={handleClose} />
-          </Container>
+              {/* Signin Modal */}
+              <SignIn />
+            </Container>
         </div>
-
       </Router> 
    
   );

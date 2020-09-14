@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import {signinUser} from "../../firebase.js";
+import { LoginModalContext } from "../../providers/LoginModalProvider";
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -19,27 +20,29 @@ import Navbar from 'react-bootstrap/Navbar';
 import '../../App.css'
 
 
-const SignIn = props => {
+const SignIn = () => {
+
+    const {loginShow, setLoginShow} = useContext(LoginModalContext);
+    const [show, setShow] = useState(loginShow);
+
 
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
 
     async function handleSignin(event) {
-        
         event.preventDefault();
-        // console.log(email, password);
-        // console.log(typeof(email));
-        // console.log(typeof(password))
         await signinUser(email, password)
-        
-        props.handleClose();
-
-        
+        setLoginShow(false);
     }
 
+    const handleClose = () => {
+        setLoginShow(false);
+
+    }
 
     return (
-        <Modal show={props.show} onHide={props.handleClose} className="login-modal">
+
+        <Modal show={loginShow} onHide={handleClose} className="login-modal">
             <Modal.Header closeButton>
                 <Modal.Title>Sign In</Modal.Title>
             </Modal.Header>
@@ -56,14 +59,13 @@ const SignIn = props => {
                 </Form>
             </Modal.Body>
             <Modal.Footer className="login-modal-footer">
-                <Link to={`/signup`} onClick={props.handleClose}><p>Don't have an account? Sign up here!</p></Link>
+                <Link to={`/signup`} onClick={handleClose}><p>Don't have an account? Sign up here!</p></Link>
                 <Button variant="primary" className="btn-light" onClick={handleSignin}>
                     Submit
                 </Button>
             </Modal.Footer>
         </Modal>
     )
-    
 }
 
 export default SignIn;

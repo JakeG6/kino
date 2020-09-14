@@ -3,6 +3,7 @@ import { BrowserRouter as Router} from "react-router-dom";
 
 // import ScrollToTop from './ScrollToTop.js';
 import UserProvider from "./providers/UserProvider.js"
+import {LoginModalProvider} from "./providers/LoginModalProvider.js"
 
 
 import ReactDOM from 'react-dom';
@@ -12,7 +13,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <UserProvider>
-        <App />
+        <LoginModalProvider>
+            <App />
+        </LoginModalProvider>
     </UserProvider>
         
   

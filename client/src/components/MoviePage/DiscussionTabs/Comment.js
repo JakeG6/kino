@@ -13,6 +13,8 @@ import { faPrayingHands } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '../../../providers/UserProvider';
+import { LoginModalContext } from '../../../providers/LoginModalProvider';
+
 import { toggleUpvote, toggleDownvote } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
@@ -20,6 +22,13 @@ const Comment = props => {
 
       //get user information if logged in
     const user = useContext(UserContext);
+
+    //context for moodal
+    const {loginShow, setLoginShow} = useContext(LoginModalContext)
+
+    const handleModalShow = () => {
+        setLoginShow(true);
+      }
 
     //set visual for upvote/downvote based on if a user is logged in, and then how user has previously voted on this comment
     const [vote, setVote] = useState(user ? props.comment.upvoters.includes(user.uid) ? "upvoted" : props.comment.downvoters.includes(user.uid) ? "downvoted" : "" : "");
@@ -83,7 +92,7 @@ const Comment = props => {
                                         icon={faPrayingHands} 
                                         size="2x" 
                                         color="white" 
-                                        onClick={ e => handleUpvote(props.comment.commentId, user)}
+                                        onClick={ user ? e =>  handleUpvote(props.comment.commentId, user) : handleModalShow}
                                     />
                                 </OverlayTrigger>
                                 <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>
@@ -93,7 +102,7 @@ const Comment = props => {
                                         icon={faThumbsDown} 
                                         size="2x" 
                                         color="white"
-                                        onClick={ e => handleDownvote(props.comment.commentId, user)}    
+                                        onClick={ user ? e => handleDownvote(props.comment.commentId, user) : handleModalShow}    
                                     />
                                 </OverlayTrigger>
                             </div>
