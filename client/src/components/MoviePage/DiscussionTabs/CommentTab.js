@@ -141,7 +141,7 @@ const CommentTab = props => {
                 user => (
                     user ?
                         <Form>
-                            <Form.Group controlId="formNewComment">
+                            <Form.Group>
                                 <FormControl 
                                     as="textarea" 
                                     aria-label="With textarea" 

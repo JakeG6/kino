@@ -1,27 +1,15 @@
-import React, {useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import validator from 'validator';
 
-
-import Accordion from 'react-bootstrap/Accordion';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image'
-import Tabs from 'react-bootstrap/Tabs';
+import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '../../../providers/UserProvider';
 import { postMovieReview, getMovieReviews } from '../../../firebase';
