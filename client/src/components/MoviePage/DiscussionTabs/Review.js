@@ -27,7 +27,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
 
-import { toggleUpvote, toggleDownvote, deleteComment } from '../../../firebase';
+import { toggleUpvote, toggleDownvote, deleteReview } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 
@@ -52,9 +52,9 @@ const Review = props => {
 
     // Delete Review
     const handleDelete = async (id) => {
-        await deleteComment(id)
+        await deleteReview(id)
         handleDelModalHide();
-        props.setComments({...props.comments, gettingComments: true});
+        props.setReviews({...props.reviews, gettingReviews: true});
         
     }
 
@@ -62,7 +62,7 @@ const Review = props => {
         <UserContext.Consumer>
             {
                 user => (            
-                    <Card className="comment-card review-card" key={props.review.reviewId}>
+                    <Card className="comment-card review-card">
                         <Card.Header className="comment-header">                     
                             
                             <div>
@@ -96,7 +96,7 @@ const Review = props => {
                             
                         </Card.Header>
                         <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                        <Card.Body clasName="review-body">
+                        <Card.Body className="review-body">
                             <div className="review-title">
                                 <h2>{props.review.title}</h2>
                                 

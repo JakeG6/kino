@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import validator from 'validator';
 
 
 import Accordion from 'react-bootstrap/Accordion';
@@ -17,6 +18,10 @@ import Tab from 'react-bootstrap/Tab';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '../../../providers/UserProvider';
 import { postMovieReview, getMovieReviews } from '../../../firebase';
@@ -91,6 +96,10 @@ const ReviewTab = props => {
 
     useEffect(() => {
         waitForMovieReviews();
+        const x = true;
+        const y = false;
+        console.log((x == true) && (y == true) ? true : false)
+     
    
     }, [reviews.gettingReviews, props.movieId])
 
@@ -115,7 +124,10 @@ const ReviewTab = props => {
     const reviewCards = reviews => {
         return (
             reviews.reviewsArr.map(review => (
-                <Review review={review} />
+                <div key={review.reviewId}>
+                    <Review review={review} setReviews={setReviews} reviews={reviews}  />
+                </div>
+                
             ))
         )
     }
@@ -132,38 +144,41 @@ const ReviewTab = props => {
                 {
                 user => (
                     user ?
-                    <Accordion>                              
-                        <Card>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="0" className="reviewButton">
-                                Write a review!
-                            </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="0">
-                                <Form className="black review-form">
-                                    <Form.Group>
-                                        <Form.Label>Review Headline</Form.Label>
-                                        <Form.Control value={reviewData.title} onChange={ e => setReviewData({ ...reviewData, title: e.target.value})} />
-                                    </Form.Group>
-                                    <Form.Group controlId="formNewComment">
-                                    <Form.Label>Review Text</Form.Label>
-                                        <FormControl as="textarea" aria-label="With textarea" rows={5} value={reviewData.reviewText} onChange={ e => setReviewData({ ...reviewData, reviewText: e.target.value})} />
-                                    </Form.Group>
-                                    <Form.Group controlId="exampleForm.SelectCustomSizeLg">
-                                        <Form.Label>Rating</Form.Label>
-                                        <Form.Control value={reviewData.rating} onChange={ e => setReviewData({ ...reviewData, rating: e.target.value })} as="select" size="lg" >
-                                            <option value={1}>1</option>
-                                            <option value={2}>2</option>
-                                            <option value={3}>3</option>
-                                            <option value={4}>4</option>
-                                            <option value={5}>5</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Button variant="primary" type="submit" onClick={e => submitReview(e, props.movieId, reviewData, user)}>
-                                        Submit
-                                    </Button>
-                                </Form>
-                                </Accordion.Collapse>
-                            </Card>
-                    </Accordion>
+                        <Form className="black review-form">
+                            <Form.Group>
+                                <Form.Label>Review Headline</Form.Label>
+                                <Form.Control value={reviewData.title} onChange={ e => setReviewData({ ...reviewData, title: e.target.value})} />
+                            </Form.Group>
+                            <Form.Group>
+                            <Form.Label>Review Text</Form.Label>
+                                <FormControl as="textarea" aria-label="With textarea" rows={5} value={reviewData.reviewText} onChange={ e => setReviewData({ ...reviewData, reviewText: e.target.value})} />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Rating</Form.Label>
+                                <Form.Control className="rating-control" value={reviewData.rating} onChange={ e => setReviewData({ ...reviewData, rating: e.target.value })} as="select" size="sm" >
+                                    <option value={1}>
+                                        ⭐   |  Awful
+                                    </option>
+                                    <option value={2}>⭐⭐    |  Mediocore</option>
+                                    <option value={3}>⭐⭐⭐    |  Good</option>
+                                    <option value={4}>⭐⭐⭐⭐    |  Great</option>
+                                    <option value={5}>⭐⭐⭐⭐⭐    |  Amazing</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <div className="comment-submit">
+                                <Button  
+                                variant="light" 
+                                type="submit" 
+                                disabled = {
+                                    ((!validator.isEmpty( reviewData.title, { ignore_whitespace:true }) == true) &&
+                                    (!validator.isEmpty( reviewData.reviewText, { ignore_whitespace:true }) == true ))
+                                     ? false : true}
+                                onClick={e => submitReview(e, props.movieId, reviewData, user)}>
+                                    Submit
+                                </Button>
+                            </div>
+                            
+                        </Form>
                     :
                     <Card className="comment-card  please-signin">
                         <Card.Text>
@@ -178,7 +193,6 @@ const ReviewTab = props => {
                         <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
                             Sort By
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
                             <Dropdown.Item className={`black-text ${reviews.reviewOrder==="newest" ? "bold" : ""}`} onClick={() => changeReviewOrder("newest")}>Newest</Dropdown.Item>
                             <Dropdown.Item className={`black-text ${reviews.reviewOrder==="oldest" ? "bold" : ""}`} onClick={() => changeReviewOrder("oldest")}>Oldest</Dropdown.Item>
