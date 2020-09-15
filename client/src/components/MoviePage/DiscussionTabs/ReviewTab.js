@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
@@ -25,7 +26,7 @@ import Review from "./Review.js";
 const ReviewTab = props => {
 
     const [reviewData, setReviewData] = useState({title: "", rating: 1, reviewText: ""});
-    const [reviews, setReviews] = useState({reviewsArr: [], gettingReviews: true})
+    const [reviews, setReviews] = useState({reviewsArr: [], reviewOrder:"newest", gettingReviews: true})
 
     async function waitForMovieReviews() {
         let newReviews = await getMovieReviews(props.movieId);
@@ -34,26 +35,8 @@ const ReviewTab = props => {
 
         let sortedReviews;
 
-        //sort reviews by upvotes
-        if (reviews.commentOrder === "patrician") {
-            // console.log("doing patrician stuff")
-            sortedReviews = newReviews.sort((a, b) => {
-              
-                return b.points - a.points;
-            })
-            // console.log(sortedReviews)
-        }
-
-        //sort reviews by downvotes
-        if (reviews.commentOrder === "plebian") {
-            // console.log("doing pleb stuff")
-            sortedReviews = newReviews.sort((a, b) => {
-                return a.points - b.points;
-            })
-        }
-
         //sort reviews by newest
-        if (reviews.commentOrder === "newest") {
+        if (reviews.reviewOrder === "newest") {
             // console.log("doing new stuff")
             sortedReviews = newReviews.sort((a, b) => {
                 let x = a.date.seconds, y = b.date.seconds
@@ -68,8 +51,8 @@ const ReviewTab = props => {
             })
         }
 
-        //sort reviews by newest
-        if (reviews.commentOrder === "oldest") {
+        //sort reviews by oldest
+        if (reviews.reviewOrder === "oldest") {
             // console.log("doing old stuff")
             sortedReviews = newReviews.sort((a, b) => {
                 let x = a.date.seconds, y = b.date.seconds
@@ -82,22 +65,34 @@ const ReviewTab = props => {
                 return 0;
             })
         }
+
+        //sort reviews by rating, descending
+        if (reviews.reviewOrder === "ratingDsc") {
+           
+            sortedReviews = newReviews.sort((a, b) => {
+              
+                return b.rating - a.rating;
+            })
+            // console.log(sortedReviews)
+        }
+
+        //sort reviews by rating, ascending
+        if (reviews.reviewOrder === "ratingAsc") {
+            // console.log("doing pleb stuff")
+            sortedReviews = newReviews.sort((a, b) => {
+                return a.rating - b.rating;
+            })
+        }
+       
         console.log(sortedReviews)
 
-        setReviews({...reviews, commentArr: sortedReviews, gettingReviews: false});
+        setReviews({...reviews, reviewsArr: sortedReviews, gettingReviews: false});
     }
 
     useEffect(() => {
-
-        async function waitForMovieReviews() {
-            let reviews = await getMovieReviews(props.movieId);
-            // console.log(reviews);
-            setReviews({reviewsArr: reviews, gettingReviews: false});
-        }
-
         waitForMovieReviews();
    
-    }, [reviews.gettingReviews])
+    }, [reviews.gettingReviews, props.movieId])
 
     const submitReview = (event, movieId, reviewData, user) => {
         event.preventDefault();
@@ -108,6 +103,15 @@ const ReviewTab = props => {
 
     }
 
+    //change order of comments and trigger comments rerender
+    const changeReviewOrder = newOrder => {
+        if (newOrder === reviews.reviewOrder) { 
+            console.log("the order is the same");
+            return; 
+        }
+        setReviews({...reviews, reviewOrder: newOrder, gettingReviews: true});
+    }
+
     const reviewCards = reviews => {
         return (
             reviews.reviewsArr.map(review => (
@@ -116,10 +120,8 @@ const ReviewTab = props => {
         )
     }
 
-
     return (
-        <Tab.Content>
-            
+        <Tab.Content>           
                 <Row>
                     <Col xs={1}>
                     </Col>
@@ -171,20 +173,32 @@ const ReviewTab = props => {
                 )
             }
             </UserContext.Consumer>
-            <div>
+            <div className="comment-stack">
+                <Dropdown  >
+                        <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
+                            Sort By
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item className={`black-text ${reviews.reviewOrder==="newest" ? "bold" : ""}`} onClick={() => changeReviewOrder("newest")}>Newest</Dropdown.Item>
+                            <Dropdown.Item className={`black-text ${reviews.reviewOrder==="oldest" ? "bold" : ""}`} onClick={() => changeReviewOrder("oldest")}>Oldest</Dropdown.Item>
+                            <Dropdown.Item className={`black-text ${reviews.reviewOrder==="ratingDsc" ? "bold" : ""}`} onClick={() => changeReviewOrder("ratingDsc")}>Rating Descending</Dropdown.Item>
+                            <Dropdown.Item className={`black-text ${reviews.reviewOrder==="ratingAsc" ? "bold" : ""}`} onClick={() => changeReviewOrder("ratingAsc")}>Rating Ascending</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 {
-                    reviews.reviewsArr.length > 0 ?
+                    reviews.gettingReviews ? 
+                        <LoadingSpinner />
+                    :
+                        reviews.reviewsArr.length > 0 ?
                         reviewCards(reviews)                                                                                              
                     :
-                    <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has reviewed this movie yet. You could be the first!</p>
+                        <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has reviewed this movie yet. You could be the first!</p>
                 }
             </div>
             </Col>
             <Col xs={1}></Col>
-                </Row>
-            
-            
-            
+        </Row>
         </Tab.Content>
     )
 

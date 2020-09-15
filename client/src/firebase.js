@@ -157,7 +157,7 @@ export const postMovieComment = async (movieId, text, user) => {
     }).catch(function(error) {
     
         console.log("Error getting documents: ", error);
-    
+
     });
 
     await firestore.collection("movieComments").add({
@@ -219,7 +219,7 @@ export const postMovieReview = async (movieId, reviewData, user) => {
     });
 
     await firestore.collection("movieReviews").add({
-        date: firebase.firestore.FieldValue.serverTimestamp(),
+        date: await firebase.firestore.FieldValue.serverTimestamp(),
         movieId: movieId,
         authorId: authorId,
         points: 0,
@@ -351,5 +351,16 @@ export const deleteComment = (id) => {
         console.error("Error removing document: ", error);
     });
 
+}
+
+export const deleteReview = (id) => {
+
+    const commentRef = firestore.collection("movieReviews").doc(id);
+
+    commentRef.delete().then(function() {
+        console.log("Document successfully deleted!");
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
 
 }

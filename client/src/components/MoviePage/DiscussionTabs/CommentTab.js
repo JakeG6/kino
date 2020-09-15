@@ -79,7 +79,7 @@ const CommentTab = props => {
             })
         }
 
-        //sort comments by newest
+        //sort comments by oldest
         if (comments.commentOrder === "oldest") {
             // console.log("doing old stuff")
             sortedComments = newComments.sort((a, b) => {
@@ -102,7 +102,7 @@ const CommentTab = props => {
 
         waitForMovieComments();
    
-    }, [comments.gettingComments])
+    }, [comments.gettingComments, props.movieId])
 
 
     //submit comment, and trigger comments rerender
@@ -196,7 +196,7 @@ const CommentTab = props => {
                 comments.commentArr.length > 0 ?
                     commentCards(comments)                                                                                              
                 :
-                <p>Nobody has commented on this movie yet.</p>
+                <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has commented on this movie yet.</p>
                 
             }
             </div>
