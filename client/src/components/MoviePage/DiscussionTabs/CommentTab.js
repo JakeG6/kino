@@ -29,7 +29,6 @@ const CommentTab = props => {
     //context for signin modal
     const {loginShow, setLoginShow} = useContext(LoginModalContext)
 
-
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState({ commentOrder: "patrician", commentArr: [], gettingComments: true})
     
@@ -196,7 +195,7 @@ const CommentTab = props => {
                 comments.commentArr.length > 0 ?
                     commentCards(comments)                                                                                              
                 :
-                <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has commented on this movie yet.</p>
+                <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has commented on this movie yet. You could be the first!</p>
                 
             }
             </div>

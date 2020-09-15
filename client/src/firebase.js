@@ -164,7 +164,7 @@ export const postMovieComment = async (movieId, text, user) => {
         movieId: movieId,
         username: username,
         authorId: authorId,
-        date: await firebase.firestore.FieldValue.serverTimestamp(),
+        date: firebase.firestore.FieldValue.serverTimestamp(),
         text: text,
         points: 0,
         upvoters: [],
@@ -210,6 +210,8 @@ export const postMovieReview = async (movieId, reviewData, user) => {
     let authorId = user.uid
     let username;
 
+    //let timestamp = await firebase.firestore.FieldValue.serverTimestamp()
+
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
         username = snapshot.docs[0].data().username;
         // console.log("username is ", username)
@@ -219,7 +221,7 @@ export const postMovieReview = async (movieId, reviewData, user) => {
     });
 
     await firestore.collection("movieReviews").add({
-        date: await firebase.firestore.FieldValue.serverTimestamp(),
+        date: firebase.firestore.FieldValue.serverTimestamp(),
         movieId: movieId,
         authorId: authorId,
         points: 0,

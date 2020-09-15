@@ -94,10 +94,10 @@ const ReviewTab = props => {
    
     }, [reviews.gettingReviews, props.movieId])
 
-    const submitReview = (event, movieId, reviewData, user) => {
+    const submitReview = async (event, movieId, reviewData, user) => {
         event.preventDefault();
         console.log(movieId, reviewData, user)
-        postMovieReview(movieId, reviewData, user);
+        await postMovieReview(movieId, reviewData, user);
         setReviewData({title:"", rating: 1, reviewText: ""});
         setReviews({...reviews, gettingReviews: true});
 
