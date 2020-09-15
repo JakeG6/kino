@@ -55,6 +55,7 @@
 .comment-header {
     display: flex;
     justify-content: space-between;
+    align-items: bottom;
 }
 
 .comment-vote {
@@ -66,4 +67,35 @@
 .delete-icon:hover {
     color:red;
     cursor: pointer;
+}
+
+
+.review-card .card-body {
+    padding-top: 0em;
+}
+
+
+.review-text {
+    margin-top: 1em !important;
+}
+
+.review-title {
+    padding-top: .5em;
+}
+
+.review-title h2 {
+    margin-bottom: 0em;
+}
+
+.review-footer {
+    justify-content: flex-end;
+}
+
+.review-title {
+    display: flex;
+    align-items: flex-end;
+} 
+
+.review-title i {
+    margin-left: 2em;
 }

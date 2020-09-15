@@ -20,6 +20,7 @@ import TabPane from 'react-bootstrap/TabPane';
 import { UserContext } from '../../../providers/UserProvider';
 import { postMovieReview, getMovieReviews } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
+import Review from "./Review.js";
 
 const ReviewTab = props => {
 
@@ -103,17 +104,14 @@ const ReviewTab = props => {
         console.log(movieId, reviewData, user)
         postMovieReview(movieId, reviewData, user);
         setReviewData({title:"", rating: 1, reviewText: ""});
+        setReviews({...reviews, gettingReviews: true});
+
     }
 
     const reviewCards = reviews => {
         return (
             reviews.reviewsArr.map(review => (
-                <Card>
-                    <Card.Subtitle className="mb-2 text-muted">{review.username}</Card.Subtitle>
-                    <Card.Body>
-                        {review.text}
-                    </Card.Body>
-                </Card>
+                <Review review={review} />
             ))
         )
     }
@@ -173,11 +171,6 @@ const ReviewTab = props => {
                 )
             }
             </UserContext.Consumer>
-            </Col>
-            <Col xs={1}></Col>
-                </Row>
-            
-            
             <div>
                 {
                     reviews.reviewsArr.length > 0 ?
@@ -186,6 +179,12 @@ const ReviewTab = props => {
                     <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has reviewed this movie yet. You could be the first!</p>
                 }
             </div>
+            </Col>
+            <Col xs={1}></Col>
+                </Row>
+            
+            
+            
         </Tab.Content>
     )
 

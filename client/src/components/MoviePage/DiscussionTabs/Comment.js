@@ -30,7 +30,7 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 const Comment = props => {
 
-      //get user information if logged in
+    //get user information if logged in
     const user = useContext(UserContext);
 
     //context for login moodal
@@ -111,8 +111,11 @@ const Comment = props => {
                     user => (
                   
                         <Card className="comment-card" key={props.comment.commentId}>
-                            <Card.Header className="comment-header">                     
-                                <h5>{props.comment.username}</h5>
+                            <Card.Header className="comment-header">
+                                {
+                                    
+                                }                     
+                                <h4>{props.comment.username}</h4>
                                 {   
                                     user ?
                                     user.uid === props.comment.authorId ?
