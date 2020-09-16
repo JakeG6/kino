@@ -34,16 +34,17 @@ const App = () => {
 
   const {loginShow, setLoginShow} = useContext(LoginModalContext)
 
-
-  // const handleModalClose = () => setLoginShow(false)
   const handleModalShow = () => {
-    console.log("this is triggered")
     setLoginShow(true);
   }
 
-  return (
+  
 
-      <Router>
+  let history = useHistory();
+
+  return (
+    <div>
+      
         <ScrollToTop />
         <div className="App">
             <Container>
@@ -62,7 +63,7 @@ const App = () => {
                           User name
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item className="black-text">Dashboard</Dropdown.Item>
+                          <Dropdown.Item className="black-text" onClick={() => {history.push("/dashboard")}}>Dashboard</Dropdown.Item>
                           <Dropdown.Item className="black-text" onClick={logoutUser}>Log Out</Dropdown.Item>                       
                         </Dropdown.Menu>
                       </Dropdown>
@@ -88,13 +89,12 @@ const App = () => {
                   <Route component={NoMatch} />
                 </Switch>
               </div>
-
               {/* Signin Modal */}
               <SignIn />
             </Container>
         </div>
-      </Router> 
    
+    </div>
   );
 }
 

@@ -11,11 +11,12 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //add new user to site firebase.
-export const signupNewUser = (username, password, email) => {
+export const signupNewUser = async (username, password, email) => {
     console.log("we're signing up the new user")
 
     const usernameQuery =  firestore.collection("users").where("username", "==", username);
     const emailQuery = firestore.collection("users").where("email", "==", email);
+    let uid;
 
     console.log(usernameQuery);
     console.log(emailQuery);
@@ -24,22 +25,24 @@ export const signupNewUser = (username, password, email) => {
 
         console.log("good news: they don't exist")
 
-        auth.createUserWithEmailAndPassword(email, password).catch( error => {
+        await auth.createUserWithEmailAndPassword(email, password).catch( error => {
             // Handle Errors here.
             let errorCode = error.code;
             let errorMessage = error.message;
+            console.log(`${errorCode} ${errorMessage}`)
             // ...
-        });
+        })
 
-        firestore.collection("users").add({
+        const id = new Date().getTime().toString();
+
+        firestore.collection("users").doc(id).set({
+            //use unix millisecond timestamp for field id
+            id: id,
             email: email,
             password: password,
             privilege: "user",
-            userPoints: 1,
+            userPoints: 0,
             username: username
-            
-        }).then(docRef => {
-            console.log("Document written with ID: ", docRef.id);
         })
         .catch(error => {
             console.error("Error adding document: ", error);
@@ -81,13 +84,14 @@ export const logoutUser = () => {
 }
 
 //retrieve user data
-export const getUserData = user => {
+export const getUserData = async user => {
 
     let userObj;
 
-    firestore.collection("users").where("email", "==", user.email).get().then(snapshot => {
+    await firestore.collection("users").where("email", "==", user.email).get().then(snapshot => {
 
         userObj = snapshot.docs[0].data();
+        console.log(userObj)
         
     }).catch(function(error) {
     
@@ -96,6 +100,32 @@ export const getUserData = user => {
     });
 
     return userObj;
+
+}
+
+//Update user points value
+export const updateUserPoints = async (authorId) => {
+
+    const userRef = firestore.collection("users").doc(authorId);
+    const userCommentsRef = firestore.collection("movieComments").where("authorId", "==", authorId);
+   
+    let userCommentsArr = [];
+    let newPointTotal = 0;
+
+    await userCommentsRef.get().then(snapshot => {
+
+        snapshot.forEach(doc => {
+            userCommentsArr.push(doc.data());
+        })
+        
+        console.log(userCommentsArr)
+  
+    })
+
+    userCommentsArr.forEach(comment => (newPointTotal += comment.points))
+    console.log(newPointTotal);
+
+    userRef.update({userPoints: newPointTotal}).then(() => console.log("point total updated"))
 
 }
 
@@ -145,13 +175,14 @@ const getCount = ref => {
 export const postMovieComment = async (movieId, text, user) => {
     // console.log(movieId, text, user.email)
 
-    let email = user.email
-    let authorId = user.uid
+    let email = user.email;
+    let authorId;
     let username;
 
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
 
         username = snapshot.docs[0].data().username;
+        authorId = snapshot.docs[0].data().id;
         // console.log(username)
     
     }).catch(function(error) {
@@ -183,6 +214,8 @@ export const postMovieComment = async (movieId, text, user) => {
     .catch(function(error) {
         console.error("Error adding comment: ", error);
     });
+
+
 }
 
 //retrieve comments for moviepage
@@ -205,12 +238,10 @@ export const getMovieComments = async movieId => {
 }
 
 export const postMovieReview = async (movieId, reviewData, user) => {
-
+    
     let email = user.email
     let authorId = user.uid
     let username;
-
-    //let timestamp = await firebase.firestore.FieldValue.serverTimestamp()
 
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
         username = snapshot.docs[0].data().username;
@@ -219,7 +250,6 @@ export const postMovieReview = async (movieId, reviewData, user) => {
     }).catch(function(error) {
         console.log("Error getting document: ", error);
     });
-
     await firestore.collection("movieReviews").add({
         date: firebase.firestore.FieldValue.serverTimestamp(),
         movieId: movieId,
@@ -267,7 +297,7 @@ export const toggleUpvote = async (commentId, user) => {
     const addToUpvoters = { upvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
 
     let comment = undefined;
-    let pointChange = 0;
+    let pointChange;
 
     let doc = await commentRef.get();
 
@@ -276,7 +306,7 @@ export const toggleUpvote = async (commentId, user) => {
     //remove the user from upvoters if they've upvoted already
     if (comment.upvoters.includes(user.uid)) {
         await commentRef.update(removeFromUpvoters);
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
+        await commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
         pointChange = -1;
     
     }
@@ -284,17 +314,19 @@ export const toggleUpvote = async (commentId, user) => {
     else if (comment.downvoters.includes(user.uid)) {
         await commentRef.update(removeFromDownvoters);
         await commentRef.update(addToUpvoters);
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(2)});
+        await commentRef.update({ points: firebase.firestore.FieldValue.increment(2)});
         pointChange = 2;
                 
     }
     //add the user to upvoters if they haven't voted on the comment
     else {
         await commentRef.update(addToUpvoters);
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
+        await commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
         pointChange = 1;
             
     }
+
+    updateUserPoints(comment.authorId)
 
 }
 
@@ -317,7 +349,7 @@ export const toggleDownvote = async (commentId, user) => {
     if (comment.downvoters.includes(user.uid)) {
 
         await commentRef.update(removeFromDownvoters);
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
+        await commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
         pointChange = 1;
    
     }
@@ -327,7 +359,7 @@ export const toggleDownvote = async (commentId, user) => {
 
         await commentRef.update(removeFromUpvoters);
         await commentRef.update(addToDownvoters);
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(-2)});
+        await commentRef.update({ points: firebase.firestore.FieldValue.increment(-2)});
         pointChange = -2;
        
     }
@@ -336,10 +368,12 @@ export const toggleDownvote = async (commentId, user) => {
     else {
         
         await commentRef.update(addToDownvoters);
-        commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
+        await commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
         pointChange = -1;
 
     }
+
+    updateUserPoints(comment.authorId)
 
 }
 
@@ -366,3 +400,4 @@ export const deleteReview = (id) => {
     });
 
 }
+

@@ -22,10 +22,12 @@ const Signup = () => {
     let [password, setPassword] = useState('');
     let [errorMessage, setErrorMessage] = useState('')
 
+    let history = useHistory();
+
     const noWhitespace = { ignore_whitespace:true };
 
     //validate the signup
-    const validateSignup = (e) => {
+    const validateSignup = async (e) => {
         e.preventDefault();
         // console.log("validating signup")
         // console.log(username, email, password)
@@ -37,7 +39,7 @@ const Signup = () => {
 
         if (validator.isLength(username, {max: 16 }) === false) {
             setErrorMessage("Your username can't be longer than 16 characters")
-            return;
+            return;;
         }
 
         if (validator.isEmail(email) === false)  {
@@ -50,19 +52,20 @@ const Signup = () => {
             return;
         }
         console.log("about to signup new user")
-        signupNewUser(username, password, email);
+        await signupNewUser(username, password, email);
         console.log("we're done signing up the new user")
+
+        history.push("/")
 
     }
 
     return (
         <Container>
             <Row className="signup">
-                <Col xs={1} sm={2} md={4}>
+                <Col xs={1} sm={2} lg={3} xl={4}>
                 </Col>
-                <Col xs={10} sm={8} md={4}>
-                    <Form className="signup-form">
-                        
+                <Col xs={10} sm={8} lg={6} xl={4}>
+                    <Form className="signup-form">                       
                         <Form.Group controlId="formBasicUsername">
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="username" placeholder="What's your name?" value={username} onChange={ e => setUsername(e.target.value)} />
@@ -88,10 +91,9 @@ const Signup = () => {
                             Submit
                         </Button>
                         <h1>{errorMessage}</h1>
-
                     </Form>
-                </Col >
-                <Col xs={1} sm={2} md={4}>
+                </Col > 
+                <Col xs={1} sm={2} lg={3} xl={4}>
                 </Col>
             </Row>
         </Container>

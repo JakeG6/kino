@@ -25,7 +25,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
 
-import { toggleUpvote, toggleDownvote, deleteComment } from '../../../firebase';
+import { toggleUpvote, toggleDownvote, updateUserPoints, deleteComment } from '../../../firebase';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 const Comment = props => {
@@ -65,7 +65,7 @@ const Comment = props => {
     const [vote, setVote] = useState(user ? props.comment.upvoters.includes(user.uid) ? "upvoted" : props.comment.downvoters.includes(user.uid) ? "downvoted" : "" : "");
     const [pointCount, setPointCount] = useState(props.comment.points)
 
-    const handleUpvote = (id, user)=> {
+    const handleUpvote = async (id, authorId, user) => {
 
         //remove the user from upvoters if they've upvoted already
         if (vote === "upvoted") {
@@ -83,10 +83,10 @@ const Comment = props => {
             setPointCount(pointCount + 1);
                    
         }
-        toggleUpvote(id, user);
+        await toggleUpvote(id, user);
     }
 
-    const handleDownvote = (id, user) => {
+    const handleDownvote = async (id, authorId, user) => {
         //remove the user from downvoters if they've downvoted already
         if (vote === "downvoted") {
             setVote("");
@@ -102,7 +102,8 @@ const Comment = props => {
             setVote("downvoted");
             setPointCount(pointCount - 1);
         }
-        toggleDownvote(id, user);
+        await toggleDownvote(id, user);
+        
     }
 
     return (
@@ -145,7 +146,7 @@ const Comment = props => {
                                             icon={faPrayingHands} 
                                             size="2x" 
                                             color="white" 
-                                            onClick={ user ? e =>  handleUpvote(props.comment.commentId, user) : handleModalShow}
+                                            onClick={ user ? e =>  handleUpvote(props.comment.commentId, props.comment.authorId, user) : handleModalShow}
                                         />
                                     </OverlayTrigger>
                                     <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>
@@ -155,7 +156,7 @@ const Comment = props => {
                                             icon={faThumbsDown} 
                                             size="2x" 
                                             color="white"
-                                            onClick={ user ? e => handleDownvote(props.comment.commentId, user) : handleModalShow}    
+                                            onClick={ user ? e => handleDownvote(props.comment.commentId, props.comment.authorId, user) : handleModalShow}    
                                         />
                                     </OverlayTrigger>
                                 </div>
@@ -175,7 +176,6 @@ const Comment = props => {
                                 </Modal.Header>
                                 <Modal.Body>
                                     Are you sure you want to delete this comment?
-                                    
                                 </Modal.Body>
                                 <Modal.Footer >
                                 <Button variant="danger" className="comment-delete-button" onClick={e => handleDelete(props.comment.commentId)}  >

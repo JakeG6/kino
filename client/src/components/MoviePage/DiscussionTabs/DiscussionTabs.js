@@ -34,8 +34,8 @@ const DiscussionTabs = props => {
                     </Col>
                 </Row>
                     <Col>
-                        <div className="discussion black">
-                            <Tabs defaultActiveKey="review" id="uncontrolled-tab-example"  >
+                        <div id="discussion" className="black">
+                            <Tabs defaultActiveKey="review"  >
                                 <Tab eventKey="review" title="Reviews" className="disTab black">
                                     <ReviewTab movieId={props.movieId} />
                                 </Tab>

@@ -1,11 +1,4 @@
 
-.active {
-    border-color: #343A40 !important;
-    border-bottom: 0px !important;
-    border-top: none !important;
-    background-color: black !important;
-}
-
 .bold {
     font-weight: bold !important;
 }
@@ -14,20 +7,31 @@
     text-align: right;
 }
 
-.discussion {
-
+#discussion {
     border-radius: .25rem;
     margin-bottom: 1em;
 }
 
-.discussion .nav-tabs {
+#discussion .nav-tabs {
     border-bottom: 1px solid #343A40;
     border-left: 0px solid;
-    border-top: none;
+    border-top: #343A40;
+    
 }
 
-.tab-content {
-    background-color: Black;
+#discussion .nav-tabs .active {
+
+    border-bottom: 0px !important;
+    border-left: 1px solid #343A40;
+    border-right: 1px solid #343A40;
+    border-top: none ;
+    background-color: black;
+    
+}
+
+#discussion .nav-tabs .active:first-child {
+    border-left: 1px solid black;
+
 }
 
 .reviewButton {

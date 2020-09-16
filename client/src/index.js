@@ -12,11 +12,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <UserProvider>
-        <LoginModalProvider>
-            <App />
-        </LoginModalProvider>
-    </UserProvider>
+    <Router>
+        <UserProvider>
+            <LoginModalProvider>
+                <App />
+            </LoginModalProvider>
+        </UserProvider>
+    </Router>
         
   
 , 

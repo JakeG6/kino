@@ -161,7 +161,8 @@ const ReviewTab = props => {
                                     ((!validator.isEmpty( reviewData.title, { ignore_whitespace:true }) == true) &&
                                     (!validator.isEmpty( reviewData.reviewText, { ignore_whitespace:true }) == true ))
                                      ? false : true}
-                                onClick={e => submitReview(e, props.movieId, reviewData, user)}>
+                                onClick={e => submitReview(e, props.movieId, reviewData, user)}
+                                >
                                     Submit
                                 </Button>
                             </div>
