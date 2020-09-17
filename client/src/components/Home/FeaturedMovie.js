@@ -14,7 +14,7 @@ let FeaturedMovie = () => {
     let history = useHistory();
 
     useEffect(() => {
-        //this is having issues
+
         axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1&region=US`)
             .then(res => {            
                 console.log(res.data.results[0])

@@ -23,7 +23,7 @@ const PopularMovies = similarMovies => {
 
 
     useEffect(() => {
-        //this is having issues
+        
         axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1&region=US`)
             .then(res => {   
                 let list = []         
@@ -36,12 +36,6 @@ const PopularMovies = similarMovies => {
 
     }, [])
 
-    //number of similar movies shown
-    
-
-    //create short list of similar movies
-
-    //render similar movies in JSX if there are any.
         return (
             <Row>
                 <Col>
@@ -68,16 +62,7 @@ const PopularMovies = similarMovies => {
                 </Col>
             </Row>
         )
-    // else {
-    //     return (
-    //         <Row>
-    //             <Col>
-    //                 <h2>There Are No Similar Movies at This Time</h2>
-    //             </Col>
-    //         </Row>
-    //     )
-    // }
-    
+
 }
 
 export default PopularMovies;

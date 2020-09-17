@@ -56,30 +56,27 @@ const SearchResultsPage = () => {
 
     useEffect(() => {
 
-        console.log(`hey! this is the start of useEffect. param is ${searchParams.q}. the pageCount is ${pageCount}`);
-
         const fetchResults = async () => {
 
             //results from api based on url built by queryBuilder function
             const apiResults = await axios.get(queryBuilder(searchParams, searchParams.type, 1));
             
             //show what the parameters are for the search results
-            
+            console.log(searchParams)
+            const paramSentence = await paramDisplayGenerator(searchParams);
+            console.log(paramSentence);
 
             //update component state
-            setCurrentParams(searchParams)
+            setParamDisplay(paramSentence);
+            setCurrentParams(searchParams);
             setPageCount(1);
             setSearchResults([...apiResults.data.results]);
             setTotalPages(apiResults.data.total_pages);
-            
-            
+
         }
 
         fetchResults();
-        // const paramDisplay = 
-        // setParamDisplay(paramDisplayGenerator(searchParams));
-        // console.log(currentParams)
-
+        
     }, [location])
 
     const MoreResultsButton = () => (
@@ -96,7 +93,8 @@ const SearchResultsPage = () => {
                 <Container>
                     <Row>
                         <Col xs={12}>
-                            <b>{paramDisplayGenerator(searchParams)}</b>
+                            <h1>Search Results</h1>
+                            <b>{paramDisplay}</b>
                             <ListGroup >
                                 {searchResults.map(result => (
                                     <ListGroup.Item key={result.id} className="results-item">

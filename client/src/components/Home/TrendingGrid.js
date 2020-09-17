@@ -12,7 +12,7 @@ const TrendingGrid = () => {
     const [nowTrending, setNowTrending] = useState([]);
 
     useEffect(() => {
-        //this is having issues
+      
         axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`)
             .then(res => {            
                 setNowTrending(res.data.results)
