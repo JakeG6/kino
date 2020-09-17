@@ -8,6 +8,7 @@ import ComingSoonChart from './ComingSoonChart';
 import FeaturedMovie from './FeaturedMovie';
 import PopularMovies from './PopularMovies';
 import TrendingGrid from './TrendingGrid';
+import backdropPlaceholder from "../backdrop-placeholder.jpg"
 
 import "./Home.css";
 
@@ -37,6 +38,10 @@ let Home = () =>  {
         })
     
     }, [])
+
+    const checkBackdropPath = path => {
+        return path ?  `https://image.tmdb.org/t/p/w780${path}` : backdropPlaceholder;
+    }
         
     return (
         <div>
@@ -55,7 +60,7 @@ let Home = () =>  {
                                     <div className="carousel-image">
                                         <img
                                             className="d-block w-100"
-                                            src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}
+                                            src={checkBackdropPath(movie.backdrop_path)}
                                             alt="First slide"
                                         />
                                     </div>
