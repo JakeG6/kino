@@ -129,6 +129,30 @@ export const updateUserPoints = async (authorId) => {
 
 }
 
+//update user profile WIP
+const updateUserProfile = async (arg, newVal) => {
+    
+    const usersRef =  firebase.collection("users");
+    let currentUser = auth.currentUser();   
+    let userId;
+    
+    if (arg = "password") {
+
+        await currentUser.updateProfile({
+            password: newVal           
+        })
+
+        await usersRef.where("email", "==", currentUser.email).get().then(snapshot => {   
+            userId = snapshot.docs[0].data().id;
+        })
+        
+        usersRef.doc(userId).update({pasword: newVal});
+
+    }
+
+}
+
+
 //create distributed counters for likes and dislikes for posts and reviews.
 const createCounter = (ref, num_shards) => {
     let batch = firestore.batch();

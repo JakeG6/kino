@@ -13,10 +13,10 @@ const UserProvider = ({children}) => {
   useEffect(() => {
 
     auth.onAuthStateChanged(user => {
-      console.log("a user is detected")
+      // console.log("a user is detected")
       setUser(user)
       setPending(false);
-      console.log(user)
+      // console.log(user)
     });
 
   },[]) 

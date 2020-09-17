@@ -44,10 +44,9 @@ const App = () => {
 
   return (
     <div>
-      
         <ScrollToTop />
-        <div className="App">
-            <Container>
+        <div id="app-overwrites" className="App">
+            <Container >
               {/* Navigation bar */}
               <Navbar fluid="true" expand="sm" sticky="top" className="justify-content-between">
                 <Navbar.Brand><Link className="app-logo" to={`/`}>KINO</Link></Navbar.Brand>
