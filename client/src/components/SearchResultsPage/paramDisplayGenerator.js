@@ -26,7 +26,6 @@ const paramDisplayGenerator = async (params) => {
         })
 
         sentence += `genre is ${genreName}.`;
-        console.log(sentence);
 
     }
 
@@ -38,7 +37,6 @@ const paramDisplayGenerator = async (params) => {
         
     }  
 
-    console.log(sentence)
     return sentence;
 
 }

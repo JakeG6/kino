@@ -14,9 +14,7 @@
 #searchbar input {
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
-    
     width: calc(100% - 42px);
-    /* max-width: 540px; */
     display: block;
     outline: none;
     height: calc(1.5em + .75rem + 2px);

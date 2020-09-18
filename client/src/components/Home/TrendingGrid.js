@@ -24,7 +24,6 @@ const TrendingGrid = () => {
     const makeImages = arg => {
         
         arg.map((movie) => {
-            console.log(movie.backdrop_path)
           return (
             <img key={movie.id} height="100px" width="100px" src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`}></img>
           )

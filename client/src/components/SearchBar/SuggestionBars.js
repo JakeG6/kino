@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import apiKey from "../apiKey";
-
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
-import axios from 'axios';
-
-
-import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup';
-import InputGroup from 'react-bootstrap/InputGroup'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
 import Image from 'react-bootstrap/Image';
 
 import "./SearchBar.css";
@@ -33,7 +24,6 @@ const SuggestionBars = () => {
 
     //get placeholder poster if official poster is not available.
     const checkPosterPath = path => {
-        console.log(`look at thsi path `, path)
         return path !== null ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
     }
 

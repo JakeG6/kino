@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
     
 //create list of genres of movie
 const createGenreList = (movie) => {
-    // console.log(movie.movieInfo.genres)
 
     let genreList = [];
 

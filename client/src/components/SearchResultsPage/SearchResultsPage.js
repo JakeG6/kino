@@ -35,8 +35,6 @@ const SearchResultsPage = () => {
     const [pageCount, setPageCount] = useState(1);
     const [totalPages, setTotalPages] = useState(null);
 
-    console.log(searchParams)
-
     //get placeholder poster if official poster is not available.
     const checkPosterPath = path => {
         return path ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
@@ -62,9 +60,7 @@ const SearchResultsPage = () => {
             const apiResults = await axios.get(queryBuilder(searchParams, searchParams.type, 1));
             
             //show what the parameters are for the search results
-            console.log(searchParams)
             const paramSentence = await paramDisplayGenerator(searchParams);
-            console.log(paramSentence);
 
             //update component state
             setParamDisplay(paramSentence);

@@ -7,7 +7,6 @@ export const LoginModalProvider = ({children}) => {
   const [loginShow, setLoginShow] = useState(false);
 
   useEffect(() => {
-    console.log("loginShow is", loginShow)
   }, [loginShow])
 
   return (

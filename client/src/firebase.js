@@ -12,18 +12,13 @@ export const firestore = firebase.firestore();
 
 //add new user to site firebase.
 export const signupNewUser = async (username, password, email) => {
-    console.log("we're signing up the new user")
+
 
     const usernameQuery =  firestore.collection("users").where("username", "==", username);
     const emailQuery = firestore.collection("users").where("email", "==", email);
-    let uid;
-
-    console.log(usernameQuery);
-    console.log(emailQuery);
 
     if (!usernameQuery.exists && !emailQuery.exists) {
 
-        console.log("good news: they don't exist")
 
         await auth.createUserWithEmailAndPassword(email, password).catch( error => {
             // Handle Errors here.
@@ -61,8 +56,8 @@ export const signinUser = (email, password) => {
     let userPromise = auth.signInWithEmailAndPassword(email, password);
 
     userPromise.then((result) => {
-        console.log(result);
-         // updare the context
+
+         // update the context
     }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -74,13 +69,7 @@ export const signinUser = (email, password) => {
 
 //logout User
 export const logoutUser = () => {
-    auth.signOut().then(promise => {
-        //signout succesful
-        console.log("signout succesful")
-        console.log(promise);
-    }).catch(error => {
-        // An error happened.
-    });
+    auth.signOut();
 }
 
 //retrieve user data
@@ -91,7 +80,6 @@ export const getUserData = async user => {
     await firestore.collection("users").where("email", "==", user.email).get().then(snapshot => {
 
         userObj = snapshot.docs[0].data();
-        console.log(userObj)
         
     }).catch(function(error) {
     
@@ -118,14 +106,13 @@ export const updateUserPoints = async (authorId) => {
             userCommentsArr.push(doc.data());
         })
         
-        console.log(userCommentsArr)
+
   
     })
 
     userCommentsArr.forEach(comment => (newPointTotal += comment.points))
-    console.log(newPointTotal);
 
-    userRef.update({userPoints: newPointTotal}).then(() => console.log("point total updated"))
+    userRef.update({userPoints: newPointTotal})
 
 }
 
@@ -197,7 +184,6 @@ const getCount = ref => {
 
 //post movie comment to firestore
 export const postMovieComment = async (movieId, text, user) => {
-    // console.log(movieId, text, user.email)
 
     let email = user.email;
     let authorId;
@@ -207,7 +193,6 @@ export const postMovieComment = async (movieId, text, user) => {
 
         username = snapshot.docs[0].data().username;
         authorId = snapshot.docs[0].data().id;
-        // console.log(username)
     
     }).catch(function(error) {
     
@@ -233,7 +218,6 @@ export const postMovieComment = async (movieId, text, user) => {
             commentId: docRef.id
         }, {merge: true})
 
-        console.log("Comment written with ID: ", docRef.id);
     })
     .catch(function(error) {
         console.error("Error adding comment: ", error);
@@ -252,8 +236,6 @@ export const getMovieComments = async movieId => {
 
             commentArr.push(doc.data());
         })
-        
-        //console.log(commentArr)
   
     })
 
@@ -269,8 +251,7 @@ export const postMovieReview = async (movieId, reviewData, user) => {
 
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
         username = snapshot.docs[0].data().username;
-        // console.log("username is ", username)
-    
+
     }).catch(function(error) {
         console.log("Error getting document: ", error);
     });
@@ -286,7 +267,6 @@ export const postMovieReview = async (movieId, reviewData, user) => {
     }).then(function(docRef) {
         let freshReview = firestore.collection("movieReviews").doc(docRef.id);
         freshReview.set({ reviewId: docRef.id }, {merge: true})
-        console.log("Review written with ID: ", docRef.id);
     })
     .catch(function(error) {
         console.error("Error adding comment: ", error);
@@ -303,8 +283,6 @@ export const getMovieReviews = async movieId => {
 
             reviewsArr.push(doc.data());
         })
-        
-        //console.log(reviewsArr)
   
     })
 
@@ -406,7 +384,7 @@ export const deleteComment = (id) => {
     const commentRef = firestore.collection("movieComments").doc(id);
 
     commentRef.delete().then(function() {
-        console.log("Document successfully deleted!");
+
     }).catch(function(error) {
         console.error("Error removing document: ", error);
     });
@@ -418,7 +396,7 @@ export const deleteReview = (id) => {
     const commentRef = firestore.collection("movieReviews").doc(id);
 
     commentRef.delete().then(function() {
-        console.log("Document successfully deleted!");
+        
     }).catch(function(error) {
         console.error("Error removing document: ", error);
     });

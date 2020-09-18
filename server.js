@@ -9,4 +9,4 @@ app.get('/', (req, res) => res.send('frontend will be here'))
 
 app.get('/api/hello', (req, res) => res.send('Hello World!'))
 
-app.listen(port, () => console.log(`Kino API running on ${port}.`))
+app.listen(port)

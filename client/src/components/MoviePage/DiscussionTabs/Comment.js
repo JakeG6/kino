@@ -1,15 +1,8 @@
 import React, {useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import validator from 'validator';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
-import ModalDialog from 'react-bootstrap/ModalDialog';
-import ModalHeader from 'react-bootstrap/ModalHeader';
-import ModalTitle from 'react-bootstrap/ModalTitle';
-import ModalBody from 'react-bootstrap/ModalBody';
-import ModalFooter from 'react-bootstrap/ModalFooter';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import "./Comment.css"
@@ -26,7 +19,6 @@ import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
 
 import { toggleUpvote, toggleDownvote, updateUserPoints, deleteComment } from '../../../firebase';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
 const Comment = props => {
 
@@ -111,7 +103,7 @@ const Comment = props => {
                 {
                     user => (
                   
-                        <Card className="comment-card" key={props.comment.commentId}>
+                        <Card className="comment-card" >
                             <Card.Header className="comment-header">
                                 {
                                     

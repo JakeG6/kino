@@ -6,16 +6,11 @@ import posterPlaceholder from "../poster-placeholder.jpg";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
-import {DebounceInput} from 'react-debounce-input';
-
-
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import ListGroup from 'react-bootstrap/ListGroup';
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
 import Image from 'react-bootstrap/Image';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,7 +75,7 @@ const SearchBar = (props) => {
     }
 
     const handleOnBlur = () => {
-        setTimeout(function() {  setIsFocused(false, () => console.log(`isFocused is ${isFocused}`)); }, 300)
+        setTimeout(() => {  setIsFocused(false) }, 300)
     }
 
 
@@ -136,19 +131,6 @@ const SearchBar = (props) => {
     return (
         <div>
             <div id="searchbar" >
-            {/* //input with debounce */}
-            {/* <DebounceInput
-                type="text" 
-                value={searchQuery} 
-                className="searchbar-input"         
-                onChange={e => setSearchQuery(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={handleOnBlur}
-                onKeyPress={submitSearch}
-                placeholder="Search for films" 
-                minLength={4}
-                debounceTimeout={200}
-            /> */}
                 <input 
                     type="text" 
                     value={searchQuery} 

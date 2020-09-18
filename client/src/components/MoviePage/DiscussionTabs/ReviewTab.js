@@ -24,16 +24,12 @@ const ReviewTab = props => {
     async function waitForMovieReviews() {
         let newReviews = await getMovieReviews(props.movieId);
 
-        // console.log(reviews);
-
         let sortedReviews;
 
         //sort reviews by newest
         if (reviews.reviewOrder === "newest") {
-            // console.log("doing new stuff")
             sortedReviews = newReviews.sort((a, b) => {
                 let x = a.date.seconds, y = b.date.seconds
-                console.log(typeof(x))
                 
                 if (x < y)
                 return 1;
@@ -46,7 +42,6 @@ const ReviewTab = props => {
 
         //sort reviews by oldest
         if (reviews.reviewOrder === "oldest") {
-            // console.log("doing old stuff")
             sortedReviews = newReviews.sort((a, b) => {
                 let x = a.date.seconds, y = b.date.seconds
                 
@@ -66,34 +61,25 @@ const ReviewTab = props => {
               
                 return b.rating - a.rating;
             })
-            // console.log(sortedReviews)
         }
 
         //sort reviews by rating, ascending
         if (reviews.reviewOrder === "ratingAsc") {
-            // console.log("doing pleb stuff")
             sortedReviews = newReviews.sort((a, b) => {
                 return a.rating - b.rating;
             })
         }
        
-        console.log(sortedReviews)
-
         setReviews({...reviews, reviewsArr: sortedReviews, gettingReviews: false});
     }
 
     useEffect(() => {
         waitForMovieReviews();
-        const x = true;
-        const y = false;
-        console.log((x == true) && (y == true) ? true : false)
-     
    
     }, [reviews.gettingReviews, props.movieId])
 
     const submitReview = async (event, movieId, reviewData, user) => {
         event.preventDefault();
-        console.log(movieId, reviewData, user)
         await postMovieReview(movieId, reviewData, user);
         setReviewData({title:"", rating: 1, reviewText: ""});
         setReviews({...reviews, gettingReviews: true});
@@ -103,7 +89,6 @@ const ReviewTab = props => {
     //change order of comments and trigger comments rerender
     const changeReviewOrder = newOrder => {
         if (newOrder === reviews.reviewOrder) { 
-            console.log("the order is the same");
             return; 
         }
         setReviews({...reviews, reviewOrder: newOrder, gettingReviews: true});

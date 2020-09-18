@@ -17,7 +17,6 @@ let FeaturedMovie = () => {
 
         axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1&region=US`)
             .then(res => {            
-                console.log(res.data.results[0])
                 setPopularMovie(res.data.results[0])
         })
 

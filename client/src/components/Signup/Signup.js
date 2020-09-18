@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import {signupNewUser} from "../../firebase.js";
@@ -51,9 +51,7 @@ const Signup = () => {
             setErrorMessage('Your Password must be at least 6 characters')
             return;
         }
-        console.log("about to signup new user")
         await signupNewUser(username, password, email);
-        console.log("we're done signing up the new user")
 
         history.push("/")
 

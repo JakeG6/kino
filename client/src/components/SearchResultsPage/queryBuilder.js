@@ -2,8 +2,6 @@ import apiKey from "../apiKey.js";
 
 const querybuilder = (queryObj, type = "movies", pageCount) => {
 
-    console.log(queryObj);
-
     //name of each query category
     let queryNames = Object.keys(queryObj);
     

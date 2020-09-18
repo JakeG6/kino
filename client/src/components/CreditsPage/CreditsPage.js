@@ -35,13 +35,7 @@ const CreditsPage = ({ match }) => {
             setPageMovie({ movieInfo: movieInfoRes, movieCredits: movieCreditsRes });
         }
         fetchData();
-        console.log(pageMovie)
     }, [movieId])
-
-    //check if component state has changed. for development only.
-    // useEffect(() => {
-    //     console.log(`pageMovie state was initialized or changed`, pageMovie);
-    // }, [pageMovie]);
 
     if (pageMovie) {
 

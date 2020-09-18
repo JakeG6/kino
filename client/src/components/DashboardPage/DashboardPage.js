@@ -30,14 +30,12 @@ const DashboardPage = () => {
 
     const retrieveUserData = async (user) => {
         const userObj = await getUserData(user);
-        console.log(userObj)
         setUserData({data: userObj, gettingData: false});
     }
 
     useEffect(()=> {
 
         retrieveUserData(user);
-        // console.log(userData);
         
     }, []);
 

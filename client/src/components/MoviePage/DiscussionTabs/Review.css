@@ -29,3 +29,8 @@
 .review-title i {
     margin-left: 2em;
 }
+
+.stars {
+    display: flex;
+    flex-direction: row;
+}

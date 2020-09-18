@@ -32,7 +32,6 @@ let Home = () =>  {
     useEffect(() => {
         axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1&region=US`)
             .then(res => {
-                // console.log(res.data.results)
                 setNowPlaying(res.data.results)
         })
     

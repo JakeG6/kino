@@ -8,6 +8,8 @@
 .comment-card .card-header {
     background-color: gray;
     border-bottom: none;
+    display: flex;
+    flex-direction: row;
 }
 
 .patrIcon:hover {

@@ -1,15 +1,8 @@
 import React, {useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import validator from 'validator';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
-import ModalDialog from 'react-bootstrap/ModalDialog';
-import ModalHeader from 'react-bootstrap/ModalHeader';
-import ModalTitle from 'react-bootstrap/ModalTitle';
-import ModalBody from 'react-bootstrap/ModalBody';
-import ModalFooter from 'react-bootstrap/ModalFooter';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import "./Comment.css"
@@ -18,18 +11,11 @@ import "./Review.css"
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPrayingHands, faCommentSlash } from '@fortawesome/free-solid-svg-icons';
-import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-
-
 import { UserContext } from '../../../providers/UserProvider';
-import { LoginModalContext } from '../../../providers/LoginModalProvider';
-
-import { toggleUpvote, toggleDownvote, deleteReview } from '../../../firebase';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
+import { deleteReview } from '../../../firebase';
 
 
 const Review = props => {
@@ -63,18 +49,21 @@ const Review = props => {
         <UserContext.Consumer>
             {
                 user => (            
-                    <Card className="comment-card review-card">
+                    <Card className="comment-card review-card" >
                         <Card.Header className="comment-header">                     
                             
-                            <div>
+                            <div className="stars">
                                 {
                                 Array.from({ length: props.review.rating}, (_, i) => 
-                                    <FontAwesomeIcon 
-                                        icon={faStar} 
-                                        size="2x" 
-                                        color="gold"
-                                    />
-                                )
+                                    <div key={i}>
+                                        <FontAwesomeIcon                                            
+                                            icon={faStar} 
+                                            size="2x" 
+                                            color="gold"
+                                        />
+                                        
+                                    </div>                                   
+                                    )
                                 }
                             </div>
                             {   
