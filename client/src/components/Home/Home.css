@@ -40,3 +40,79 @@ ol li:marker {
 }
 
 
+/* NAVIGATION BAR */
+
+.app-logo {
+  font-family: 'Literata', serif;
+  font-size: 1.5em;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.app-logo:hover {
+  color: white;
+}
+
+.bar-item {
+  width: 10%;
+}
+
+.dropdown {
+  text-align: right;
+
+}
+
+/* .mobile-search {
+  margin-left:10em;
+} */
+
+#kino-nav {
+  align-items: center;
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  padding: .5em;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+
+/* lg */
+@media screen and (max-width: 1199px) {
+  .bar-item {
+      width: 20%;
+  }
+
+}
+
+
+@media screen and (min-width: 992px) {
+  .bar-item {
+      width: 20%;
+  }
+
+}
+
+/* md */
+@media screen and (min-width: 768px) {
+  .bar-item {
+    width: 30%;
+  }
+}
+
+
+/* sm */
+@media screen and (min-width: 576px) {
+  .bar-item {
+    width: 40%;
+  }
+}
+
+
+/* xs  */
+@media screen and (max-width: 575px) {
+  .bar-item {
+    width: 40%;
+  }
+} 

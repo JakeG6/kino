@@ -6,6 +6,9 @@ import posterPlaceholder from "../poster-placeholder.jpg";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
+import {DebounceInput} from 'react-debounce-input';
+
+
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button'
@@ -69,7 +72,7 @@ const SearchBar = (props) => {
 
     //limit the length of titles in the suggestion box that would cause text wrapping
     const titleLimiter = (title, titleCutoff) => {     
-        return (title.length > titleCutoff) ?  `${title.slice(0, 47)}...` : title;    
+        return (title.length > titleCutoff) ?  `${title.slice(0, titleCutoff + 1)}...` : title;    
     }
 
     const releaseDateChecker = (date) => {
@@ -80,12 +83,6 @@ const SearchBar = (props) => {
         setTimeout(function() { setIsFocused(false, () => console.log(`isFocused is ${isFocused}`)); }, 500)
     }
 
-   const suggestionStyle = {
-        zIndex: 1000,
-        position: "absolute",
-        top: "3.25em",
-        width: "660px"
-    }
 
     //JSX
     const showMore = () => {
@@ -102,16 +99,16 @@ const SearchBar = (props) => {
         if (suggestions && isFocused && searchQuery.length >= 3) {
             const suggestionCount = suggestions.slice(0, 6);
             return(
-                <div style={suggestionStyle} >
-                    <ListGroup>
+                <div id="search-suggestions" >
+                    <div className="suggestion-group">
                     {
                         suggestionCount.map(movie => {
                             return (
-                                <ListGroup.Item
+                                <div
                                     variant="warning" 
                                     key={movie.id}
                                     onClick={() => { props.history.push(`/movie/${movie.id}`); clearSearchBar(); }}
-                                    className="searchbar-item"
+                                    className="suggestion-item"
                                 >
                                     <Image
                                         rounded
@@ -120,16 +117,17 @@ const SearchBar = (props) => {
                                         alt={`poster for ${movie.title}`}
                                     />
                                     <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">
-                                        {titleLimiter(movie.title, 50)} ({releaseDateChecker(movie.release_date)})
+                                        {titleLimiter(movie.title, 40)}
+                                         {/* ({releaseDateChecker(movie.release_date)}) */}
                                     </Link> 
-                                </ListGroup.Item>
+                                </div>
                             )
                         })                    
                     }
                     {   
                         showMore() 
                     }
-                    </ListGroup>
+                    </div>
                 </div>              
             )
         }
@@ -137,28 +135,39 @@ const SearchBar = (props) => {
 
     return (
         <div>
-            <Form>
-                <InputGroup>
-                    <FormControl 
-                        type="text" 
-                        value={searchQuery} 
-                        className="searchbar-input"
-                        onChange={e => setSearchQuery(e.target.value)}
-                        onFocus={() => setIsFocused(true)}
-                        onBlur={handleOnBlur}
-                        onKeyPress={submitSearch}
-                        placeholder="Search for films" 
-                    />  
-                    <InputGroup.Append>
-                        <Button 
-                            variant="outline-secondary"
-                            onClick={clickSearch}
-                        >
-                            <FontAwesomeIcon icon={faSearch} color="white" />
-                        </Button>
-                    </InputGroup.Append>
-                </InputGroup>    
-            </Form>
+            <div id="searchbar" >
+            {/* //input with debounce */}
+            <DebounceInput
+                type="text" 
+                value={searchQuery} 
+                className="searchbar-input"
+                onChange={e => setSearchQuery(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={handleOnBlur}
+                onKeyPress={submitSearch}
+                placeholder="Search for films" 
+                minLength={4}
+                debounceTimeout={200}
+            />
+                {/* <input 
+                    type="text" 
+                    value={searchQuery} 
+                    className="searchbar-input"
+                    onChange={e => setSearchQuery(e.target.value)}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={handleOnBlur}
+                    onKeyPress={submitSearch}
+                    placeholder="Search for films" 
+                />   */}
+                <InputGroup.Append>
+                    <Button 
+                        variant="outline-secondary"
+                        onClick={clickSearch}
+                    >
+                        <FontAwesomeIcon icon={faSearch} color="white" />
+                    </Button>
+                </InputGroup.Append>
+            </div>    
             {suggestionBars()}
         </div>
     )

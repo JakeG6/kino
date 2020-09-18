@@ -10,26 +10,8 @@ a:hover {
   text-decoration:underline;
 }
 
-@media only screen and (max-width: 575px) {
-  #app-overwrites .container {
-    /* background-color: black; */
-  }
-}
-
-
-
 .App {
-  
-  color: white;
-}
 
-.app-logo {
-  font-family: 'Literata', serif;
-  text-decoration: none !important;
-  color: white !important;
-}
-
-.app-logo:hover {
   color: white;
 }
 
@@ -56,17 +38,13 @@ a:hover {
   text-align: center;
 }
 
-
-
-
-
 .red {
   color: red;
 }
-.green {
+.green-bg {
   color: green;
 }
-.blue {
+.blue-bg {
   background-color: blue;
 }
 
