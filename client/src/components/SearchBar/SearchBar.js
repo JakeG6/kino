@@ -137,10 +137,10 @@ const SearchBar = (props) => {
         <div>
             <div id="searchbar" >
             {/* //input with debounce */}
-            <DebounceInput
+            {/* <DebounceInput
                 type="text" 
                 value={searchQuery} 
-                className="searchbar-input"
+                className="searchbar-input"         
                 onChange={e => setSearchQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={handleOnBlur}
@@ -148,8 +148,8 @@ const SearchBar = (props) => {
                 placeholder="Search for films" 
                 minLength={4}
                 debounceTimeout={200}
-            />
-                {/* <input 
+            /> */}
+                <input 
                     type="text" 
                     value={searchQuery} 
                     className="searchbar-input"
@@ -158,7 +158,7 @@ const SearchBar = (props) => {
                     onBlur={handleOnBlur}
                     onKeyPress={submitSearch}
                     placeholder="Search for films" 
-                />   */}
+                />  
                 <InputGroup.Append>
                     <Button 
                         variant="outline-secondary"
