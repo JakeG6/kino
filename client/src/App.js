@@ -90,14 +90,19 @@ const App = () => {
 
                 {
                   (isMobileDevice || mobileSearch) &&
-                  <Button 
-                    variant="outline-secondary" 
-                    style={!mobileSearch ?  {marginLeft: "30%"} : null} 
-                    onClick={!mobileSearch ?  () => setMobileSearch(true) : () => setMobileSearch(false)} 
-                  >
-                      <FontAwesomeIcon icon={!mobileSearch ? faSearch : faTimes} color="white" />
-                  </Button>
-
+                    <UserContext.Consumer>
+                          {
+                            user => (
+                              <Button 
+                                variant="outline-secondary" 
+                                style={!mobileSearch ? {marginLeft: "50%"} : null} 
+                                onClick={!mobileSearch ?  () => setMobileSearch(true) : () => setMobileSearch(false)} 
+                              >
+                                  <FontAwesomeIcon icon={!mobileSearch ? faSearch : faTimes} color="white" />
+                              </Button>
+                            )
+                          }                     
+                      </UserContext.Consumer>
                 }
 
                 {
@@ -111,7 +116,7 @@ const App = () => {
                           <div className="bar-item">
                             <Dropdown  >
                               <Dropdown.Toggle variant="light">
-                                User name
+                                User
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
                                 <Dropdown.Item className="black-text" onClick={() => {history.push("/dashboard")}}>Dashboard</Dropdown.Item>
@@ -120,8 +125,11 @@ const App = () => {
                             </Dropdown>
                           </div>
                       :
-                        <div className="bar-item" style={ mobileSearch ? {display: "none"} : {display: "show"}}>
-                          <Button variant="light" onClick={handleModalShow}>Log In</Button>
+                        <div className="bar-item" 
+                        // style={ mobileSearch ? {display: "none"} : {display: "show"}}
+                        style={{textAlign: "right"}}
+                        >
+                          <Button variant="light" onClick={handleModalShow} >Log In</Button>
                         </div>
                     )      
                 
