@@ -4,6 +4,8 @@
     
 }
 
+
+
 .searchbar-div {
     width: 80%;
 }
@@ -12,9 +14,22 @@
 #searchbar input {
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
-    border:1px solid transparent;
+    
     width: calc(100% - 42px);
     /* max-width: 540px; */
+    display: block;
+    outline: none;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 #searchbar .btn {
@@ -55,6 +70,7 @@
 
 .suggestion-item:hover {
     cursor:pointer;
+    background-color: gray !important;
 }
 
 #search-suggestions {
@@ -110,7 +126,6 @@
         max-width: 444px;
     }
   }
-  
   
   /* xs  */
   @media screen and (max-width: 575px) {

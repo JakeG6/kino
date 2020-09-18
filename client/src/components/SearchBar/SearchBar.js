@@ -80,7 +80,7 @@ const SearchBar = (props) => {
     }
 
     const handleOnBlur = () => {
-        setTimeout(function() { setIsFocused(false, () => console.log(`isFocused is ${isFocused}`)); }, 500)
+        setTimeout(function() {  setIsFocused(false, () => console.log(`isFocused is ${isFocused}`)); }, 300)
     }
 
 
@@ -88,7 +88,7 @@ const SearchBar = (props) => {
     const showMore = () => {
         if (suggestions.length > 6) {
             return (
-                <ListGroup.Item  variant="warning" className="searchbar-item" onClick={clickSearch} >
+                <ListGroup.Item  variant="warning" className="suggestion-item" onClick={clickSearch} >
                     <Link to={`/search?type=movies&q=${searchQuery}`} onClick={clearSearchBar}>{`see more results for "${titleLimiter(searchQuery, 26)}"`}</Link> 
                 </ListGroup.Item>
             )
@@ -158,12 +158,9 @@ const SearchBar = (props) => {
                     onBlur={handleOnBlur}
                     onKeyPress={submitSearch}
                     placeholder="Search for films" 
-                />  
+                />
                 <InputGroup.Append>
-                    <Button 
-                        variant="outline-secondary"
-                        onClick={clickSearch}
-                    >
+                    <Button  variant="outline-secondary" onClick={clickSearch} >
                         <FontAwesomeIcon icon={faSearch} color="white" />
                     </Button>
                 </InputGroup.Append>
