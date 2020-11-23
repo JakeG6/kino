@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import {googleSignin, signinUser} from "../../firebase.js";
+import { facebookSignin, googleSignin, signinUser } from "../../firebase.js";
+import facebookLogo from'./facebook-logo-png-38347.png';
 import { LoginModalContext } from "../../providers/LoginModalProvider";
 
 import Container from 'react-bootstrap/Container';
@@ -58,13 +59,25 @@ const SignIn = () => {
                 <Container>
                     <Row>
                         {/* Google signin button */}
-                    <button className="googleBtn" type="button" onClick={googleSignin}>
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                            alt="logo"
-                        />
-                        Sign In With Google
-                    </button>
+                        <Col className="justify-content-center">
+                            <button className="googleBtn" type="button" onClick={googleSignin}>
+                                <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                                alt="google logo"
+                                />
+                                Sign In With Google
+                            </button>    
+                        </Col>
+                        {/* Facebook signin button */}
+                        <Col className="justify-content-center">
+                            <button className="facebookBtn" onClick={facebookSignin}>
+                                <img
+                                    src={facebookLogo}
+                                    alt="facebook logo"
+                                />
+                                Sign in with Facebook
+                            </button>
+                        </Col>
                     </Row>
                     <Row className="justify-content-center">
                         

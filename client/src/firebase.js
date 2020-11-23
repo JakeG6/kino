@@ -14,6 +14,10 @@ export const firestore = firebase.firestore();
 //google provider
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
+//facebook provider
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
+
+
 //add new user to site firebase.
 export const signupNewUser = async (username, password, email) => {
 
@@ -71,7 +75,6 @@ export const signinUser = (email, password) => {
 }
 
 //sign in user via google with a redirect
-
 export const googleSignin = () => {
 
     auth.signInWithRedirect(googleProvider);
@@ -101,6 +104,33 @@ export const getGoogleAuthResult = () => {
 
 }
 
+//sign in user via facebook with a redirect
+export const facebookSignin = () => {
+
+    auth.signInWithRedirect(facebookProvider);
+    
+}
+
+export const getFacebookAuthResult = () => {
+    firebase.auth().getRedirectResult().then(function(result) {
+        if (result.credential) {
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          var token = result.credential.accessToken;
+          // ...
+        }
+        // The signed-in user info.
+        var user = result.user;
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+}
 
 
 //logout User

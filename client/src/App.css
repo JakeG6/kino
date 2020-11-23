@@ -66,6 +66,40 @@ body {
   background-color: #c0c0c0;
 }
 
+/* Facebook Button */
+.facebookBtn {
+  font-family: Lucida Grande, Helvetica Neue, Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  margin: .5em auto;
+  padding: 10px .5em;
+  background-color: #3A5A97;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,20,.4);
+  text-decoration: none;
+  width: 10em;
+  line-height: 1.5;
+  border-radius: .25rem;
+  border: 1px solid transparent;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+
+.facebookBtn:hover {
+  border-color: #2e4878;
+  background-color: #2e4878;
+}
+
+.facebookBtn img {
+  height: 45px;
+  margin-left: -7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Google Button */
 .googleBtn {
   border-radius: .25rem;
@@ -73,8 +107,8 @@ body {
   background-color: #f8f9fa;
   border-color: #f8f9fa;
   width: 10em;
-  margin: 20px;
-  padding: .5em;
+  margin: .5em auto;
+  padding: 9px;
   display: flex;
   justify-content: center;
   font-size: 1rem;
@@ -145,7 +179,6 @@ body {
 }
 
 .wrapper {
-
   background-color: #343a40;
 }
 
