@@ -2,9 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import {signinUser} from "../../firebase.js";
+import {googleSignin, signinUser} from "../../firebase.js";
 import { LoginModalContext } from "../../providers/LoginModalProvider";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -46,14 +49,33 @@ const SignIn = () => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" value={password} onChange={ e => setPassword(e.target.value)} />
                     </Form.Group>
+                    
+                    <Button variant="success" className="emailSignin" onClick={handleSignin} block>Submit</Button>
+                    
                 </Form>
             </Modal.Body>
             <Modal.Footer className="login-modal-footer">
-                <Link to={`/signup`} onClick={handleClose}><p>Don't have an account? Sign up here!</p></Link>
-                <Button variant="primary" className="btn-light" onClick={handleSignin}>
-                    Submit
-                </Button>
+                <Container>
+                    <Row>
+                        {/* Google signin button */}
+                    <button className="googleBtn" type="button" onClick={googleSignin}>
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                            alt="logo"
+                        />
+                        Sign In With Google
+                    </button>
+                    </Row>
+                    <Row className="justify-content-center">
+                        
+                        <Link  to={`/signup`} onClick={handleClose}><p>Don't have an account? Sign up here!</p></Link>
+                     
+                    </Row>
+                </Container>
+                
+                
             </Modal.Footer>
+
         </Modal>
     )
 }

@@ -7,12 +7,15 @@ import { counter } from '@fortawesome/fontawesome-svg-core';
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// auth and firestore
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+//google provider
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 //add new user to site firebase.
 export const signupNewUser = async (username, password, email) => {
-
 
     const usernameQuery =  firestore.collection("users").where("username", "==", username);
     const emailQuery = firestore.collection("users").where("email", "==", email);
@@ -42,7 +45,7 @@ export const signupNewUser = async (username, password, email) => {
         .catch(error => {
             console.error("Error adding document: ", error);
         });
-        
+    
     }
     else {
         console.log("something wrong")
@@ -66,6 +69,39 @@ export const signinUser = (email, password) => {
     });
 
 }
+
+//sign in user via google with a redirect
+
+export const googleSignin = () => {
+
+    auth.signInWithRedirect(googleProvider);
+
+}
+
+export const getGoogleAuthResult = () => {
+
+    auth.getRedirectResult().then(function(result) {
+        if (result.credential) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // ...
+        }
+        // The signed-in user info.
+        var user = result.user;
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+
+}
+
+
 
 //logout User
 export const logoutUser = () => {
@@ -402,4 +438,3 @@ export const deleteReview = (id) => {
     });
 
 }
-

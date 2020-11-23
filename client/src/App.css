@@ -66,6 +66,35 @@ body {
   background-color: #c0c0c0;
 }
 
+/* Google Button */
+.googleBtn {
+  border-radius: .25rem;
+  border: 1px solid transparent;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  width: 10em;
+  margin: 20px;
+  padding: .5em;
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+
+.googleBtn:hover {
+  border-color: rgb(115, 115, 115);
+  background-color: rgb(115, 115, 115);
+  
+}
+
+.googleBtn img {
+  height: 50px;
+  width: 50px;
+}
+
 .literata {
   font-family: 'Literata', serif;
 }
@@ -118,6 +147,10 @@ body {
 .wrapper {
 
   background-color: #343a40;
+}
+
+.emailSignin {
+  margin-top:2em;
 }
 
 /* styling for modals */
