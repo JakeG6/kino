@@ -35,7 +35,6 @@ const SignIn = () => {
     }
 
     return (
-
         <Modal show={loginShow} onHide={handleClose} className="login-modal">
             <Modal.Header closeButton>
                 <Modal.Title>Sign In</Modal.Title>
@@ -50,9 +49,11 @@ const SignIn = () => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" value={password} onChange={ e => setPassword(e.target.value)} />
                     </Form.Group>
-                    
+
+                    {/* Submit Button */}
                     <Button variant="success" className="emailSignin" onClick={handleSignin} block>Submit</Button>
-                    
+                    <Link  to={`/pwreset`} onClick={handleClose} className="pwResetLink"><p>Forgot your password?</p></Link>
+
                 </Form>
             </Modal.Body>
             <Modal.Footer className="login-modal-footer">
@@ -84,11 +85,8 @@ const SignIn = () => {
                         <Link  to={`/signup`} onClick={handleClose}><p>Don't have an account? Sign up here!</p></Link>
                      
                     </Row>
-                </Container>
-                
-                
+                </Container> 
             </Modal.Footer>
-
         </Modal>
     )
 }

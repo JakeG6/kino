@@ -13,10 +13,11 @@ import { LoginModalContext } from "./providers/LoginModalProvider";
 
 //components
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
+import DashboardPage from './components/DashboardPage/DashboardPage.js';
 import Home from './components/Home/Home';
 import MoviePage from './components/MoviePage/MoviePage.js';
 import NoMatch from './components/NoMatch/NoMatch.js';
-import DashboardPage from './components/DashboardPage/DashboardPage.js'
+import PWReset from './components/PWReset/PWReset.js';
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.js';
 import SearchBar from './components/SearchBar/SearchBar';
 import SignIn from './components/SignIn/SignIn.js';
@@ -31,8 +32,6 @@ import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-
 
 const App = () => {
 
@@ -148,6 +147,7 @@ const App = () => {
                   <Route path="/dashboard"          component={DashboardPage} />
                   <Route path="/search"             component={SearchResultsPage} />
                   <Route path="/signup"             component={Signup} />
+                  <Route path="/pwreset"             component={PWReset} />
                   {/* 404 page */}
                   <Route component={NoMatch} />
                 </Switch>

@@ -153,6 +153,12 @@ body {
   justify-content: center;;
 }
 
+.pwResetLink {
+  color: lightgray !important;
+ 
+  text-align: center;
+}
+
 .return-link {
   margin-top: 1em !important;
   margin-bottom: 1em;
@@ -184,6 +190,7 @@ body {
 
 .emailSignin {
   margin-top:2em;
+  margin-bottom: .5em;
 }
 
 /* styling for modals */

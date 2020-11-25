@@ -34,7 +34,6 @@ let Home = () =>  {
             .then(res => {
                 setNowPlaying(res.data.results)
         })
-    
     }, [])
 
     const checkBackdropPath = path => {
