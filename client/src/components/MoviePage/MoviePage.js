@@ -88,7 +88,7 @@ const MoviePage = ({ match }) => {
         const releaseDate = pageMovie.movieInfo.release_date
 
         return (   
-        <div>
+        <div >
             <Container style={pageMovie.movieInfo.backdrop_path ? backdrop : backdropDefault} >
                 <div >
                     <Row>

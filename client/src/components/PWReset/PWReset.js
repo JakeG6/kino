@@ -40,7 +40,7 @@ const PWReset = () => {
                     <Form className="signup-form">                       
                         <Form.Group >
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="username" placeholder="What's your name?" value={email} onChange={ e => setEmail(e.target.value)} />
+                            <Form.Control type="username" placeholder="What's your email?" value={email} onChange={ e => setEmail(e.target.value)} />
                         </Form.Group>
 
                         <Button 
@@ -52,7 +52,6 @@ const PWReset = () => {
                         >
                             Submit
                         </Button>
-                        
                     </Form>
                 </Col > 
                 <Col xs={1} sm={2} lg={3} xl={4}>

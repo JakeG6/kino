@@ -1,8 +1,8 @@
 .spinner-page {
-    min-height: 92.7vh;
+    min-height: 100vh;
     
 }
 
 .spinner-col {
-    margin-top: 25%;
+    margin: 50% auto;
 }

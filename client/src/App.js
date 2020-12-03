@@ -49,114 +49,125 @@ const App = () => {
   //show mobile search.
   const [mobileSearch, setMobileSearch] = useState(false);
 
+  //styling for all pages with router
+  const containerStyle = {
+    backgroundColor: "#343a40",
+    minHeight:"100vh"
+  };
+
   return (
     <div>
-        <ScrollToTop />
-        <div id="app-overwrites" className="App">
-
-            <Container >
-              {/* Navigation bar */}
-              
-              <div id="kino-nav">
-                {
-                  !mobileSearch && 
-                  <div className="bar-item"  >
-                    <Link className="app-logo" to={`/`}>KINO</Link>
-                  </div>
-                 
-                }
-
-                { 
-                  (isMobileDevice && !mobileSearch) ?
-                      null
-                    :
-                      (isMobileDevice && mobileSearch) ?
-                 
-                        <div className="searchbar-div" >
-                          <SearchBar mobileSearch={mobileSearch} />
-  
-                          
-                        </div>
-       
-                      :
-                        <div className="searchbar-div" >
-                          <SearchBar mobileSearch={mobileSearch} />
-                        </div>
-                }
-
-
-                  {/* show or hide searchbars on mobile display */}
-
-                {
-                  (isMobileDevice || mobileSearch) &&
-                    <UserContext.Consumer>
-                          {
-                            user => (
-                              <Button 
-                                variant="outline-secondary" 
-                                style={!mobileSearch ? {marginLeft: "50%"} : null} 
-                                onClick={!mobileSearch ?  () => setMobileSearch(true) : () => setMobileSearch(false)} 
-                              >
-                                  <FontAwesomeIcon icon={!mobileSearch ? faSearch : faTimes} color="white" />
-                              </Button>
-                            )
-                          }                     
-                      </UserContext.Consumer>
-                }
-
-                {
-                  !mobileSearch &&
-                    <UserContext.Consumer>
-                      {
-
-                  user => (
-                    //is the user logged in?
-                      user ?                                          
-                          <div className="bar-item">
-                            <Dropdown  >
-                              <Dropdown.Toggle variant="light">
-                                User
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu>
-                                <Dropdown.Item className="black-text" onClick={() => {history.push("/dashboard")}}>Dashboard</Dropdown.Item>
-                                <Dropdown.Item className="black-text" onClick={logoutUser}>Log Out</Dropdown.Item>                       
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </div>
-                      :
-                        <div className="bar-item" 
-                        // style={ mobileSearch ? {display: "none"} : {display: "show"}}
-                        style={{textAlign: "right"}}
-                        >
-                          <Button variant="light" onClick={handleModalShow} >Log In</Button>
-                        </div>
-                    )      
+      <ScrollToTop />
+      <div id="app-overwrites" className="App">
+        
+          <Container >
+          <div style={containerStyle}>
+            {/* Navigation bar */}
+            
+            <div id="kino-nav">
+              {
+                !mobileSearch && 
+                <div className="bar-item"  >
+                  <Link className="app-logo" to={`/`}>KINO</Link>
+                </div>
                 
-                    }
-                  </UserContext.Consumer>
-                  
-                }  
-              </div>
+              }
 
-              <div className="wrapper">
-                {/* React Router */}
-                <Switch>
-                  <Route path="/"                   exact component={Home} />
-                  <Route path="/movie/:id/credits"  component={CreditsPage} />
-                  <Route path="/movie/:id"          component={MoviePage} />
-                  <Route path="/dashboard"          component={DashboardPage} />
-                  <Route path="/search"             component={SearchResultsPage} />
-                  <Route path="/signup"             component={Signup} />
-                  <Route path="/pwreset"             component={PWReset} />
-                  {/* 404 page */}
-                  <Route component={NoMatch} />
-                </Switch>
-              </div>
-              {/* Signin Modal */}
-              <SignIn />
-            </Container>
-        </div>
-   
+              { 
+                (isMobileDevice && !mobileSearch) ?
+                    null
+                  :
+                    (isMobileDevice && mobileSearch) ?
+                
+                      <div className="searchbar-div" >
+                        <SearchBar mobileSearch={mobileSearch} />
+
+                        
+                      </div>
+      
+                    :
+                      <div className="searchbar-div" >
+                        <SearchBar mobileSearch={mobileSearch} />
+                      </div>
+              }
+
+
+                {/* show or hide searchbars on mobile display */}
+
+              {
+                (isMobileDevice || mobileSearch) &&
+                  <UserContext.Consumer>
+                        {
+                          user => (
+                            <Button 
+                              variant="outline-secondary" 
+                              style={!mobileSearch ? {marginLeft: "50%"} : null} 
+                              onClick={!mobileSearch ?  () => setMobileSearch(true) : () => setMobileSearch(false)} 
+                            >
+                                <FontAwesomeIcon icon={!mobileSearch ? faSearch : faTimes} color="white" />
+                            </Button>
+                          )
+                        }                     
+                    </UserContext.Consumer>
+              }
+
+              {
+                !mobileSearch &&
+                  <UserContext.Consumer>
+                    {
+
+                user => (
+                  //is the user logged in?
+                    user ?                                          
+                        <div className="bar-item">
+                          <Dropdown  >
+                            <Dropdown.Toggle variant="light">
+                              User
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              <Dropdown.Item className="black-text" onClick={() => {history.push("/dashboard")}}>Dashboard</Dropdown.Item>
+                              <Dropdown.Item className="black-text" onClick={logoutUser}>Log Out</Dropdown.Item>                       
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
+                    :
+                      <div className="bar-item" 
+                      // style={ mobileSearch ? {display: "none"} : {display: "show"}}
+                      style={{textAlign: "right"}}
+                      >
+                        <Button variant="light" onClick={handleModalShow} >Log In</Button>
+                      </div>
+                  )      
+              
+                  }
+                </UserContext.Consumer>
+                
+              }  
+            </div>
+
+            <div className="wrapper">
+              
+              {/* React Router */}
+              <Switch >
+                <Route path="/"                   exact component={Home} />
+                <Route path="/movie/:id/credits"  component={CreditsPage} />
+                <Route path="/movie/:id"          component={MoviePage} />
+                <Route path="/dashboard"          component={DashboardPage} />
+                <Route path="/search"             component={SearchResultsPage} />
+                <Route path="/signup"             component={Signup} />
+                <Route path="/pwreset"            component={PWReset} />
+                {/* 404 page */}
+                <Route component={NoMatch} />
+              </Switch>
+              
+            </div>
+            {/* Signin Modal */}
+            <SignIn />
+            </div>
+          </Container>
+          
+      </div>
+  
     </div>
   );
 }

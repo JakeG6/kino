@@ -11,9 +11,11 @@ a:hover {
 }
 
 .App {
-
+  
   color: white;
 }
+
+
 
 .App-header {
   display: flex;
@@ -53,10 +55,6 @@ a:hover {
 }
 
 
-
-.dark-bg {
-  background-color: #343a40 !important;
-}
 
 body, html {
   height: 100% !important;
@@ -184,9 +182,10 @@ body {
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
-.wrapper {
-  background-color: #343a40;
-}
+/* .wrapper {
+  min-height: 100vh !important;
+
+} */
 
 .emailSignin {
   margin-top:2em;
