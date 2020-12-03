@@ -1,0 +1,16 @@
+.go-home {
+    text-align: center !important;
+    margin-top: 2em !important;
+}
+
+.reset-form {
+    margin-top: 5em;
+    padding: 1em;
+    border-radius: .5em;
+    border: 1px solid white;
+    height:260px;
+}
+
+.reset-form button {
+    margin-top: 3em;
+}

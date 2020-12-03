@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import ChangePW from "./ChangePW.js";
 import "./DashboardPage.css";
 import axios from 'axios';
 
@@ -36,9 +37,9 @@ const DashboardPage = () => {
     useEffect(()=> {
 
         retrieveUserData(user);
+        console.log(user)
         
     }, []);
-
 
     //is the user logged in?
     return (
@@ -53,16 +54,9 @@ const DashboardPage = () => {
                 <Col xs={0} sm={1}></Col>
                 
                     <Col xs={12} sm={10}>
-                        <Card className="comment-card">
-                            <Card.Header className="comment-header">
-                                {
-                                    
-                                }                     
+                        <Card className="comment-card dashboard-card">
+                            <Card.Header className="comment-header">             
                                 <h4>Welcome {userData.data.username}</h4>
-                                {   
-
-                                }
-                                
                             </Card.Header>
                             <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
                             <Card.Body>
@@ -70,22 +64,39 @@ const DashboardPage = () => {
                                 <Tab.Container  defaultActiveKey="first">
                                     <Row>
                                         <Col sm={2}>
-                                        <Nav id="dashboard-nav" variant="pills" className="flex-column">
-                                            <Nav.Item>
-                                                <Nav.Link  eventKey="first">Stats</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link  eventKey="second">Settings</Nav.Link>
-                                            </Nav.Item>
-                                        </Nav>
+                                            <Nav id="dashboard-nav" variant="pills" className="flex-column">
+                                                <Nav.Item>
+                                                    <Nav.Link  eventKey="first">Stats</Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link  eventKey="second">Settings</Nav.Link>
+                                                </Nav.Item>
+                                            </Nav>
                                         </Col>
-                                        <Col sm={10}>
+                                        <Col sm={9}>
                                             <Tab.Content>
+                                                
                                                 <Tab.Pane eventKey="first">
                                                     <p>You have {userData.data.userPoints} points.</p>
                                                 </Tab.Pane>
                                                 <Tab.Pane eventKey="second">
-                                                other stuff
+                                                    <Tab.Container defaultActiveKey="third">
+                                                        <Row>
+                                                            <Col sm={4}>
+                                                                <Nav id="dashboard-nav" variant="pills" className="flex-column">
+                                                                    <Nav.Item>
+                                                                        <Nav.Link  eventKey="third">Change Password</Nav.Link>
+                                                                    </Nav.Item>
+                                                                   
+                                                                </Nav>
+                                                            </Col>
+                                                            <Col sm={8}>
+                                                            <Tab.Pane eventKey="third">
+                                                                <ChangePW />
+                                                            </Tab.Pane>
+                                                            </Col>
+                                                        </Row>                                                        
+                                                    </Tab.Container>
                                                 </Tab.Pane>
                                             </Tab.Content>
                                         </Col>
@@ -111,6 +122,5 @@ const DashboardPage = () => {
     )       
     
 }
-
 
 export default DashboardPage;

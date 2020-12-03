@@ -43,7 +43,7 @@ const Signup = () => {
         }
 
         if (validator.isEmail(email) === false)  {
-            setErrorMessage('Invalid Email');
+            setErrorMessage('Invalid email');
             return;
         }
 
@@ -59,6 +59,7 @@ const Signup = () => {
 
     return (
         <Container>
+            <h1>Sign up</h1>
             <Row className="signup">
                 <Col xs={1} sm={2} lg={3} xl={4}>
                 </Col>
@@ -88,7 +89,8 @@ const Signup = () => {
                         >
                             Submit
                         </Button>
-                        <h1>{errorMessage}</h1>
+                        <b className="error-msg">{errorMessage}</b>
+
                     </Form>
                 </Col > 
                 <Col xs={1} sm={2} lg={3} xl={4}>

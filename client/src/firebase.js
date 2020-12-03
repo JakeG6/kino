@@ -190,10 +190,10 @@ export const updateUserPoints = async (authorId) => {
 }
 
 //update user profile WIP
-const updateUserProfile = async (arg, newVal) => {
+export const updateUserProfile = async (arg, newVal) => {
     
-    const usersRef =  firebase.collection("users");
-    let currentUser = auth.currentUser();   
+    const usersRef =  firestore.collection("users");
+    let currentUser = auth.currentUser;   
     let userId;
     
     if (arg = "password") {
@@ -206,7 +206,7 @@ const updateUserProfile = async (arg, newVal) => {
             userId = snapshot.docs[0].data().id;
         })
         
-        usersRef.doc(userId).update({pasword: newVal});
+        usersRef.doc(userId).update({password: newVal});
 
     }
 
@@ -473,5 +473,28 @@ export const deleteReview = (id) => {
     }).catch(function(error) {
         console.error("Error removing document: ", error);
     });
+
+}
+
+//Reset Password
+export const passwordReset = email => {
+    auth.sendPasswordResetEmail(email);
+}
+
+//check password
+export const checkPassword = async password => {
+
+    const usersRef =  firestore.collection("users");
+    let currentUser = auth.currentUser;  
+    console.log(currentUser) 
+    let userPW;
+
+    await usersRef.where("email", "==", currentUser.email).get().then(snapshot => {   
+        userPW = snapshot.docs[0].data().password;
+    })
+
+    return (password === userPW ? true : false);
+    
+
 
 }

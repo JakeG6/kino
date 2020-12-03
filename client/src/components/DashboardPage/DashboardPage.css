@@ -2,3 +2,19 @@
     background-color: black;
 }
 
+
+.changepw-form {
+    margin-top: 1em;
+    padding: 1em;
+    border-radius: .5em;
+    border: 1px solid white;
+    height: 20em;
+}
+
+.changepw-form button {
+    margin-top: 3em;
+}
+
+.dashboard-card {
+    height: 437px;
+}

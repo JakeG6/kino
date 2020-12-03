@@ -9,8 +9,14 @@
     padding: 1em;
     border-radius: .5em;
     border: 1px solid white;
+    height: 420px;
 }
 
 .signup-form button {
     margin-top: 3em;
+}
+
+.error-msg {
+    color:red;
+    font-size: 24px;
 }
