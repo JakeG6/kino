@@ -37,7 +37,6 @@ const DashboardPage = () => {
     useEffect(()=> {
 
         retrieveUserData(user);
-        console.log(user)
         
     }, []);
 

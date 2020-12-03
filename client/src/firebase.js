@@ -64,6 +64,7 @@ export const signinUser = (email, password) => {
     let userPromise = auth.signInWithEmailAndPassword(email, password);
 
     userPromise.then((result) => {
+        return result;
 
          // update the context
     }).catch(function(error) {
@@ -71,6 +72,7 @@ export const signinUser = (email, password) => {
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
+        return error;
     });
 
 }
@@ -495,6 +497,9 @@ export const checkPassword = async password => {
 
     return (password === userPW ? true : false);
     
+}
 
-
+export const checkUser = () => {
+    if (auth.currentUser) { return true; }
+    else { return false; }
 }

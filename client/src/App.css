@@ -198,6 +198,10 @@ body {
   margin-right: 2em !important;
 }
 
+.login-modal button {
+  margin-bottom: 1em;
+}
+
 .login-modal-footer {
   justify-content: space-evenly;
 }

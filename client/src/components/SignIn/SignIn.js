@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import { facebookSignin, googleSignin, signinUser } from "../../firebase.js";
+import { facebookSignin, googleSignin, signinUser, checkUser } from "../../firebase.js";
 import facebookLogo from'./facebook-logo-png-38347.png';
 import { LoginModalContext } from "../../providers/LoginModalProvider";
 
@@ -22,11 +22,23 @@ const SignIn = () => {
 
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
+    let [errorMessage, setErrorMessage] = useState("");
 
     async function handleSignin(event) {
         event.preventDefault();
+
         await signinUser(email, password)
-        setLoginShow(false);
+
+        const signedIn = await checkUser();
+        
+        if (signedIn) {
+            setLoginShow(false);
+        }
+        else {
+            setErrorMessage("Incorrect username and/or password")
+            return;
+        }
+
     }
 
     const handleClose = () => {
@@ -52,6 +64,10 @@ const SignIn = () => {
 
                     {/* Submit Button */}
                     <Button variant="success" className="emailSignin" onClick={handleSignin} block>Submit</Button>
+                    <div style={{height: "3em" }}>
+                        <b style={{textAlign: "center"}} className="error-msg">{errorMessage}</b>
+                    </div>
+                    
                     <Link  to={`/pwreset`} onClick={handleClose} className="pwResetLink"><p>Forgot your password?</p></Link>
 
                 </Form>

@@ -44,10 +44,6 @@ const PWReset = () => {
 
     }
 
-    
-
-    
-
     return (
 
         <Container>
@@ -98,8 +94,6 @@ const PWReset = () => {
             </Row>
         </Container>
     )
-
-
 
 }
 
