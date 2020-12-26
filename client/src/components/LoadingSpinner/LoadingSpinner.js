@@ -10,8 +10,6 @@ import "./LoadingSpinner.css"
 
 const LoadingSpinner = () => {
 
-
-
     return (
         <Container className="spinner-page">
             <Row >
