@@ -140,8 +140,6 @@ export const facebookSignin = () => {
 
 }
 
-
-
 //logout User
 export const logoutUser = () => {
     auth.signOut();
@@ -181,8 +179,6 @@ export const updateUserPoints = async (authorId) => {
             userCommentsArr.push(doc.data());
         })
         
-
-  
     })
 
     userCommentsArr.forEach(comment => (newPointTotal += comment.points))
