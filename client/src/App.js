@@ -12,7 +12,8 @@ import { UserContext } from "./providers/UserProvider";
 import { LoginModalContext } from "./providers/LoginModalProvider";
 
 //components
-import BlogForm from './components/BlogForm/BlogForm.js';
+import ArticleForm from './components/ArticleForm/ArticleForm.js';
+import ArticlePage from './components/ArticlePage/ArticlePage.js';
 import CreditsPage from './components/CreditsPage/CreditsPage.js';
 import DashboardPage from './components/DashboardPage/DashboardPage.js';
 import Home from './components/Home/Home';
@@ -156,7 +157,8 @@ const App = () => {
                 <Route path="/search"             component={SearchResultsPage} />
                 <Route path="/signup"             component={Signup} />
                 <Route path="/pwreset"            component={PWReset} />
-                <Route path="/blogform"           component={BlogForm} />
+                <Route path="/articleform"        component={ArticleForm} />
+                <Route path="/article/:title"     component={ArticlePage} />
                 {/* 404 page */}
                 <Route component={NoMatch} />
               </Switch>

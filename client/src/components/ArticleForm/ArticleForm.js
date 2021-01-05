@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 
 import ReactQuill from 'react-quill'; // ES6
-import postArticle from './BlogForm-fb.js';
+import postArticle from './ArticleForm-fb.js';
 import TagInput from './TagInput.js';
 
 import Button from 'react-bootstrap/Button';
@@ -20,7 +20,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row';
 
-const BlogForm = () => {
+const ArticleForm = () => {
 
     const [articleData, setArticleData] = useState( { title: "", text: "", tags: [] } );
 
@@ -79,4 +79,4 @@ const BlogForm = () => {
     )
 }
 
-export default BlogForm;
+export default ArticleForm;
