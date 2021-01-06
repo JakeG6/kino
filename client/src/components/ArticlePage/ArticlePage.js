@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
 
 import getArticle from "./ArticlePage-FB.js"
 import apiKey from "../apiKey";
@@ -16,6 +18,11 @@ const ArticlePage = ({ match }) => {
     const [article, setArticle] = useState(null);
 
     const articleTitle = match.params.title.split("-").join(" ");
+
+    const attributionStyle = {
+        color: "lightgrey",
+        fontSize: "14px"
+    }
 
     useEffect(() => {
 
@@ -41,10 +48,11 @@ const ArticlePage = ({ match }) => {
             <Container>
                 <Row>
                     <Col>
-                    <h1>{article.title}</h1>
-                <div>
-                    {article.text}
-                </div>      
+                        <h1>{article.title}</h1>
+                        <p style={attributionStyle}><i>By <Link to={`/user/${article.username}`}>{article.username}</Link>, published {new Date(article.date.seconds * 1000).toLocaleDateString("en-US")}</i></p>
+                        {/* reacthtmlparser sets article markup */}
+                        <div>{ReactHtmlParser(article.text)}</div>
+                        <h2>Comments</h2>
                     </Col>
                 </Row>
                         
