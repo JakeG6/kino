@@ -28,7 +28,7 @@ const DiscussionTabs = props => {
                                     <ReviewTab movieId={props.movieId} />
                                 </Tab>
                                 <Tab eventKey="comments" title="Comments" className="disTab black">
-                                    <CommentTab movieId={props.movieId} />
+                                    <CommentTab id={props.movieId} type="movie" />
                                 </Tab> 
                             </Tabs>
                         </div>

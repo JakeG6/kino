@@ -254,7 +254,7 @@ const getCount = ref => {
 }
 
 //post movie comment to firestore
-export const postMovieComment = async (movieId, text, user) => {
+export const postComment = async (type, id, text, user) => {
 
     let email = user.email;
     let authorId;
@@ -271,44 +271,89 @@ export const postMovieComment = async (movieId, text, user) => {
 
     });
 
-    await firestore.collection("movieComments").add({
-        movieId: movieId,
-        username: username,
-        authorId: authorId,
-        date: firebase.firestore.FieldValue.serverTimestamp(),
-        text: text,
-        points: 0,
-        upvoters: [],
-        downvoters: []
-        
-    }).then(function(docRef) {
-        //add UID as property
-        let freshComment = firestore.collection("movieComments").doc(docRef.id);
+    if (type == "movie") {
 
-        freshComment.set({
-            commentId: docRef.id
-        }, {merge: true})
+        await firestore.collection("movieComments").add({
+            movieId: id,
+            username: username,
+            authorId: authorId,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            text: text,
+            points: 0,
+            upvoters: [],
+            downvoters: []
+            
+        }).then(function(docRef) {
+            //add UID as property
+            let freshComment = firestore.collection("movieComments").doc(docRef.id);
+    
+            freshComment.set({
+                commentId: docRef.id
+            }, {merge: true})
+    
+        })
+        .catch(function(error) {
+            console.error("Error adding comment: ", error);
+        });
 
-    })
-    .catch(function(error) {
-        console.error("Error adding comment: ", error);
-    });
+    }
 
+    if (type == "article") {
+
+        await firestore.collection("articleComments").add({
+            articleId: id,
+            authorId: authorId,
+            username: username,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            text: text,
+            points: 0,
+            upvoters: [],
+            downvoters: []
+            
+            
+        }).then(function(docRef) {
+            //add UID as property
+            let freshComment = firestore.collection("articleComments").doc(docRef.id);
+    
+            freshComment.set({
+                commentId: docRef.id
+            }, {merge: true})
+    
+        })
+        .catch(function(error) {
+            console.error("Error adding comment: ", error);
+        });
+
+    }
 
 }
 
 //retrieve comments for moviepage
-export const getMovieComments = async movieId => {
+export const getComments = async (type, id) => {
 
-    let commentArr = []
+    let commentArr = [];
 
-    await firestore.collection("movieComments").where("movieId", "==", movieId).get().then(snapshot => {
-        snapshot.forEach(doc => {
+    if (type === "movie") {
 
-            commentArr.push(doc.data());
+        await firestore.collection("movieComments").where("movieId", "==", id).get().then(snapshot => {
+            snapshot.forEach(doc => {
+    
+                commentArr.push(doc.data());
+            })
+      
         })
-  
-    })
+
+    }
+
+    if (type === "article") {
+        await firestore.collection("articleComments").where("articleId", "==", id).get().then(snapshot => {
+            snapshot.forEach(doc => {
+    
+                commentArr.push(doc.data());
+            })
+      
+        })
+    }
 
     return commentArr;
 

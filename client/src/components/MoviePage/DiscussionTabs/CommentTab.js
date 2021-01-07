@@ -20,7 +20,7 @@ import Tab from 'react-bootstrap/Tab';
 
 import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
-import { postMovieComment, getMovieComments, toggleUpvote, toggleDownvote } from '../../../firebase';
+import { postComment, getComments, toggleUpvote, toggleDownvote } from '../../../firebase';
 import Comment from "./Comment";
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 
@@ -32,17 +32,19 @@ const CommentTab = props => {
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState({ commentOrder: "patrician", commentArr: [], gettingComments: true})
     
-
     const handleModalShow = () => {
+
         setLoginShow(true);
+    
     }
 
-    async function waitForMovieComments() {
-        let newComments = await getMovieComments(props.movieId);
+    async function waitForComments() {
 
+        let newComments = await getComments(props.type, props.id);
+        
 
         let sortedComments;
-
+        
         //sort comments by upvotes
         if (comments.commentOrder === "patrician") {
             sortedComments = newComments.sort((a, b) => {
@@ -86,20 +88,22 @@ const CommentTab = props => {
             })
         }
 
+        console.log(sortedComments)
+
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
     }
 
     useEffect(() => {
 
-        waitForMovieComments();
+        waitForComments();
    
-    }, [comments.gettingComments, props.movieId])
+    }, [comments.gettingComments, props.id])
 
 
     //submit comment, and trigger comments rerender
-    const submitComment = async (event, movieId, text, user) => {
+    const submitComment = async (event, id, text, user) => {
         event.preventDefault();
-        await postMovieComment(movieId, text, user);
+        await postComment(props.type, id, text, user);
         setCommentText("");
         setComments({...comments, gettingComments: true});
     }
@@ -146,7 +150,7 @@ const CommentTab = props => {
                                 <Button
                                     variant="light" 
                                     type="submit" 
-                                    onClick={e => submitComment(e, props.movieId, commentText, user)}
+                                    onClick={e => submitComment(e, props.id, commentText, user)}
                                     disabled = {validator.isEmpty(commentText, { ignore_whitespace:true })? true : false}
                                 >
                                     Submit
@@ -186,7 +190,7 @@ const CommentTab = props => {
                 comments.commentArr.length > 0 ?
                     commentCards(comments)                                                                                              
                 :
-                <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has commented on this movie yet. You could be the first!</p>
+                <p style={{textAlign: "center", paddingBottom: "1em"}}>{`Nobody has commented on this ${props.type} yet. You could be the first!`}</p>
                 
             }
             </div>
