@@ -1,8 +1,8 @@
 import { firestore } from '../../firebase.js';
 
-const getArticle = async (title) => {
+const getArticle = async (urlString) => {
 
-    return firestore.collection("articles").where("title", "==", title).get().then(snapshot => {
+    return firestore.collection("articles").where("urlString", "==", urlString).get().then(snapshot => {
 
         let article = snapshot.docs[0].data();
 

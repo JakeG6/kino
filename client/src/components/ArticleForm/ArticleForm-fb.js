@@ -28,7 +28,8 @@ const postArticle = async (articleData, user) => {
         tags: articleData.tags,
         points: 0,
         upvoters: [],
-        downvoters: []
+        downvoters: [],
+        urlString: articleData.title.toLowerCase().split(" ").join("-")
         
     }).then(function(docRef) {
 

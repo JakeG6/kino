@@ -16,7 +16,7 @@ const ArticlePage = ({ match }) => {
 
     const [article, setArticle] = useState(null);
 
-    const articleTitle = match.params.title.split("-").join(" ");
+    const articleTitle = match.params.urlString;
 
     const attributionStyle = {
         color: "lightgrey",

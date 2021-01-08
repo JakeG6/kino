@@ -17,7 +17,19 @@
 
 .article-preview h2 {
     margin-top: -4px;
+    
+    
 }
+
+.article-preview h2:hover {
+    
+    cursor: pointer;
+    color: yellow;
+    text-decoration: underline;
+}
+
+
+
 
 .read-more {
     text-align: center;

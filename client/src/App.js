@@ -159,7 +159,7 @@ const App = () => {
                 <Route path="/signup"             component={Signup} />
                 <Route path="/pwreset"            component={PWReset} />
                 <Route path="/articleform"        component={ArticleForm} />
-                <Route path="/article/:title"     component={ArticlePage} />
+                <Route path="/article/:urlString" component={ArticlePage} />
                 <Route path="/user/:username"     component={UserPage} />
                 {/* 404 page */}
                 <Route component={NoMatch} />

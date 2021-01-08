@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import axios from 'axios';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
@@ -23,7 +25,7 @@ const ArticleList = props => {
 
     const [articles, setArticles] = useState([]);
 
-
+    let history = useHistory();
 
     useEffect(() => {
 
@@ -49,9 +51,9 @@ const ArticleList = props => {
                         articles.map(article => (
                             <div className="article-preview" key={articles.indexOf(article)}>
                                 <p><i>12/27/2020</i></p>
-                                <h2 >{article.title}</h2>
+                                <h2 onClick={() => history.push(`/article/${article.urlString}`)} >{article.title}</h2>
                                 <div>{ReactHtmlParser(article.text)}</div>
-                                <div className="read-more"><Link to={`/article/${article.title.split(" ").join("-")}`}>Read more</Link></div>
+                                <div className="read-more"><Link to={`/article/${article.urlString}`}>Read more</Link></div>
                             </div>
                         ))
                     }
