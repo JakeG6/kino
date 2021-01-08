@@ -1,0 +1,15 @@
+.ql-style{
+    background-color: white;
+    color:#495057;
+    border-bottom: 0px solid #ced4da !important;
+    border-radius: 0 0 .25rem .25rem !important;
+
+}
+
+.ql-editor {
+    min-height: 500px !important; 
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+
+}

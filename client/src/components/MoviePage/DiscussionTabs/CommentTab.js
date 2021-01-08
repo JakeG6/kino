@@ -88,8 +88,6 @@ const CommentTab = props => {
             })
         }
 
-        console.log(sortedComments)
-
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
     }
 

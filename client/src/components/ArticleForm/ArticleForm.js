@@ -9,9 +9,11 @@ import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 
-import ReactQuill from 'react-quill'; // ES6
+import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 import postArticle from './ArticleForm-fb.js';
 import TagInput from './TagInput.js';
+
+import "./ArticleForm.css";
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -24,20 +26,16 @@ const ArticleForm = () => {
 
     const [articleData, setArticleData] = useState( { title: "", text: "", tags: [] } );
 
-    const editorStyle = {
-        backgroundColor: "white",
-        color: "#495057",
-        borderBottom: "0px solid #ced4da !important",
-        borderRadius: "0 0 .25rem .25rem"    
-    }
+    let history = useHistory();
 
-    const submitArticle = (e, user) => {
+    const submitArticle = async (e, user) => {
+
         e.preventDefault();
         console.log(articleData);
-        postArticle(articleData, user)
+        await postArticle(articleData, user)
+        history.push(`/article/${articleData.title.split(" ").join("-")}`);
 
     }
-    
 
     return (
 
@@ -59,8 +57,8 @@ const ArticleForm = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Article Content</Form.Label>
-                                    <ReactQuill style={editorStyle} value={articleData.text || ""} onChange={text => setArticleData({...articleData, text})} />
+                                    <Form.Label>Article Content</Form.Label>                                    
+                                        <ReactQuill className="ql-style" value={articleData.text || ""} onChange={text => setArticleData({...articleData, text})} />                                
                                 </Form.Group>
                                 <Form.Group >
                                     <Form.Label>Tags</Form.Label>

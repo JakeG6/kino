@@ -24,6 +24,7 @@ import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage.
 import SearchBar from './components/SearchBar/SearchBar';
 import SignIn from './components/SignIn/SignIn.js';
 import Signup from './components/Signup/Signup.js';
+import UserPage from './components/UserPage/UserPage.js';
 
 //CSS
 import Button from 'react-bootstrap/Button';
@@ -121,7 +122,7 @@ const App = () => {
                   //is the user logged in?
                     user ?                                          
                         <div className="bar-item">
-                          <Dropdown  >
+                          <Dropdown>
                             <Dropdown.Toggle variant="light">
                               User
                             </Dropdown.Toggle>
@@ -159,6 +160,7 @@ const App = () => {
                 <Route path="/pwreset"            component={PWReset} />
                 <Route path="/articleform"        component={ArticleForm} />
                 <Route path="/article/:title"     component={ArticlePage} />
+                <Route path="/user/:username"     component={UserPage} />
                 {/* 404 page */}
                 <Route component={NoMatch} />
               </Switch>

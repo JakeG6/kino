@@ -5,7 +5,6 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 
 import CommentTab from "../MoviePage/DiscussionTabs/CommentTab.js";
 import getArticle from "./ArticlePage-FB.js"
-import apiKey from "../apiKey";
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
 import Col from 'react-bootstrap/Col';
@@ -51,11 +50,8 @@ const ArticlePage = ({ match }) => {
 
         //retrieve article data from firestore
         const fetchArticle = async () => {
-            console.log('we are going to getArticle');
 
             let artToBe = await getArticle(articleTitle);
-
-            console.log(artToBe);
 
             setArticle(artToBe);
 
@@ -68,7 +64,7 @@ const ArticlePage = ({ match }) => {
     const articleTags = tags => {
         return (
             tags.map(tag => (
-                 <p style={articleTagStyle}>{tag}</p>
+                 <p style={articleTagStyle} key={tags.indexOf(tag)}>{tag}</p>
             ))
         )
     }
@@ -76,6 +72,7 @@ const ArticlePage = ({ match }) => {
     if(article) {
 
         return (
+
             <Container>
                 <Row>
                     <Col>
@@ -86,17 +83,17 @@ const ArticlePage = ({ match }) => {
                         <div style={tagDisplay}>
                             {articleTags(article.tags)}
                         </div>
-                        <Link exact to={`/profile/${article.username}`}><p className="return-link">{`<< See more from ${article.username}`}</p></Link>  
+                        <Link to={`/user/${article.username}`}><p className="return-link">{`<< See more from ${article.username}`}</p></Link>  
                         <h2 className="movie-page-header">Comments</h2> 
                  
                         <div style={commentStyle}>
                             <CommentTab type="article" id={article.articleId} />
                         </div>
-                        
                     </Col>
                 </Row>
                         
             </Container>
+        
         )
     } else {
 

@@ -26,7 +26,6 @@ const TagInput = (props) => {
     //delete tag
     const deleteTag = (tag) => {
         let newTags = props.articleData.tags.filter(item => item !== tag);
-        console.log(newTags)
 
         props.setArticleData( prevArticleData => ({ ...prevArticleData,  tags: newTags }) )
     }
