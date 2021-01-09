@@ -50,63 +50,63 @@ const DashboardPage = () => {
 
                 <Row>
                     
-                <Col xs={0} sm={1}></Col>
-                
-                    <Col xs={12} sm={10}>
-                        <Card className="comment-card dashboard-card">
-                            <Card.Header className="comment-header">             
-                                <h4>Welcome {userData.data.username}</h4>
-                            </Card.Header>
-                            <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                            <Card.Body>
+                    <Col xs={0} sm={1}></Col>
+                    
+                        <Col xs={12} sm={10}>
+                            <Card className="comment-card dashboard-card">
+                                <Card.Header className="comment-header">             
+                                    <h4>Welcome {userData.data.username}</h4>
+                                </Card.Header>
+                                <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
+                                <Card.Body>
 
-                                <Tab.Container  defaultActiveKey="first">
-                                    <Row>
-                                        <Col sm={2}>
-                                            <Nav id="dashboard-nav" variant="pills" className="flex-column">
-                                                <Nav.Item>
-                                                    <Nav.Link  eventKey="first">Stats</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link  eventKey="second">Settings</Nav.Link>
-                                                </Nav.Item>
-                                            </Nav>
-                                        </Col>
-                                        <Col sm={9}>
-                                            <Tab.Content>
-                                                
-                                                <Tab.Pane eventKey="first">
-                                                    <p>You have {userData.data.userPoints} points.</p>
-                                                </Tab.Pane>
-                                                <Tab.Pane eventKey="second">
-                                                    <Tab.Container defaultActiveKey="third">
-                                                        <Row>
-                                                            <Col sm={4}>
-                                                                <Nav id="dashboard-nav" variant="pills" className="flex-column">
-                                                                    <Nav.Item>
-                                                                        <Nav.Link  eventKey="third">Change Password</Nav.Link>
-                                                                    </Nav.Item>
-                                                                   
-                                                                </Nav>
-                                                            </Col>
-                                                            <Col sm={8}>
-                                                            <Tab.Pane eventKey="third">
-                                                                <ChangePW />
-                                                            </Tab.Pane>
-                                                            </Col>
-                                                        </Row>                                                        
-                                                    </Tab.Container>
-                                                </Tab.Pane>
-                                            </Tab.Content>
-                                        </Col>
-                                    </Row>
-                                </Tab.Container>
-                            </Card.Body>
-                            {/* <footer className="comment-footer"> </footer> */}
-                        </Card>
-                    </Col><Col xs={0} sm={1}>
+                                    <Tab.Container  defaultActiveKey="first">
+                                        <Row>
+                                            <Col sm={2}>
+                                                <Nav id="dashboard-nav" variant="pills" className="flex-column">
+                                                    <Nav.Item>
+                                                        <Nav.Link  eventKey="first">Stats</Nav.Link>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link  eventKey="second">Settings</Nav.Link>
+                                                    </Nav.Item>
+                                                </Nav>
+                                            </Col>
+                                            <Col sm={9}>
+                                                <Tab.Content>
+                                                    
+                                                    <Tab.Pane eventKey="first">
+                                                        <p>You have {userData.data.userPoints} points.</p>
+                                                    </Tab.Pane>
+                                                    <Tab.Pane eventKey="second">
+                                                        <Tab.Container defaultActiveKey="third">
+                                                            <Row>
+                                                                <Col sm={4}>
+                                                                    <Nav id="dashboard-nav" variant="pills" className="flex-column">
+                                                                        <Nav.Item>
+                                                                            <Nav.Link  eventKey="third">Change Password</Nav.Link>
+                                                                        </Nav.Item>
+                                                                    
+                                                                    </Nav>
+                                                                </Col>
+                                                                <Col sm={8}>
+                                                                <Tab.Pane eventKey="third">
+                                                                    <ChangePW />
+                                                                </Tab.Pane>
+                                                                </Col>
+                                                            </Row>                                                        
+                                                        </Tab.Container>
+                                                    </Tab.Pane>
+                                                </Tab.Content>
+                                            </Col>
+                                        </Row>
+                                    </Tab.Container>
+                                </Card.Body>
+                                {/* <footer className="comment-footer"> </footer> */}
+                            </Card>
+                        </Col><Col xs={0} sm={1}>
 
-                </Col>
+                    </Col>
                 </Row>
             :
                 <LoadingSpinner />

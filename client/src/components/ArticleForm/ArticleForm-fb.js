@@ -19,7 +19,7 @@ const postArticle = async (articleData, user) => {
 
     });
 
-    await firestore.collection("articles").add({
+    return firestore.collection("articles").add({
         username: username,
         authorId: authorId,
         date: firebase.firestore.FieldValue.serverTimestamp(),
