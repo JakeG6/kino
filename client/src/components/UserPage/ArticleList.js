@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import axios from 'axios';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+// import Cheerio from "cheerio";
 
 import getArticles from "./ArticleList-FB.js"
 import apiKey from "../apiKey";
@@ -25,6 +25,9 @@ const ArticleList = props => {
 
     const [articles, setArticles] = useState([]);
 
+    //cheerio
+    // const $ = cheerio.load() ;
+
     let history = useHistory();
 
     useEffect(() => {
@@ -34,7 +37,19 @@ const ArticleList = props => {
 
             let artsToBe = await getArticles(props.username);
 
-            setArticles(artsToBe);
+            //sort articles in array from newest to oldest
+            let sortedArticles = artsToBe.sort((a, b) => {
+                let x = a.date.seconds, y = b.date.seconds
+                
+                if (x < y)
+                return 1;
+
+                if (x > y)
+                    return -1;
+                return 0;
+            })
+
+            setArticles(sortedArticles);
 
         }
 
@@ -50,7 +65,7 @@ const ArticleList = props => {
                     {
                         articles.map(article => (
                             <div className="article-preview" key={articles.indexOf(article)}>
-                                <p><i>12/27/2020</i></p>
+                                <p><i>{new Date(article.date.seconds * 1000).toLocaleDateString("en-US")}</i></p>
                                 <h2 onClick={() => history.push(`/article/${article.urlString}`)} >{article.title}</h2>
                                 <div>{ReactHtmlParser(article.text)}</div>
                                 <div className="read-more"><Link to={`/article/${article.urlString}`}>Read more</Link></div>
@@ -70,8 +85,6 @@ const ArticleList = props => {
             </div>
         )    
     } 
-
-
 
 }
 

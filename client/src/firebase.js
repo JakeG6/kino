@@ -61,10 +61,9 @@ export const signupNewUser = async (username, password, email) => {
 //sign in user
 export const signinUser = (email, password) => {
 
-    let userPromise = auth.signInWithEmailAndPassword(email, password);
-
-    userPromise.then((result) => {
-        return result;
+    return auth.signInWithEmailAndPassword(email, password).then((result) => {
+        console.log(result)
+        // return result;
 
          // update the context
     }).catch(function(error) {
@@ -260,10 +259,15 @@ export const postComment = async (type, id, text, user) => {
     let authorId;
     let username;
 
+    console.log(email)
+
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
+
+        console.log(snapshot[0].data())
 
         username = snapshot.docs[0].data().username;
         authorId = snapshot.docs[0].data().id;
+        console.log(username)
     
     }).catch(function(error) {
     
@@ -272,6 +276,8 @@ export const postComment = async (type, id, text, user) => {
     });
 
     if (type == "movie") {
+
+        console.log(username)
 
         await firestore.collection("movieComments").add({
             movieId: id,
@@ -541,6 +547,7 @@ export const checkPassword = async password => {
 }
 
 export const checkUser = () => {
+    console.log("check user: ", auth.currentUser)
     if (auth.currentUser) { return true; }
     else { return false; }
 }

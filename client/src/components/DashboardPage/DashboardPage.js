@@ -9,8 +9,6 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 import { UserContext } from "../../providers/UserProvider";
 import { getUserData } from "../../firebase.js";
 
-import posterPlaceholder from "../poster-placeholder.jpg";
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -111,7 +109,7 @@ const DashboardPage = () => {
             :
                 <LoadingSpinner />
             :
-            
+
 
                 <Redirect to="/" />
         }
