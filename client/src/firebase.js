@@ -151,7 +151,7 @@ export const getUserData = async user => {
 
     await firestore.collection("users").where("email", "==", user.email).get().then(snapshot => {
 
-        userObj = snapshot.docs[0].data();
+        userObj = snapshot.docs[0].data();    
         
     }).catch(function(error) {
     

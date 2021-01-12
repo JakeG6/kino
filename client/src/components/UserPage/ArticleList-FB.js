@@ -1,4 +1,3 @@
-import * as firebase from 'firebase';
 import { firestore } from '../../firebase.js';
 
 const getArticles = async username => {

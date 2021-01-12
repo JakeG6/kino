@@ -2,17 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import ChangePW from "./ChangePW.js";
 import "./DashboardPage.css";
-import axios from 'axios';
 
-import apiKey from "../apiKey";
+import DashboardArticles from "./DashboardArticles.js"
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 import { UserContext } from "../../providers/UserProvider";
 import { getUserData } from "../../firebase.js";
 
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup'
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
@@ -49,7 +48,6 @@ const DashboardPage = () => {
                 <Row>
                     
                     <Col xs={0} sm={1}></Col>
-                    
                         <Col xs={12} sm={10}>
                             <Card className="comment-card dashboard-card">
                                 <Card.Header className="comment-header">             
@@ -67,6 +65,9 @@ const DashboardPage = () => {
                                                     </Nav.Item>
                                                     <Nav.Item>
                                                         <Nav.Link  eventKey="second">Settings</Nav.Link>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link  eventKey="third">My Articles</Nav.Link>
                                                     </Nav.Item>
                                                 </Nav>
                                             </Col>
@@ -94,6 +95,9 @@ const DashboardPage = () => {
                                                                 </Col>
                                                             </Row>                                                        
                                                         </Tab.Container>
+                                                    </Tab.Pane>
+                                                    <Tab.Pane eventKey="third">
+                                                        <DashboardArticles username={userData.data.username} />
                                                     </Tab.Pane>
                                                 </Tab.Content>
                                             </Col>

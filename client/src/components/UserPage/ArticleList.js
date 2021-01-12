@@ -6,7 +6,7 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 // import Cheerio from "cheerio";
 
 import getArticles from "./ArticleList-FB.js"
-import apiKey from "../apiKey";
+
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
 import "./ArticleList.css";

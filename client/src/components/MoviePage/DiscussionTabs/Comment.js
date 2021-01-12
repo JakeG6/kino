@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -108,7 +110,7 @@ const Comment = props => {
                                 {
                                     
                                 }                     
-                                <h4>{props.comment.username}</h4>
+                                <h4 className="comment-username"><Link to={`/user/${props.comment.username}`}>{props.comment.username}</Link></h4>
                                 {   
                                     user ?
                                     user.uid === props.comment.authorId ?
