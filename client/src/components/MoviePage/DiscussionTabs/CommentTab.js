@@ -43,7 +43,7 @@ const CommentTab = props => {
 
         let newComments = await getComments(props.type, props.id);
         
-        console.log(newComments);
+        // console.log(newComments);
         
         let sortedComments = sortComments(newComments, comments.commentOrder);
 
