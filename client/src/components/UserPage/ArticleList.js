@@ -62,7 +62,10 @@ const ArticleList = props => {
             <Container>
                 <Row>
                     <Col>
-                    {
+
+                    {   
+                        articles.length > 0 ?
+                        
                         articles.map(article => (
                             <div className="article-preview" key={articles.indexOf(article)}>
                                 <p><i>{new Date(article.date.seconds * 1000).toLocaleDateString("en-US")}</i></p>
@@ -71,6 +74,9 @@ const ArticleList = props => {
                                 <div className="read-more"><Link to={`/article/${article.urlString}`}>Read more</Link></div>
                             </div>
                         ))
+                        
+                        :
+                        <div><p>This user hasn't published any articles.</p></div>
                     }
                     </Col>
                 </Row>

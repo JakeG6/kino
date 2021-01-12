@@ -254,20 +254,18 @@ const getCount = ref => {
 
 //post movie comment to firestore
 export const postComment = async (type, id, text, user) => {
+    console.log(user)
 
     let email = user.email;
     let authorId;
     let username;
 
-    console.log(email)
-
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
 
-        console.log(snapshot[0].data())
+        let userData = snapshot.docs[0].data();
 
-        username = snapshot.docs[0].data().username;
-        authorId = snapshot.docs[0].data().id;
-        console.log(username)
+        username = userData.username;
+        authorId = userData.id;
     
     }).catch(function(error) {
     
@@ -279,7 +277,7 @@ export const postComment = async (type, id, text, user) => {
 
         console.log(username)
 
-        await firestore.collection("movieComments").add({
+        return firestore.collection("movieComments").add({
             movieId: id,
             username: username,
             authorId: authorId,
@@ -292,8 +290,8 @@ export const postComment = async (type, id, text, user) => {
         }).then(function(docRef) {
             //add UID as property
             let freshComment = firestore.collection("movieComments").doc(docRef.id);
-    
-            freshComment.set({
+                
+            return freshComment.set({
                 commentId: docRef.id
             }, {merge: true})
     
@@ -306,7 +304,7 @@ export const postComment = async (type, id, text, user) => {
 
     if (type == "article") {
 
-        await firestore.collection("articleComments").add({
+        return firestore.collection("articleComments").add({
             articleId: id,
             authorId: authorId,
             username: username,
@@ -321,7 +319,7 @@ export const postComment = async (type, id, text, user) => {
             //add UID as property
             let freshComment = firestore.collection("articleComments").doc(docRef.id);
     
-            freshComment.set({
+            return freshComment.set({
                 commentId: docRef.id
             }, {merge: true})
     
@@ -388,7 +386,7 @@ export const postMovieReview = async (movieId, reviewData, user) => {
         username: username
     }).then(function(docRef) {
         let freshReview = firestore.collection("movieReviews").doc(docRef.id);
-        freshReview.set({ reviewId: docRef.id }, {merge: true})
+        return freshReview.set({ reviewId: docRef.id }, {merge: true})
     })
     .catch(function(error) {
         console.error("Error adding comment: ", error);
@@ -535,7 +533,7 @@ export const checkPassword = async password => {
 
     const usersRef =  firestore.collection("users");
     let currentUser = auth.currentUser;  
-    console.log(currentUser) 
+
     let userPW;
 
     await usersRef.where("email", "==", currentUser.email).get().then(snapshot => {   
@@ -547,7 +545,7 @@ export const checkPassword = async password => {
 }
 
 export const checkUser = () => {
-    console.log("check user: ", auth.currentUser)
+    // console.log("check user: ", auth.currentUser)
     if (auth.currentUser) { return true; }
     else { return false; }
 }

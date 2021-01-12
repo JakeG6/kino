@@ -31,7 +31,6 @@ const ArticleForm = () => {
     const submitArticle = async (e, user) => {
 
         e.preventDefault();
-        console.log(articleData);
         await postArticle(articleData, user)
 
         history.push(`/article/${articleData.title.toLowerCase().split(" ").join("-")}`);

@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import validator from 'validator';
 
-
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Row from 'react-bootstrap/Row';
@@ -18,11 +17,13 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import Tab from 'react-bootstrap/Tab';
 
+
 import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
 import { postComment, getComments, toggleUpvote, toggleDownvote } from '../../../firebase';
 import Comment from "./Comment";
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js';
+import sortComments from './sortComments.js';
 
 const CommentTab = props => {
 
@@ -42,53 +43,12 @@ const CommentTab = props => {
 
         let newComments = await getComments(props.type, props.id);
         
-
-        let sortedComments;
+        console.log(newComments);
         
-        //sort comments by upvotes
-        if (comments.commentOrder === "patrician") {
-            sortedComments = newComments.sort((a, b) => {
-              
-                return b.points - a.points;
-            })
-        }
-
-        //sort comments by downvotes
-        if (comments.commentOrder === "plebian") {
-            sortedComments = newComments.sort((a, b) => {
-                return a.points - b.points;
-            })
-        }
-
-        //sort comments by newest
-        if (comments.commentOrder === "newest") {
-            sortedComments = newComments.sort((a, b) => {
-                let x = a.date.seconds, y = b.date.seconds
-                
-                if (x < y)
-                return 1;
-
-                if (x > y)
-                    return -1;
-                return 0;
-            })
-        }
-
-        //sort comments by oldest
-        if (comments.commentOrder === "oldest") {
-            sortedComments = newComments.sort((a, b) => {
-                let x = a.date.seconds, y = b.date.seconds
-                
-                if (x > y)
-                    return 1;
-
-                if (x < y)
-                    return -1;
-                return 0;
-            })
-        }
+        let sortedComments = sortComments(newComments, comments.commentOrder);
 
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
+
     }
 
     useEffect(() => {
@@ -96,7 +56,6 @@ const CommentTab = props => {
         waitForComments();
    
     }, [comments.gettingComments, props.id])
-
 
     //submit comment, and trigger comments rerender
     const submitComment = async (event, id, text, user) => {
@@ -199,8 +158,6 @@ const CommentTab = props => {
             </Row>
         </Tab.Content>
     )
-    
-
     
 }
 

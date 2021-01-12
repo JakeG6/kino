@@ -14,7 +14,6 @@ const TagInput = (props) => {
     const handleKeyPress = (event) => {
         if (event.key === 'Enter'){
             event.preventDefault();
-            console.log('enter press here!');
             props.setArticleData(prevArticleData => ({
                 ...prevArticleData, 
                 tags: [...prevArticleData.tags, tagInput] }) 
