@@ -1,6 +1,6 @@
 .comment-card {
     background-color:#343a40;
-    /* border: 1px solid white; */
+    border: 2px solid black;
     margin-top: 1em;
     margin-bottom: 1em;
 }
@@ -71,4 +71,6 @@
     cursor: pointer;
 }
 
-
+.comment-username {
+    color:white;
+}

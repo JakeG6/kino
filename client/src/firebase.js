@@ -61,10 +61,9 @@ export const signupNewUser = async (username, password, email) => {
 //sign in user
 export const signinUser = (email, password) => {
 
-    let userPromise = auth.signInWithEmailAndPassword(email, password);
-
-    userPromise.then((result) => {
-        return result;
+    return auth.signInWithEmailAndPassword(email, password).then((result) => {
+        console.log(result)
+        // return result;
 
          // update the context
     }).catch(function(error) {
@@ -140,8 +139,6 @@ export const facebookSignin = () => {
 
 }
 
-
-
 //logout User
 export const logoutUser = () => {
     auth.signOut();
@@ -154,7 +151,7 @@ export const getUserData = async user => {
 
     await firestore.collection("users").where("email", "==", user.email).get().then(snapshot => {
 
-        userObj = snapshot.docs[0].data();
+        userObj = snapshot.docs[0].data();    
         
     }).catch(function(error) {
     
@@ -181,8 +178,6 @@ export const updateUserPoints = async (authorId) => {
             userCommentsArr.push(doc.data());
         })
         
-
-  
     })
 
     userCommentsArr.forEach(comment => (newPointTotal += comment.points))
@@ -258,7 +253,8 @@ const getCount = ref => {
 }
 
 //post movie comment to firestore
-export const postMovieComment = async (movieId, text, user) => {
+export const postComment = async (type, id, text, user) => {
+    console.log(user)
 
     let email = user.email;
     let authorId;
@@ -266,8 +262,10 @@ export const postMovieComment = async (movieId, text, user) => {
 
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
 
-        username = snapshot.docs[0].data().username;
-        authorId = snapshot.docs[0].data().id;
+        let userData = snapshot.docs[0].data();
+
+        username = userData.username;
+        authorId = userData.id;
     
     }).catch(function(error) {
     
@@ -275,44 +273,91 @@ export const postMovieComment = async (movieId, text, user) => {
 
     });
 
-    await firestore.collection("movieComments").add({
-        movieId: movieId,
-        username: username,
-        authorId: authorId,
-        date: firebase.firestore.FieldValue.serverTimestamp(),
-        text: text,
-        points: 0,
-        upvoters: [],
-        downvoters: []
-        
-    }).then(function(docRef) {
-        //add UID as property
-        let freshComment = firestore.collection("movieComments").doc(docRef.id);
+    if (type == "movie") {
 
-        freshComment.set({
-            commentId: docRef.id
-        }, {merge: true})
+        console.log(username)
 
-    })
-    .catch(function(error) {
-        console.error("Error adding comment: ", error);
-    });
+        return firestore.collection("movieComments").add({
+            movieId: id,
+            username: username,
+            authorId: authorId,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            text: text,
+            points: 0,
+            upvoters: [],
+            downvoters: []
+            
+        }).then(function(docRef) {
+            //add UID as property
+            let freshComment = firestore.collection("movieComments").doc(docRef.id);
+                
+            return freshComment.set({
+                commentId: docRef.id
+            }, {merge: true})
+    
+        })
+        .catch(function(error) {
+            console.error("Error adding comment: ", error);
+        });
 
+    }
+
+    if (type == "article") {
+
+        return firestore.collection("articleComments").add({
+            articleId: id,
+            authorId: authorId,
+            username: username,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            text: text,
+            points: 0,
+            upvoters: [],
+            downvoters: []
+            
+            
+        }).then(function(docRef) {
+            //add UID as property
+            let freshComment = firestore.collection("articleComments").doc(docRef.id);
+    
+            return freshComment.set({
+                commentId: docRef.id
+            }, {merge: true})
+    
+        })
+        .catch(function(error) {
+            console.error("Error adding comment: ", error);
+        });
+
+    }
 
 }
 
 //retrieve comments for moviepage
-export const getMovieComments = async movieId => {
+export const getComments = async (type, id) => {
 
-    let commentArr = []
+    let commentArr = [];
 
-    await firestore.collection("movieComments").where("movieId", "==", movieId).get().then(snapshot => {
-        snapshot.forEach(doc => {
+    if (type === "movie") {
 
-            commentArr.push(doc.data());
+        await firestore.collection("movieComments").where("movieId", "==", id).get().then(snapshot => {
+            snapshot.forEach(doc => {
+    
+                commentArr.push(doc.data());
+            })
+      
         })
-  
-    })
+
+    }
+
+    if (type === "article") {
+        await firestore.collection("articleComments").where("articleId", "==", id).get().then(snapshot => {
+            snapshot.forEach(doc => {
+    
+                commentArr.push(doc.data());
+            })
+      
+        })
+    }
 
     return commentArr;
 
@@ -341,7 +386,7 @@ export const postMovieReview = async (movieId, reviewData, user) => {
         username: username
     }).then(function(docRef) {
         let freshReview = firestore.collection("movieReviews").doc(docRef.id);
-        freshReview.set({ reviewId: docRef.id }, {merge: true})
+        return freshReview.set({ reviewId: docRef.id }, {merge: true})
     })
     .catch(function(error) {
         console.error("Error adding comment: ", error);
@@ -488,7 +533,7 @@ export const checkPassword = async password => {
 
     const usersRef =  firestore.collection("users");
     let currentUser = auth.currentUser;  
-    console.log(currentUser) 
+
     let userPW;
 
     await usersRef.where("email", "==", currentUser.email).get().then(snapshot => {   
@@ -500,6 +545,7 @@ export const checkPassword = async password => {
 }
 
 export const checkUser = () => {
+    // console.log("check user: ", auth.currentUser)
     if (auth.currentUser) { return true; }
     else { return false; }
 }

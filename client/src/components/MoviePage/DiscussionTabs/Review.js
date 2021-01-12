@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -92,7 +94,7 @@ const Review = props => {
                                 
                             </div>
                             
-                            <p className="review-text">{props.review.text} <i>-by {props.review.username}</i> </p>
+                            <p className="review-text">{props.review.text} <i>-by <Link to={`/user/${props.review.username}`}>{props.review.username}</Link></i> </p>
                             </Card.Body>
                         <footer className="comment-footer review-footer">
                             {/* <div className="comment-vote">
