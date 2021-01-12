@@ -7,7 +7,7 @@ import { getUserData } from "../../firebase.js";
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { useMediaQuery } from 'react-responsive';
+import validator from 'validator';
 
 import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
 import postArticle from './ArticleForm-fb.js';
@@ -26,6 +26,8 @@ const ArticleForm = () => {
     const [articleData, setArticleData] = useState( { title: "", text: "", tags: [] } );
 
     let history = useHistory();
+
+    const noWhitespace = { ignore_whitespace:true };
 
     const submitArticle = async (e, user) => {
 
@@ -65,7 +67,10 @@ const ArticleForm = () => {
                                         {/* tags entered here */}
                                         <TagInput articleData={articleData} setArticleData={setArticleData} />
                                     </Form.Group>
-                                    <Button variant="success" size="lg" block type="submit" onClick={e => submitArticle(e, user)}>
+                                    <Button 
+                                        disabled={
+                                            validator.isEmpty(articleData.title, noWhitespace) ||
+                                            validator.isEmpty(articleData.text, noWhitespace)  ? true : false} variant="success" size="lg" block type="submit" onClick={e => submitArticle(e, user)}>
                                         Submit
                                     </Button>
                                 </Form>

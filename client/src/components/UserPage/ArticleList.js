@@ -25,8 +25,7 @@ const ArticleList = props => {
 
     const [articles, setArticles] = useState([]);
 
-    //cheerio
-    // const $ = cheerio.load() ;
+    
 
     let history = useHistory();
 
@@ -57,6 +56,13 @@ const ArticleList = props => {
 
     }, [])
 
+    const createPreviewElement = str => {
+        let arr = str.split("><").slice(0,1);
+        arr.push(">")
+        
+        return arr.join("")
+    }
+
     if (articles) {
         return (
             <Container>
@@ -65,12 +71,13 @@ const ArticleList = props => {
 
                     {   
                         articles.length > 0 ?
-                        
+                            
                         articles.map(article => (
                             <div className="article-preview" key={articles.indexOf(article)}>
                                 <p><i>{new Date(article.date.seconds * 1000).toLocaleDateString("en-US")}</i></p>
                                 <h2 onClick={() => history.push(`/article/${article.urlString}`)} >{article.title}</h2>
-                                <div>{ReactHtmlParser(article.text)}</div>
+                                {/* preview only the first X words of the article of the article */}
+                                <div>{ReactHtmlParser(createPreviewElement(article.text))}</div>
                                 <div className="read-more"><Link to={`/article/${article.urlString}`}>Read more</Link></div>
                             </div>
                         ))
