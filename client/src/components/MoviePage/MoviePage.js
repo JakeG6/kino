@@ -59,7 +59,7 @@ const MoviePage = ({ match }) => {
     // }, [pageMovie]);
 
     const checkPosterPath = path => {
-        return path ?  `http://image.tmdb.org/t/p/w300${path}` : posterPlaceholder;
+        return path ?  `https://image.tmdb.org/t/p/w300${path}` : posterPlaceholder;
     }
 
     //return movie page, or loading screen if api calls aren't done 

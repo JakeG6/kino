@@ -108,7 +108,7 @@ const SearchBar = (props) => {
                                     <Image
                                         rounded
                                         className="suggestion-poster"
-                                        src={movie.poster_path ? `http://image.tmdb.org/t/p/w300${movie.poster_path}` : posterPlaceholder}
+                                        src={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : posterPlaceholder}
                                         alt={`poster for ${movie.title}`}
                                     />
                                     <Link to={`/movie/${movie.id}`} onClick={clickSearch} className="suggestion-font">

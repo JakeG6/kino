@@ -24,7 +24,7 @@ const SuggestionBars = () => {
 
     //get placeholder poster if official poster is not available.
     const checkPosterPath = path => {
-        return path !== null ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
+        return path !== null ?  `https://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
     }
 
     //limit the length of titles in the suggestion box that would cause text wrapping

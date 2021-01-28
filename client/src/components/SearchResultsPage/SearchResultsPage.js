@@ -37,7 +37,7 @@ const SearchResultsPage = () => {
 
     //get placeholder poster if official poster is not available.
     const checkPosterPath = path => {
-        return path ?  `http://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
+        return path ?  `https://image.tmdb.org/t/p/w92${path}` : posterPlaceholder;
     }
 
     const showMoreResults = async () => {
