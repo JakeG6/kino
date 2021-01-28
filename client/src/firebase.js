@@ -254,7 +254,6 @@ const getCount = ref => {
 
 //post movie comment to firestore
 export const postComment = async (type, id, text, user) => {
-    console.log(user)
 
     let email = user.email;
     let authorId;
@@ -274,8 +273,6 @@ export const postComment = async (type, id, text, user) => {
     });
 
     if (type == "movie") {
-
-        console.log(username)
 
         return firestore.collection("movieComments").add({
             movieId: id,
