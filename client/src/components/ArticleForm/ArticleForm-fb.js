@@ -1,4 +1,3 @@
-import * as firebase from 'firebase';
 import { firestore } from '../../firebase.js';
 
 //post article to firestore
@@ -22,7 +21,7 @@ const postArticle = async (articleData, user) => {
     return firestore.collection("articles").add({
         username: username,
         authorId: authorId,
-        date: firebase.firestore.FieldValue.serverTimestamp(),
+        date: firestore.FieldValue.serverTimestamp(),
         title: articleData.title,
         text: articleData.text,
         tags: articleData.tags,

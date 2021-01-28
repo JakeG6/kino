@@ -3,19 +3,14 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
 import getUser from "./UserPage-FB.js";
-import apiKey from "../apiKey";
 import ArticleList from "./ArticleList.js"
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Image from 'react-bootstrap/Image';
-
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Modal from 'react-bootstrap/Modal';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+
 
 const UserPage = ({ match }) => {
 
