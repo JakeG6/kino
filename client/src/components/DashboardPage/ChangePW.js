@@ -7,10 +7,6 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
-import { useHistory } from "react-router-dom";
-
-import {signupNewUser} from "../../firebase.js";
-
 import Button from 'react-bootstrap/Button';
 
 import Form from 'react-bootstrap/Form';
@@ -62,10 +58,6 @@ const ChangePW = () => {
             setErrorMessage('Current Password is wrong');
             return
         }
-
-        
-
-        
 
     }
 

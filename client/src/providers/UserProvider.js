@@ -15,9 +15,10 @@ const UserProvider = ({children}) => {
     auth.onAuthStateChanged(user => {
       setUser(user)
       setPending(false);
+      console.log(user)
     })
 
-  },[]) 
+  }, []) 
 
   if (pending) {
     return <>Loading...</>

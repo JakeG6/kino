@@ -54,7 +54,7 @@ export const signupNewUser = async (username, password, email) => {
     
     }
     else {
-        console.log("something wrong")
+        console.log("something is wrong")
     }
 
 }
@@ -63,7 +63,7 @@ export const signupNewUser = async (username, password, email) => {
 export const signinUser = (email, password) => {
 
     return auth.signInWithEmailAndPassword(email, password).then((result) => {
-        console.log(result)
+        // console.log(result)
         // return result;
 
          // update the context
@@ -103,6 +103,7 @@ export const getGoogleAuthResult = () => {
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
+        console.log(error.code, error.message);
       });
 
 }
@@ -115,7 +116,7 @@ export const facebookSignin = () => {
       });
 
     auth.getRedirectResult().then(function(result) {
-        console.log(result)
+        // console.log(result)
         if (result.credential) {
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           var token = result.credential.accessToken;
@@ -125,7 +126,7 @@ export const facebookSignin = () => {
         }
         // The signed-in user info.
         var user = result.user;
-        console.log(user)
+        // console.log(user)
       }).catch(function(error) {
           console.log(error)
         // Handle Errors here.
@@ -168,7 +169,7 @@ export const getUserData = async user => {
 export const updateUserPoints = async (authorId) => {
 
     const userRef = firestore.collection("users").doc(authorId);
-    const userCommentsRef = firestore.collection("movieComments").where("authorId", "==", authorId);
+    const userCommentsRef = firestore.collection("comments").where("authorId", "==", authorId);
    
     let userCommentsArr = [];
     let newPointTotal = 0;
@@ -273,60 +274,39 @@ export const postComment = async (type, id, text, user) => {
 
     });
 
-    if (type == "movie") {
-
-        return firestore.collection("movieComments").add({
-            movieId: id,
-            username: username,
-            authorId: authorId,
-            date: firebase.firestore.FieldValue.serverTimestamp(),
-            text: text,
-            points: 0,
-            upvoters: [],
-            downvoters: []
-            
-        }).then(function(docRef) {
-            //add UID as property
-            let freshComment = firestore.collection("movieComments").doc(docRef.id);
-                
-            return freshComment.set({
-                commentId: docRef.id
-            }, {merge: true})
-    
-        })
-        .catch(function(error) {
-            console.error("Error adding comment: ", error);
-        });
-
+    let commentObj = {
+        type: type,
+        movieId: id,
+        username: username,
+        authorId: user.uid,
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        text: text,
+        points: 0,
+        upvoters: [],
+        downvoters: []
     }
 
-    if (type == "article") {
-
-        return firestore.collection("articleComments").add({
-            articleId: id,
-            authorId: authorId,
-            username: username,
-            date: firebase.firestore.FieldValue.serverTimestamp(),
-            text: text,
-            points: 0,
-            upvoters: [],
-            downvoters: []
-            
-            
-        }).then(function(docRef) {
-            //add UID as property
-            let freshComment = firestore.collection("articleComments").doc(docRef.id);
-    
-            return freshComment.set({
-                commentId: docRef.id
-            }, {merge: true})
-    
-        })
-        .catch(function(error) {
-            console.error("Error adding comment: ", error);
-        });
-
+    //add the article id or movie id depending on the comment type
+    if (commentObj.type == "movie") {
+        commentObj.movieId = id;
     }
+
+    if (commentObj.type == "article") {
+        commentObj.articleId = id;
+    }
+
+    return firestore.collection("comments").add(commentObj).then(function(docRef) {
+        //add UID as property
+        let freshComment = firestore.collection("comments").doc(docRef.id);
+            
+        return freshComment.set({
+            commentId: docRef.id
+        }, {merge: true})
+
+    })
+    .catch(function(error) {
+        console.error("Error adding comment: ", error);
+    });
 
 }
 
@@ -337,7 +317,7 @@ export const getComments = async (type, id) => {
 
     if (type === "movie") {
 
-        await firestore.collection("movieComments").where("movieId", "==", id).get().then(snapshot => {
+        await firestore.collection("comments").where("movieId", "==", id).get().then(snapshot => {
             snapshot.forEach(doc => {
     
                 commentArr.push(doc.data());
@@ -348,7 +328,7 @@ export const getComments = async (type, id) => {
     }
 
     if (type === "article") {
-        await firestore.collection("articleComments").where("articleId", "==", id).get().then(snapshot => {
+        await firestore.collection("comments").where("articleId", "==", id).get().then(snapshot => {
             snapshot.forEach(doc => {
     
                 commentArr.push(doc.data());
@@ -410,7 +390,7 @@ export const getMovieReviews = async movieId => {
 
 export const toggleUpvote = async (commentId, user) => {
 
-    const commentRef = firestore.collection("movieComments").doc(commentId);
+    const commentRef = firestore.collection("comments").doc(commentId);
 
     const removeFromUpvoters = { upvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
     const removeFromDownvoters = { downvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
@@ -452,7 +432,7 @@ export const toggleUpvote = async (commentId, user) => {
 
 export const toggleDownvote = async (commentId, user) => {
 
-    const commentRef = firestore.collection("movieComments").doc(commentId);
+    const commentRef = firestore.collection("comments").doc(commentId);
 
     const removeFromUpvoters = { upvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
     const removeFromDownvoters = { downvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
@@ -499,7 +479,7 @@ export const toggleDownvote = async (commentId, user) => {
 
 export const deleteComment = (id) => {
 
-    const commentRef = firestore.collection("movieComments").doc(id);
+    const commentRef = firestore.collection("comments").doc(id);
 
     commentRef.delete().then(function() {
 

@@ -2,25 +2,19 @@ import React, {useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import validator from 'validator';
 
-import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image'
-import Overlay from 'react-bootstrap/Overlay'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import Tab from 'react-bootstrap/Tab';
 
-
 import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
-import { postComment, getComments, toggleUpvote, toggleDownvote } from '../../../firebase';
+import { postComment, getComments } from '../../../firebase';
 import Comment from "./Comment";
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js';
 import sortComments from './sortComments.js';
@@ -42,9 +36,7 @@ const CommentTab = props => {
     async function waitForComments() {
 
         let newComments = await getComments(props.type, props.id);
-        
-        // console.log(newComments);
-        
+                
         let sortedComments = sortComments(newComments, comments.commentOrder);
 
         setComments({...comments, commentArr: sortedComments, gettingComments: false});
@@ -131,7 +123,6 @@ const CommentTab = props => {
                     <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
                         Sort By
                     </Dropdown.Toggle>
-
                     <Dropdown.Menu>
                         <Dropdown.Item className={`black-text ${comments.commentOrder==="patrician" ? "bold" : ""}`} onClick={() => changeCommentOrder("patrician")}>Most Patrician</Dropdown.Item>
                         <Dropdown.Item className={`black-text ${comments.commentOrder==="plebian" ? "bold" : ""}`} onClick={() => changeCommentOrder("plebian")}>Most Plebian</Dropdown.Item>

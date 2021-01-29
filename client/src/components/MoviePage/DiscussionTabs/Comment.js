@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
@@ -59,7 +58,7 @@ const Comment = props => {
     const [vote, setVote] = useState(user ? props.comment.upvoters.includes(user.uid) ? "upvoted" : props.comment.downvoters.includes(user.uid) ? "downvoted" : "" : "");
     const [pointCount, setPointCount] = useState(props.comment.points)
 
-    const handleUpvote = async (id, authorId, user) => {
+    const handleUpvote = async (id, user) => {
 
         //remove the user from upvoters if they've upvoted already
         if (vote === "upvoted") {
@@ -80,7 +79,7 @@ const Comment = props => {
         await toggleUpvote(id, user);
     }
 
-    const handleDownvote = async (id, authorId, user) => {
+    const handleDownvote = async (id, user) => {
         //remove the user from downvoters if they've downvoted already
         if (vote === "downvoted") {
             setVote("");
@@ -107,9 +106,7 @@ const Comment = props => {
                   
                         <Card className="comment-card" >
                             <Card.Header className="comment-header">
-                                {
-                                    
-                                }                     
+                                             
                                 <h4 className="comment-username"><Link to={`/user/${props.comment.username}`}>{props.comment.username}</Link></h4>
                                 {   
                                     user ?
@@ -140,7 +137,7 @@ const Comment = props => {
                                             icon={faPrayingHands} 
                                             size="2x" 
                                             color="white" 
-                                            onClick={ user ? e =>  handleUpvote(props.comment.commentId, props.comment.authorId, user) : handleModalShow}
+                                            onClick={ user ? e =>  handleUpvote(props.comment.commentId, user) : handleModalShow}
                                         />
                                     </OverlayTrigger>
                                     <h5 className={vote === "upvoted" ? "green" : vote === "downvoted" ? "red" : ""}>{pointCount}</h5>
@@ -150,7 +147,7 @@ const Comment = props => {
                                             icon={faThumbsDown} 
                                             size="2x" 
                                             color="white"
-                                            onClick={ user ? e => handleDownvote(props.comment.commentId, props.comment.authorId, user) : handleModalShow}    
+                                            onClick={ user ? e => handleDownvote(props.comment.commentId, user) : handleModalShow}    
                                         />
                                     </OverlayTrigger>
                                 </div>
