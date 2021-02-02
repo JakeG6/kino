@@ -25,8 +25,6 @@ const PWReset = () => {
     const validatePWReset = async (e) => {
 
         e.preventDefault();
-        // console.log("validating signup")
-        // console.log(username, email, password)
         
         if (validator.isEmpty(email, noWhitespace)) {
             setErrorMessage('There is no email')

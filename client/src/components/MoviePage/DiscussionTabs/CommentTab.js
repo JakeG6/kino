@@ -47,7 +47,7 @@ const CommentTab = props => {
 
         waitForComments();
    
-    }, [comments.gettingComments, props.id])
+    }, [comments.gettingComments])
 
     //submit comment, and trigger comments rerender
     const submitComment = async (event, id, text, user) => {
@@ -55,12 +55,13 @@ const CommentTab = props => {
         await postComment(props.type, id, text, user);
         setCommentText("");
         setComments({...comments, gettingComments: true});
+        waitForComments();
     }
 
     const commentCards = comments => {
         return (
             comments.commentArr.map(comment => (
-                    <Comment comment={comment} comments={comments} setComments={setComments} key={comment.commentId} />
+                    <Comment comment={comment} comments={comments} setComments={setComments} waitForComments={waitForComments} key={comment.commentId} />
             ))
         )
     }
@@ -143,9 +144,7 @@ const CommentTab = props => {
             }
             </div>
             </Col>
-            <Col xs={1}>
-
-                </Col>
+            <Col xs={1}></Col>
             </Row>
         </Tab.Content>
     )

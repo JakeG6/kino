@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import axios from 'axios';
 
 import getUser from "./UserPage-FB.js";
 import ArticleList from "./ArticleList.js"

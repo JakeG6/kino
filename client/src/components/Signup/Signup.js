@@ -29,8 +29,6 @@ const Signup = () => {
     //validate the signup
     const validateSignup = async (e) => {
         e.preventDefault();
-        // console.log("validating signup")
-        // console.log(username, email, password)
         
         if (validator.isEmpty(username, noWhitespace)) {
             setErrorMessage('There is no username')

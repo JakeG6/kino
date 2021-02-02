@@ -26,15 +26,9 @@ const SignIn = () => {
     const handleSignin = async event => {
         event.preventDefault();
 
-        // console.log("about to sign in user");
-
         await signinUser(email, password);
 
-        // console.log("about to check if user is signed in");
-
         const signedIn = await checkUser();
-
-        // console.log(signedIn)
         
         if (signedIn) {
             setEmail("")

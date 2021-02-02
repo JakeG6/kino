@@ -32,6 +32,9 @@ const Comment = props => {
     //hook for deletion modal
     const [delModalShow, setDelModal] = useState(false)
 
+    //hook for edit mode
+    const [showEditMode, setShowEditmMode] = useState(false);
+
     //show login modal
     const handleModalShow = () => {
         setLoginShow(true);
@@ -50,6 +53,7 @@ const Comment = props => {
     const handleDelete = async (id) => {
         await deleteComment(id)
         handleDelModalHide();
+
         props.setComments({...props.comments, gettingComments: true});
         
     }

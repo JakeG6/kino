@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.9ff22266.chunk.css",
-    "main.js": "/static/js/main.e9ccff52.chunk.js",
-    "main.js.map": "/static/js/main.e9ccff52.chunk.js.map",
+    "main.js": "/static/js/main.419b70af.chunk.js",
+    "main.js.map": "/static/js/main.419b70af.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.e077b804.js",
     "runtime-main.js.map": "/static/js/runtime-main.e077b804.js.map",
     "static/js/2.d94892b5.chunk.js": "/static/js/2.d94892b5.chunk.js",
     "static/js/2.d94892b5.chunk.js.map": "/static/js/2.d94892b5.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.f426fb021579a7a0f768e11a4b21dd0b.js": "/precache-manifest.f426fb021579a7a0f768e11a4b21dd0b.js",
+    "precache-manifest.232b7547e0d422780a45827345e9a26f.js": "/precache-manifest.232b7547e0d422780a45827345e9a26f.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.9ff22266.chunk.css.map": "/static/css/main.9ff22266.chunk.css.map",
     "static/media/backdrop-placeholder.jpg": "/static/media/backdrop-placeholder.7ac04234.jpg",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.e077b804.js",
     "static/js/2.d94892b5.chunk.js",
     "static/css/main.9ff22266.chunk.css",
-    "static/js/main.e9ccff52.chunk.js"
+    "static/js/main.419b70af.chunk.js"
   ]
 }

@@ -63,7 +63,6 @@ export const signupNewUser = async (username, password, email) => {
 export const signinUser = (email, password) => {
 
     return auth.signInWithEmailAndPassword(email, password).then((result) => {
-        // console.log(result)
         // return result;
 
          // update the context
@@ -120,7 +119,6 @@ export const facebookSignin = () => {
         if (result.credential) {
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           var token = result.credential.accessToken;
-          console.log(token)
         
           // ...
         }

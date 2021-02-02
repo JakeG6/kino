@@ -53,11 +53,6 @@ const MoviePage = ({ match }) => {
         fetchSimilar();
     }, [movieId])
 
-    //check if component state has changed. for development only.
-    // useEffect(() => {
-    // console.log(`pageMovie state was initialized or changed`, pageMovie);
-    // }, [pageMovie]);
-
     const checkPosterPath = path => {
         return path ?  `https://image.tmdb.org/t/p/w300${path}` : posterPlaceholder;
     }

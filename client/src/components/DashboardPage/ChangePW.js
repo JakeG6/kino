@@ -25,8 +25,6 @@ const ChangePW = () => {
     const validatePWChange = async (e) => {
 
         e.preventDefault();
-        // console.log("validating signup")
-        // console.log(username, password, password)
         
         if (validator.isEmpty(password, noWhitespace)) {
             setErrorMessage('There is no password')
