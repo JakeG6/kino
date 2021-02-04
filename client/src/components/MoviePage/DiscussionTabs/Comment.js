@@ -124,6 +124,9 @@ const Comment = props => {
         
     }
 
+    //check if comment has been edited since initially posted
+    const isEdited = lastEdited => {return lastEdited ? `, last edited ${new Date(props.comment.lastEdited.seconds * 1000).toLocaleDateString("en-US")}` : "" }
+
     return (
         <UserContext.Consumer>
             {
@@ -223,7 +226,7 @@ const Comment = props => {
                                 </OverlayTrigger>
                             </div>
                             
-                            <i>Posted {new Date(props.comment.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+                            <i>{`Posted ${new Date(props.comment.date.seconds * 1000).toLocaleDateString("en-US")}${isEdited(props.comment.lastEdited)}`}</i>
                         </footer>
                         <Modal
                             show={delModalShow}

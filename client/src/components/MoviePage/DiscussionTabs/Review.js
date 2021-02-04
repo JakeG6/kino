@@ -69,6 +69,10 @@ const Review = props => {
         
     }
 
+    //check if review has been edited since initially posted
+    const isEdited = lastEdited => {return lastEdited ? `, last edited ${new Date(props.review.lastEdited.seconds * 1000).toLocaleDateString("en-US")}` : "" }
+
+
     return (
         <UserContext.Consumer>
             {
@@ -199,7 +203,7 @@ const Review = props => {
                                 </OverlayTrigger>
                             </div> */}
                             
-                            <i>Posted {new Date(props.review.date.seconds * 1000).toLocaleDateString("en-US")}</i>
+                            <i>{`Posted ${new Date(props.review.date.seconds * 1000).toLocaleDateString("en-US")}${isEdited(props.review.lastEdited)}`}</i>
                         </footer>
                         {<Modal
                             show={delModalShow}

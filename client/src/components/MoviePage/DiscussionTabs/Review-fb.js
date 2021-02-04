@@ -8,6 +8,7 @@ export const updateReview = (id, editedReview) => {
         rating: editedReview.rating,
         text: editedReview.text,
         title: editedReview.title,
+        lastEdited: fieldValue.serverTimestamp()
 
     }).then(function() {
         console.log("Review successfully updated!");

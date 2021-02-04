@@ -1,12 +1,13 @@
 import { firestore, fieldValue } from '../../../firebase.js';
 
+//update movie comment
 export const updateComment = (id, editedText) => {
 
     const commentRef = firestore.collection("comments").doc(id);
 
-
     commentRef.update({
-        text: editedText
+        text: editedText,
+        lastEdited: fieldValue.serverTimestamp()
     }).then(function() {
         console.log("Comment text successfully updated!");
 
