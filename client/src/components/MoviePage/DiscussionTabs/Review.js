@@ -1,18 +1,22 @@
 import React, {useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { updateReview } from './Review-fb.js';
+import validator from 'validator';
 
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+
 import Modal from 'react-bootstrap/Modal';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import "./Comment.css"
 import "./Review.css"
 
-import Tooltip from 'react-bootstrap/Tooltip';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,15 +32,33 @@ const Review = props => {
     //hook for deletion modal
     const [delModalShow, setDelModal] = useState(false)
 
-    // const starArr = new  
+    let editModeDefault = {rating: props.review.rating, title: props.review.title, text: props.review.text, show: false}
+
+    //hook for edit mode
+    const [editMode, setEditMode] = useState(editModeDefault);
 
     // show delete confirmation modal
     const handleDelModalShow = () => {
         setDelModal(true);
     }
 
+    // hide confirmation modal
     const handleDelModalHide = () => {
         setDelModal(false);
+    }
+
+    //show/hide edit mode
+    const handleEditModeShow = () => {
+        editMode.show ? setEditMode(editModeDefault) : setEditMode({...editMode, show: true}) ;
+    }
+
+    //Update edited comment
+    const handleUpdate = async (id, editedText) => {
+        await updateReview(id, editedText);
+        handleEditModeShow();
+
+        props.setReviews({...props.reviews, gettingReviews: true});
+
     }
 
     // Delete Review
@@ -71,7 +93,14 @@ const Review = props => {
                             {   
                                 user ?
                                 user.uid === props.review.authorId ?
-                                <OverlayTrigger placement="left" overlay={ <Tooltip> <strong>Delete</strong> </Tooltip>}>
+                                <div>
+                                    <FontAwesomeIcon 
+                                        className={`edit-icon`}
+                                        icon={faEdit} 
+                                        size="2x" 
+                                        color="white"
+                                        onClick={ user ? handleEditModeShow : null}    
+                                    />
                                     <FontAwesomeIcon 
                                         className={`delete-icon`}
                                         icon={faTimes} 
@@ -79,7 +108,9 @@ const Review = props => {
                                         color="white"
                                         onClick={handleDelModalShow}    
                                     />
-                                </OverlayTrigger>
+                                </div>
+                                    
+                              
                                 :
                                 <div></div>
                                 :
@@ -88,14 +119,63 @@ const Review = props => {
                             
                         </Card.Header>
                         <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-                        <Card.Body className="review-body">
-                            <div className="review-title">
-                                <h2>{props.review.title}</h2>
-                                
-                            </div>
-                            
-                            <p className="review-text">{props.review.text} <i>-by <Link to={`/user/${props.review.username}`}>{props.review.username}</Link></i> </p>
+                        {
+                            editMode.show ?
+                            <Card.Body>
+                                <Form className="review-form">
+                                    <Form.Group>
+                                        <Form.Label>Review Headline</Form.Label>
+                                        <Form.Control value={editMode.title} onChange={ e => setEditMode({ ...editMode, title: e.target.value})} />
+                                    </Form.Group>
+                                    <Form.Group>
+                                    <Form.Label>Review Text</Form.Label>
+                                        <FormControl as="textarea" aria-label="With textarea" rows={5} value={editMode.text} onChange={ e => setEditMode({ ...editMode, text: e.target.value})} />
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Rating</Form.Label>
+                                        <Form.Control className="rating-control" value={editMode.rating} onChange={ e => setEditMode({ ...editMode, rating: e.target.value })} as="select" size="sm" >
+                                            <option value={1}>
+                                                ⭐   |  Awful
+                                            </option>
+                                            <option value={2}>⭐⭐    |  Mediocore</option>
+                                            <option value={3}>⭐⭐⭐    |  Good</option>
+                                            <option value={4}>⭐⭐⭐⭐    |  Great</option>
+                                            <option value={5}>⭐⭐⭐⭐⭐    |  Amazing</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <div className="comment-submit">
+                                        <Button  
+                                            variant="light" 
+                                            type="submit" 
+                                            style={{marginRight: "1em"}}
+                                            disabled = {
+                                                ((!validator.isEmpty( editMode.title, { ignore_whitespace:true }) == true) &&
+                                                (!validator.isEmpty( editMode.text, { ignore_whitespace:true }) == true ))
+                                                ? false : true}
+                                            onClick={() => handleUpdate(props.review.reviewId, editMode)}
+                                        >
+                                            Save Changes
+                                        </Button>
+                                        <Button
+                                            variant="danger" 
+                                            onClick={() => handleEditModeShow()}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                    
+                                </Form>
                             </Card.Body>
+                            :
+                            <Card.Body className="review-body">
+                                <div className="review-title">
+                                    <h2>{props.review.title}</h2>
+                                </div>
+                                
+                                <p className="review-text">{props.review.text} <i>-by <Link to={`/user/${props.review.username}`}>{props.review.username}</Link></i> </p>
+                            </Card.Body>
+                        }
+                        
                         <footer className="comment-footer review-footer">
                             {/* <div className="comment-vote">
                                 <OverlayTrigger placement="top" overlay={ <Tooltip> <strong>Patrician</strong> </Tooltip>}>

@@ -12,6 +12,12 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+// server Timestamp
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+
+//fieldvalue
+export const fieldValue = firebase.firestore.FieldValue;
+
 //google provider
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -163,29 +169,6 @@ export const getUserData = async user => {
 
 }
 
-//Update user points value
-export const updateUserPoints = async (authorId) => {
-
-    const userRef = firestore.collection("users").doc(authorId);
-    const userCommentsRef = firestore.collection("comments").where("authorId", "==", authorId);
-   
-    let userCommentsArr = [];
-    let newPointTotal = 0;
-
-    await userCommentsRef.get().then(snapshot => {
-
-        snapshot.forEach(doc => {
-            userCommentsArr.push(doc.data());
-        })
-        
-    })
-
-    userCommentsArr.forEach(comment => (newPointTotal += comment.points))
-
-    userRef.update({userPoints: newPointTotal})
-
-}
-
 //update user profile WIP
 export const updateUserProfile = async (arg, newVal) => {
     
@@ -252,92 +235,6 @@ const getCount = ref => {
 
 }
 
-//post movie comment to firestore
-export const postComment = async (type, id, text, user) => {
-
-    let email = user.email;
-    let authorId;
-    let username;
-
-    await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
-
-        let userData = snapshot.docs[0].data();
-
-        username = userData.username;
-        authorId = userData.id;
-    
-    }).catch(function(error) {
-    
-        console.log("Error getting documents: ", error);
-
-    });
-
-    let commentObj = {
-        type: type,
-        movieId: id,
-        username: username,
-        authorId: user.uid,
-        date: firebase.firestore.FieldValue.serverTimestamp(),
-        text: text,
-        points: 0,
-        upvoters: [],
-        downvoters: []
-    }
-
-    //add the article id or movie id depending on the comment type
-    if (commentObj.type == "movie") {
-        commentObj.movieId = id;
-    }
-
-    if (commentObj.type == "article") {
-        commentObj.articleId = id;
-    }
-
-    return firestore.collection("comments").add(commentObj).then(function(docRef) {
-        //add UID as property
-        let freshComment = firestore.collection("comments").doc(docRef.id);
-            
-        return freshComment.set({
-            commentId: docRef.id
-        }, {merge: true})
-
-    })
-    .catch(function(error) {
-        console.error("Error adding comment: ", error);
-    });
-
-}
-
-//retrieve comments for moviepage
-export const getComments = async (type, id) => {
-
-    let commentArr = [];
-
-    if (type === "movie") {
-
-        await firestore.collection("comments").where("movieId", "==", id).get().then(snapshot => {
-            snapshot.forEach(doc => {
-    
-                commentArr.push(doc.data());
-            })
-      
-        })
-
-    }
-
-    if (type === "article") {
-        await firestore.collection("comments").where("articleId", "==", id).get().then(snapshot => {
-            snapshot.forEach(doc => {
-    
-                commentArr.push(doc.data());
-            })
-      
-        })
-    }
-
-    return commentArr;
-
-}
 
 export const postMovieReview = async (movieId, reviewData, user) => {
     
@@ -352,7 +249,7 @@ export const postMovieReview = async (movieId, reviewData, user) => {
         console.log("Error getting document: ", error);
     });
     await firestore.collection("movieReviews").add({
-        date: firebase.firestore.FieldValue.serverTimestamp(),
+        date: serverTimestamp(),
         movieId: movieId,
         authorId: authorId,
         points: 0,
@@ -383,107 +280,6 @@ export const getMovieReviews = async movieId => {
     })
 
     return reviewsArr;
-
-}
-
-export const toggleUpvote = async (commentId, user) => {
-
-    const commentRef = firestore.collection("comments").doc(commentId);
-
-    const removeFromUpvoters = { upvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
-    const removeFromDownvoters = { downvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
-    const addToUpvoters = { upvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
-
-    let comment = undefined;
-    let pointChange;
-
-    let doc = await commentRef.get();
-
-    comment = doc.data();
-    
-    //remove the user from upvoters if they've upvoted already
-    if (comment.upvoters.includes(user.uid)) {
-        await commentRef.update(removeFromUpvoters);
-        await commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
-        pointChange = -1;
-    
-    }
-    // add the user to upvoters if they're in downvoters, and compensate for points lost from downvoting
-    else if (comment.downvoters.includes(user.uid)) {
-        await commentRef.update(removeFromDownvoters);
-        await commentRef.update(addToUpvoters);
-        await commentRef.update({ points: firebase.firestore.FieldValue.increment(2)});
-        pointChange = 2;
-                
-    }
-    //add the user to upvoters if they haven't voted on the comment
-    else {
-        await commentRef.update(addToUpvoters);
-        await commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
-        pointChange = 1;
-            
-    }
-
-    updateUserPoints(comment.authorId)
-
-}
-
-export const toggleDownvote = async (commentId, user) => {
-
-    const commentRef = firestore.collection("comments").doc(commentId);
-
-    const removeFromUpvoters = { upvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
-    const removeFromDownvoters = { downvoters: firebase.firestore.FieldValue.arrayRemove(user.uid) };
-    const addToDownvoters = { downvoters: firebase.firestore.FieldValue.arrayUnion(user.uid) };
-
-    let comment = undefined;
-    let pointChange = 0;
-
-    let doc = await commentRef.get();
-    
-    comment = doc.data();
-        
-    //remove the user from downvoters if they've downvoted already
-    if (comment.downvoters.includes(user.uid)) {
-
-        await commentRef.update(removeFromDownvoters);
-        await commentRef.update({ points: firebase.firestore.FieldValue.increment(1)});
-        pointChange = 1;
-   
-    }
-
-    // add the user to downvoters if they're in upvoters, and compensate for points gained from upvoting
-    else if (comment.upvoters.includes(user.uid)) {
-
-        await commentRef.update(removeFromUpvoters);
-        await commentRef.update(addToDownvoters);
-        await commentRef.update({ points: firebase.firestore.FieldValue.increment(-2)});
-        pointChange = -2;
-       
-    }
-    
-    //add the user to upvoters if they haven't voted on the comment
-    else {
-        
-        await commentRef.update(addToDownvoters);
-        await commentRef.update({ points: firebase.firestore.FieldValue.increment(-1)});
-        pointChange = -1;
-
-    }
-
-    updateUserPoints(comment.authorId)
-
-}
-
-export const deleteComment = (id) => {
-
-    const commentRef = firestore.collection("comments").doc(id);
-
-    commentRef.delete().then(function() {
-
-    }).catch(function(error) {
-        console.error("Error removing document: ", error);
-    });
 
 }
 

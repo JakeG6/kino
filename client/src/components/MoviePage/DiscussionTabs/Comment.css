@@ -12,6 +12,15 @@
     flex-direction: row;
 }
 
+.edit-icon {
+    margin-right: .75em;
+}
+
+.edit-icon:hover {
+    color: orange;
+
+}
+
 .patrIcon:hover {
     color:green;
     border: 1px solid green;
@@ -41,7 +50,7 @@
     border-radius: .25em;
   }
 
-.patrIcon:hover, .plebIcon:hover {
+.edit-icon:hover, .patrIcon:hover, .plebIcon:hover {
   cursor: pointer;
 }
 

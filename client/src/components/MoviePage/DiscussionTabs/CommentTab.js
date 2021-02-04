@@ -14,7 +14,7 @@ import Tab from 'react-bootstrap/Tab';
 
 import { UserContext } from '../../../providers/UserProvider';
 import { LoginModalContext } from '../../../providers/LoginModalProvider';
-import { postComment, getComments } from '../../../firebase';
+import { postComment, getComments } from './CommentTab-fb.js';
 import Comment from "./Comment";
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js';
 import sortComments from './sortComments.js';
@@ -105,6 +105,7 @@ const CommentTab = props => {
                                 >
                                     Submit
                                 </Button>
+                           
                             </div>
                             
                         </Form>
