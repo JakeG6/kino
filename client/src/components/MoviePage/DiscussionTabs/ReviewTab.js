@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 
 import { UserContext } from '../../../providers/UserProvider';
-import { postMovieReview, getMovieReviews } from '../../../firebase';
+import { postMovieReview, getMovieReviews } from './ReviewTab-fb.js';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.js'
 import Review from "./Review.js";
 
@@ -20,6 +20,7 @@ const ReviewTab = props => {
 
     const [reviewData, setReviewData] = useState({title: "", rating: 1, reviewText: ""});
     const [reviews, setReviews] = useState({reviewsArr: [], reviewOrder:"newest", gettingReviews: true})
+    const [reviewForm, setReviewForm] = useState({userReviewExists: false, gettingForm: true});
 
     async function waitForMovieReviews() {
         let newReviews = await getMovieReviews(props.movieId);
@@ -74,9 +75,16 @@ const ReviewTab = props => {
     }
 
     useEffect(() => {
+        
         waitForMovieReviews();
    
     }, [reviews.gettingReviews, props.movieId])
+
+
+    const userReviewExists = (userId, reviewsArr) => {
+        return (reviewsArr.filter(review => review.authorId === userId).length > 0) ? true : false;
+
+    }
 
     const submitReview = async (event, movieId, reviewData, user) => {
         event.preventDefault();
@@ -107,63 +115,69 @@ const ReviewTab = props => {
 
     return (
         <Tab.Content>           
-                <Row>
-                    <Col xs={1}>
-                    </Col>
+            <Row>
+                <Col xs={1}>
+                </Col>
+                <Col xs={10}>
 
-                    <Col xs={10}>
-                    
                 <UserContext.Consumer>
                 {
-                user => (
-                    user ?
-                        <Form className="black review-form">
-                            <Form.Group>
-                                <Form.Label>Review Headline</Form.Label>
-                                <Form.Control value={reviewData.title} onChange={ e => setReviewData({ ...reviewData, title: e.target.value})} />
-                            </Form.Group>
-                            <Form.Group>
-                            <Form.Label>Review Text</Form.Label>
-                                <FormControl as="textarea" aria-label="With textarea" rows={5} value={reviewData.reviewText} onChange={ e => setReviewData({ ...reviewData, reviewText: e.target.value})} />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Rating</Form.Label>
-                                <Form.Control className="rating-control" value={reviewData.rating} onChange={ e => setReviewData({ ...reviewData, rating: e.target.value })} as="select" size="sm" >
-                                    <option value={1}>
-                                        ⭐   |  Awful
-                                    </option>
-                                    <option value={2}>⭐⭐    |  Mediocore</option>
-                                    <option value={3}>⭐⭐⭐    |  Good</option>
-                                    <option value={4}>⭐⭐⭐⭐    |  Great</option>
-                                    <option value={5}>⭐⭐⭐⭐⭐    |  Amazing</option>
-                                </Form.Control>
-                            </Form.Group>
-                            <div className="comment-submit">
-                                <Button  
-                                variant="light" 
-                                type="submit" 
-                                disabled = {
-                                    ((!validator.isEmpty( reviewData.title, { ignore_whitespace:true }) == true) &&
-                                    (!validator.isEmpty( reviewData.reviewText, { ignore_whitespace:true }) == true ))
-                                     ? false : true}
-                                onClick={e => submitReview(e, props.movieId, reviewData, user)}
-                                >
-                                    Submit
-                                </Button>
-                            </div>
-                            
-                        </Form>
+                    user => (
+                        reviews.gettingReviews ? 
+                    <LoadingSpinner />
                     :
-                    <Card className="comment-card  please-signin">
-                        <Card.Text>
-                            <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a review</i>
-                        </Card.Text>
-                    </Card>
-                )
-            }
-            </UserContext.Consumer>
-            <div className="comment-stack">
-                <Dropdown  >
+
+                        user ?
+                            userReviewExists(user.uid, reviews.reviewsArr) ?
+                                <p>You have already posted a review for this movie.</p>
+                            :
+                            <Form className="black review-form">
+                                <Form.Group>
+                                    <Form.Label>Review Headline</Form.Label>
+                                    <Form.Control value={reviewData.title} onChange={ e => setReviewData({ ...reviewData, title: e.target.value})} />
+                                </Form.Group>
+                                <Form.Group>
+                                <Form.Label>Review Text</Form.Label>
+                                    <FormControl as="textarea" aria-label="With textarea" rows={5} value={reviewData.reviewText} onChange={ e => setReviewData({ ...reviewData, reviewText: e.target.value})} />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Rating</Form.Label>
+                                    <Form.Control className="rating-control" value={reviewData.rating} onChange={ e => setReviewData({ ...reviewData, rating: e.target.value })} as="select" size="sm" >
+                                        <option value={1}>
+                                            ⭐   |  Awful
+                                        </option>
+                                        <option value={2}>⭐⭐    |  Mediocore</option>
+                                        <option value={3}>⭐⭐⭐    |  Good</option>
+                                        <option value={4}>⭐⭐⭐⭐    |  Great</option>
+                                        <option value={5}>⭐⭐⭐⭐⭐    |  Amazing</option>
+                                    </Form.Control>
+                                </Form.Group>
+                                <div className="comment-submit">
+                                    <Button  
+                                    variant="light" 
+                                    type="submit" 
+                                    disabled = {
+                                        ((!validator.isEmpty( reviewData.title, { ignore_whitespace:true }) == true) &&
+                                        (!validator.isEmpty( reviewData.reviewText, { ignore_whitespace:true }) == true ))
+                                        ? false : true}
+                                    onClick={e => submitReview(e, props.movieId, reviewData, user)}
+                                    >
+                                        Submit
+                                    </Button>
+                                </div>
+                            </Form>                           
+                        :
+                        <Card className="comment-card  please-signin">
+                            <Card.Text>
+                                <i>Log in or <Link to={`/signup`}> sign up</Link> to leave a review</i>
+                            </Card.Text>
+                        </Card>
+                    )
+                }
+                </UserContext.Consumer>
+            
+                <div className="comment-stack">
+                    <Dropdown  >
                         <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
                             Sort By
                         </Dropdown.Toggle>
@@ -174,19 +188,19 @@ const ReviewTab = props => {
                             <Dropdown.Item className={`black-text ${reviews.reviewOrder==="ratingAsc" ? "bold" : ""}`} onClick={() => changeReviewOrder("ratingAsc")}>Rating Ascending</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                {
-                    reviews.gettingReviews ? 
-                        <LoadingSpinner />
-                    :
-                        reviews.reviewsArr.length > 0 ?
-                        reviewCards(reviews)                                                                                              
-                    :
-                        <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has reviewed this movie yet. You could be the first!</p>
-                }
-            </div>
-            </Col>
-            <Col xs={1}></Col>
-        </Row>
+                    {
+                        reviews.gettingReviews ? 
+                            <LoadingSpinner />
+                        :
+                            reviews.reviewsArr.length > 0 ?
+                            reviewCards(reviews)                                                                                              
+                        :
+                            <p style={{textAlign: "center", paddingBottom: "1em"}}>Nobody has reviewed this movie yet. You could be the first!</p>
+                    }
+                </div>
+                </Col>
+                <Col xs={1}></Col>
+            </Row>
         </Tab.Content>
     )
 

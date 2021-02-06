@@ -28,7 +28,6 @@ const TagInput = (props) => {
 
         props.setArticleData( prevArticleData => ({ ...prevArticleData,  tags: newTags }) )
     }
-
     
     const tagItems = props.articleData.tags.map((tag) => {
         return (

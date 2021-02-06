@@ -122,7 +122,7 @@ const App = () => {
                   //is the user logged in?
                     user ?                                          
                         <div className="bar-item">
-                          <Dropdown>
+                          <Dropdown >
                             <Dropdown.Toggle variant="light">
                               User
                             </Dropdown.Toggle>

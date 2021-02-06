@@ -1,6 +1,6 @@
-import { firestore } from '../../firebase.js';
+import { firestore, fieldValue } from '../../firebase.js';
 
-const getArticle = async (urlString) => {
+export const getArticle = async (urlString) => {
 
     return firestore.collection("articles").where("urlString", "==", urlString).get().then(snapshot => {
 
@@ -12,6 +12,26 @@ const getArticle = async (urlString) => {
     
         return console.log("Error getting article: ", error);
     
+    });
+
+}
+
+//update movie comment
+export const updateArticle = (id, editedArticle) => {
+
+    const articleRef = firestore.collection("articles").doc(id);
+
+    articleRef.update({
+        tags: editedArticle.tags,
+        text: editedArticle.text,
+        title: editedArticle.title,
+        urlString: editedArticle.title.toLowerCase().split(" ").join("-"),
+        lastEdited: fieldValue.serverTimestamp()
+    }).then(function() {
+        console.log("Article successfully updated!");
+
+    }).catch(function(error) {
+        console.error("Error updating document: ", error);
     });
 
 }
