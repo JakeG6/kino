@@ -138,6 +138,10 @@ const ArticlePage = ({ match }) => {
         )
     }
 
+    //check if article has been edited since initially posted
+    const isEdited = lastEdited => {return lastEdited ? `, last edited ${new Date(article.lastEdited.seconds * 1000).toLocaleDateString("en-US")}` : "" }
+
+
     if(article) {
         return (
             <UserContext.Consumer>
@@ -222,7 +226,7 @@ const ArticlePage = ({ match }) => {
                                             </Form>       
                                             :
                                             <div>
-                                                <p style={attributionStyle}><i>By <Link to={`/user/${article.username}`}>{article.username}</Link>, published {new Date(article.date.seconds * 1000).toLocaleDateString("en-US")}</i></p>
+                                                <p style={attributionStyle}><i>By <Link to={`/user/${article.username}`}>{article.username}</Link>, published {new Date(article.date.seconds * 1000).toLocaleDateString("en-US")}{isEdited(article.lastEdited)}</i></p>
                                                 {/* reacthtmlparser sets article markup */}
                                                 <div>{ReactHtmlParser(article.text)}</div>
                                                 <div style={tagDisplay}>
