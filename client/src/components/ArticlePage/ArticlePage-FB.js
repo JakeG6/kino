@@ -16,7 +16,6 @@ export const getArticle = async (urlString) => {
 
 }
 
-//update movie comment
 export const updateArticle = async (id, editedArticle) => {
     console.log(editedArticle);
 
@@ -35,6 +34,16 @@ export const updateArticle = async (id, editedArticle) => {
         console.error("Error updating document: ", error);
     });
 
+}
+
+export const deleteArticle = async (id) => {
+    const articleRef = firestore.collection("articles").doc(id);
+
+    await articleRef.delete().then(function() {
+
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
 }
 
 export default getArticle;

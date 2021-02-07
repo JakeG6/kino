@@ -9,7 +9,7 @@ import validator from 'validator';
 
 import TagInput from '../ArticleForm/TagInput.js';
 import CommentTab from "../MoviePage/DiscussionTabs/CommentTab.js";
-import {getArticle, updateArticle} from "./ArticlePage-fb.js"
+import {getArticle, updateArticle, deleteArticle} from "./ArticlePage-fb.js"
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner.js'
 
 import Button from 'react-bootstrap/Button';
@@ -72,8 +72,13 @@ const ArticlePage = ({ match }) => {
         :
         setArticle(artToBe);
 
+    }
 
-
+    //Delete Comment
+    const handleDelete = async (id) => {
+        await deleteArticle(id);
+        handleDelModalHide();
+        history.push(`/user/${article.username}`);
     }
 
     const attributionStyle = {
@@ -112,8 +117,10 @@ const ArticlePage = ({ match }) => {
             let artToBe = await getArticle(articleTitle);
 
             setArticle(artToBe);
+            artToBe ?
             setEditMode({title: artToBe.title, text: artToBe.text, tags: artToBe.tags, show: false})
-
+            :
+            history.push(`/nomatch`)
         }
 
         fetchArticle();
@@ -247,7 +254,7 @@ const ArticlePage = ({ match }) => {
                                 </Modal.Body>
                                 <Modal.Footer >
                                 <Button variant="danger" className="comment-delete-button" 
-                                    // onClick={e => handleDelete(props.review.reviewId)}  
+                                    onClick={() => handleDelete(article.articleId)}  
                                 >
                                     Yes
                                 </Button> 
