@@ -17,11 +17,12 @@ export const getArticle = async (urlString) => {
 }
 
 //update movie comment
-export const updateArticle = (id, editedArticle) => {
+export const updateArticle = async (id, editedArticle) => {
+    console.log(editedArticle);
 
     const articleRef = firestore.collection("articles").doc(id);
 
-    articleRef.update({
+    await articleRef.update({
         tags: editedArticle.tags,
         text: editedArticle.text,
         title: editedArticle.title,

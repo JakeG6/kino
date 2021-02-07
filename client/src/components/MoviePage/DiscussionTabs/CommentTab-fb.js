@@ -57,7 +57,7 @@ export const postComment = async (type, id, text, user) => {
 
 }
 
-//retrieve comments for moviepage
+//retrieve comments for movie or article page's comment tab
 export const getComments = async (type, id) => {
 
     let commentArr = [];

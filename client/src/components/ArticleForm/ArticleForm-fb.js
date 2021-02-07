@@ -1,4 +1,4 @@
-import { firestore } from '../../firebase.js';
+import { firestore, fieldValue } from '../../firebase.js';
 
 //post article to firestore
 const postArticle = async (articleData, user) => {
@@ -10,7 +10,7 @@ const postArticle = async (articleData, user) => {
     await firestore.collection("users").where("email", "==", email).get().then(snapshot => {
 
         username = snapshot.docs[0].data().username;
-        authorId = snapshot.docs[0].data().id;
+        authorId = user.uid;
     
     }).catch(function(error) {
     
@@ -21,7 +21,7 @@ const postArticle = async (articleData, user) => {
     return firestore.collection("articles").add({
         username: username,
         authorId: authorId,
-        date: firestore.FieldValue.serverTimestamp(),
+        date: fieldValue.serverTimestamp(),
         title: articleData.title,
         text: articleData.text,
         tags: articleData.tags,

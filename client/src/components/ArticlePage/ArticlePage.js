@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { UserContext } from '../../providers/UserProvider';
 
@@ -28,6 +28,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ArticlePage = ({ match }) => {
 
+    let history = useHistory();
+
     const articleTitle = match.params.urlString;
 
     const [article, setArticle] = useState(null);
@@ -52,18 +54,25 @@ const ArticlePage = ({ match }) => {
     //show/hide edit mode
     const handleEditModeShow = () => {
         editMode.show ? setEditMode({title: article.title, text: article.text, tags: article.tags, show: false}) : setEditMode({...editMode, show: true}) ;
-        console.log(editMode)
     }
 
 
     //Update edited review
-    const handleUpdate = async (id, editedText) => {
+    const handleUpdate = async (e, id, editedText) => {
+        e.preventDefault();
+
         await updateArticle(id, editedText);
         handleEditModeShow();
 
         let artToBe = await getArticle(articleTitle);
 
+        console.log(editMode.title)
+
+        editedText.title != article.title ? history.push(`/article/${editMode.title.toLowerCase().split(" ").join("-")}`)
+        :
         setArticle(artToBe);
+
+
 
     }
 
@@ -134,21 +143,33 @@ const ArticlePage = ({ match }) => {
                                         <Col xs={10}>
                                             <h1>{article.title}</h1>
                                         </Col>
+                                        
                                         <Col xs={2}>
-                                        <FontAwesomeIcon 
-                                            className={`edit-icon`}
-                                            icon={faEdit} 
-                                            size="2x" 
-                                            color="white"
-                                            onClick={ user ? handleEditModeShow : null}    
-                                        />
-                                        <FontAwesomeIcon 
-                                            className={`delete-icon`}
-                                            icon={faTimes} 
-                                            size="2x" 
-                                            color="white"
-                                            onClick={handleDelModalShow}    
-                                        />
+                                        {
+                                            user ?
+                                            user.uid == article.authorId ?
+                                            <div>
+                                                <FontAwesomeIcon 
+                                                    className={`edit-icon`}
+                                                    icon={faEdit} 
+                                                    size="2x" 
+                                                    color="white"
+                                                    onClick={ user ? handleEditModeShow : null}    
+                                                />
+                                                <FontAwesomeIcon 
+                                                    className={`delete-icon`}
+                                                    icon={faTimes} 
+                                                    size="2x" 
+                                                    color="white"
+                                                    onClick={handleDelModalShow}    
+                                                />
+                                            </div>
+                                            :
+                                            <div></div>      
+                                            :
+                                            <div></div>                                          
+
+                                        }
                                         </Col>
                                         
                                     </Row>
@@ -173,14 +194,24 @@ const ArticlePage = ({ match }) => {
                                                     {/* tags entered here */}
                                                     <TagInput articleData={editMode} setArticleData={setEditMode} />
                                                 </Form.Group>
-                                                <Button 
-                                                    disabled={validator.isEmpty(editMode.title, noWhitespace) || validator.isEmpty(editMode.text, noWhitespace)  ? true : false} 
-                                                        variant="success" 
-                                                        size="lg" 
-                                                        type="submit" 
-                                                        onClick={e => handleUpdate(e, editMode)}>
-                                                    Save Changes
-                                                </Button>
+                                                <div style={{textAlign: "right"}}>
+                                                    <Button 
+                                                        disabled={validator.isEmpty(editMode.title, noWhitespace) || validator.isEmpty(editMode.text, noWhitespace)  ? true : false} 
+                                                            variant="light"
+                                                            style={{marginRight: "1em"}}
+                                                            type="submit" 
+                                                            onClick={e => handleUpdate(e, article.articleId, editMode)}
+                                                    >
+                                                        Save Changes
+                                                    </Button>
+                                                    <Button
+                                                        variant="danger" 
+                                                        onClick={() => handleEditModeShow()}
+                                                    >
+                                                        Cancel
+                                                    </Button>
+                                                </div>
+                                                
                                             </Form>       
                                             :
                                             <div>
