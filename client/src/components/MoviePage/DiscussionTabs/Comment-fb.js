@@ -9,7 +9,7 @@ export const updateComment = (id, editedText) => {
         text: editedText,
         lastEdited: fieldValue.serverTimestamp()
     }).then(function() {
-        console.log("Comment text successfully updated!");
+        // console.log("Comment text successfully updated!");
 
     }).catch(function(error) {
         console.error("Error updating document: ", error);

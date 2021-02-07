@@ -11,7 +11,7 @@ export const updateReview = (id, editedReview) => {
         lastEdited: fieldValue.serverTimestamp()
 
     }).then(function() {
-        console.log("Review successfully updated!");
+        // console.log("Review successfully updated!");
 
     }).catch(function(error) {
         console.error("Error updating document: ", error);

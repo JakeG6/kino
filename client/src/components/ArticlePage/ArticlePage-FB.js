@@ -17,7 +17,6 @@ export const getArticle = async (urlString) => {
 }
 
 export const updateArticle = async (id, editedArticle) => {
-    console.log(editedArticle);
 
     const articleRef = firestore.collection("articles").doc(id);
 
@@ -28,7 +27,7 @@ export const updateArticle = async (id, editedArticle) => {
         urlString: editedArticle.title.toLowerCase().split(" ").join("-"),
         lastEdited: fieldValue.serverTimestamp()
     }).then(function() {
-        console.log("Article successfully updated!");
+        // console.log("Article successfully updated!");
 
     }).catch(function(error) {
         console.error("Error updating document: ", error);
