@@ -155,7 +155,7 @@ const ArticlePage = ({ match }) => {
                                         {
                                             user ?
                                             user.uid == article.authorId ?
-                                            <div>
+                                            <div style={{marginTop: "10px"}}>
                                                 <FontAwesomeIcon 
                                                     className={`edit-icon`}
                                                     icon={faEdit} 
