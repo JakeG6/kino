@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // import { UserContext } from '../../../providers/UserProvider';
 import { UserContext } from "../../providers/UserProvider";
@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import validator from 'validator';
 
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
+import ReactQuill from 'react-quill'; // ES6
 import postArticle from './ArticleForm-fb.js';
 import TagInput from './TagInput.js';
 

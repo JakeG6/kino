@@ -69,21 +69,30 @@ export const getComments = async (type, id) => {
     
                 commentArr.push(doc.data());
             })
+
+            
       
         })
 
-    }
+        return commentArr;
 
-    if (type === "article") {
+    }
+    else if (type === "article") {
         await firestore.collection("comments").where("articleId", "==", id).get().then(snapshot => {
             snapshot.forEach(doc => {
-    
+                console.log(doc.data());
                 commentArr.push(doc.data());
             })
+
+            
       
         })
-    }
 
-    return commentArr;
+        return commentArr;
+        
+    }
+    else {
+        return commentArr;
+    }
 
 }

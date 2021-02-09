@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react';
+import React, {useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { updateReview } from './Review-fb.js';
 import validator from 'validator';
@@ -152,8 +152,8 @@ const Review = props => {
                                             type="submit" 
                                             style={{marginRight: "1em"}}
                                             disabled = {
-                                                ((!validator.isEmpty( editMode.title, { ignore_whitespace:true }) == true) &&
-                                                (!validator.isEmpty( editMode.text, { ignore_whitespace:true }) == true ))
+                                                ((!validator.isEmpty( editMode.title, { ignore_whitespace:true }) === true) &&
+                                                (!validator.isEmpty( editMode.text, { ignore_whitespace:true }) === true ))
                                                 ? false : true}
                                             onClick={() => handleUpdate(props.review.reviewId, editMode)}
                                         >

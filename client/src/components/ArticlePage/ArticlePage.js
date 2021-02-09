@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, useHistory } from "react-router-dom";
-import axios from 'axios';
 import { UserContext } from '../../providers/UserProvider';
 
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill'; // ES6
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactQuill from 'react-quill'; // ES6
+import ReactHtmlParser from 'react-html-parser';
 import validator from 'validator';
 
 import TagInput from '../ArticleForm/TagInput.js';
@@ -16,11 +15,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 
 import Modal from 'react-bootstrap/Modal';
-import Image from 'react-bootstrap/Image';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -66,9 +63,7 @@ const ArticlePage = ({ match }) => {
 
         let artToBe = await getArticle(articleTitle);
 
-        console.log(editMode.title)
-
-        editedText.title != article.title ? history.push(`/article/${editMode.title.toLowerCase().split(" ").join("-")}`)
+        editedText.title !== article.title ? history.push(`/article/${editMode.title.toLowerCase().split(" ").join("-")}`)
         :
         setArticle(artToBe);
 
@@ -158,7 +153,7 @@ const ArticlePage = ({ match }) => {
                                         <Col xs={2}>
                                         {
                                             user ?
-                                            user.uid == article.authorId ?
+                                            user.uid === article.authorId ?
                                             <div style={{marginTop: "10px"}}>
                                                 <FontAwesomeIcon 
                                                     className={`edit-icon`}
